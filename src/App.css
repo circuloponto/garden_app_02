@@ -43,8 +43,9 @@
 }
 .allConnections{
     position: absolute;
-    top: 20px;
-    left: 160px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
     background: rgba(255, 255, 255, 0);
