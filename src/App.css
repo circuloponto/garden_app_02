@@ -1,0 +1,337 @@
+
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0 0 0);
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.button{
+   
+    margin: 10px 0;
+    border-radius: 10px;
+    color: white;
+    font-size: 12px;
+    font-family:'Courier New', Courier, monospace;
+    height: 30px;
+    background: rgba(255, 255, 255, 0);
+    border: 2px solid rgba(255, 255, 255, 1);
+    display: flex;
+    padding: 0 10px;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+.button span{
+    margin-left: 10px;
+}
+.button .on{
+    color: green;
+}
+.button .off{
+    color: red;
+}
+.allConnections{
+    position: absolute;
+    top: 20px;
+    left: 160px;
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0);
+    
+}
+
+
+.threeToThree1{
+    position: absolute;
+    top: 18%;
+    left: 26%;
+    transform: rotate(0deg);
+    height: 170px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(45deg);
+   transform-origin: bottom;
+}
+
+.threeToThree2{
+    position: absolute;
+    top: 21%;
+    left: 29%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(45deg);
+   transform-origin: bottom;
+}
+.sevenToThree1{
+  position: absolute;
+    top: 18%;
+    left: 73%;
+    transform: rotate(0deg);
+    height: 170px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+    transform: rotate(-45deg);
+    transform-origin: bottom; 
+}
+.sevenToThree2{
+  position: absolute;
+    top: 21%;
+    left: 70%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+    transform: rotate(-45deg);
+    transform-origin: bottom; 
+}
+.fourTofour1{
+    position: absolute;
+    top: 33%;
+    left: 38%;
+    transform: rotate(0deg);
+    height: 80px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(45deg);
+   transform-origin: bottom;
+}
+.fourTofour2{
+  position: absolute;
+  top: 36.5%;
+  left: 40.5%;
+  transform: rotate(0deg);
+  height: 60px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(45deg);
+ transform-origin: bottom;
+}
+.sixTofour1{
+  position: absolute;
+  top: 33%;
+  left: 61%;
+  transform: rotate(0deg);
+  height: 80px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(-45deg);
+ transform-origin: bottom;
+}
+.sixTofour2{
+position: absolute;
+top: 36.5%;
+left: 58.5%;
+transform: rotate(0deg);
+height: 60px;
+width: 1px;
+background: rgb(255, 255, 255);
+transform: rotate(-45deg);
+transform-origin: bottom;
+}
+
+
+.threeToSeven1{
+    position: absolute;
+    top: 55%;
+    left: 26%;
+    transform: rotate(0deg);
+    height: 170px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-45deg);
+   transform-origin: top;
+}
+
+.threeToSeven2{
+  position: absolute;
+  top: 55%;
+  left: 29%;
+  transform: rotate(0deg);
+  height: 150px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(-45deg);
+ transform-origin: top;
+}
+
+
+.sevenToSeven1{
+  position: absolute;
+    top: 55%;
+    left: 73%;
+    transform: rotate(0deg);
+    height: 170px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+    transform: rotate(45deg);
+    transform-origin: top; 
+}
+.sevenToSeven2{
+  position: absolute;
+    top: 55%;
+    left: 70%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+    transform: rotate(45deg);
+    transform-origin: top; 
+}
+
+.fourToSix1{
+  position: absolute;
+  top: 55%;
+  left: 38%;
+  
+  height: 80px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(-45deg);
+ transform-origin: top;
+}
+.fourToSix2{
+position: absolute;
+top: 55%;
+left: 40.5%;
+
+height: 60px;
+width: 1px;
+background: rgb(255, 255, 255);
+transform: rotate(-45deg);
+transform-origin: top;
+}
+.sixToSix1{
+position: absolute;
+top: 55%;
+left: 61%;
+transform: rotate(0deg);
+height: 80px;
+width: 1px;
+background: rgb(255, 255, 255);
+transform: rotate(45deg);
+transform-origin: top;
+}
+.sixToSix2{
+position: absolute;
+top: 55%;
+left: 58.5%;
+transform: rotate(0deg);
+height: 60px;
+width: 1px;
+background: rgb(255, 255, 255);
+transform: rotate(45deg);
+transform-origin: top;
+}
+
+/* DIAGRAM */
+
+
+.diagram{
+    display: flex;
+    position: relative;
+}
+.vertical{
+  display: flex;
+    flex-direction: column;
+    height: 600px;
+    background: rgba(255, 0, 0, 0);
+    width: 50px;
+    justify-content: space-between;
+    align-items: center;
+    margin: -10px 0  0 0;
+}
+.horizontal{
+  position: absolute;
+  top: 265px;
+  left: -275px;
+  background: rgba(255, 0, 0, 0);
+  width: 600px;
+  display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.element{
+    width: 50px;
+    height: 50px;
+    background: rgb(7, 7, 7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    font-size: 20px;
+    position: relative;
+} 
+.fourteen{
+ opacity: 0;   
+}
+.squared{
+    position: absolute;
+    top:80px;
+    left: -186px;
+    background: rgba(255, 0, 0, 0);
+    border: 2px dashed rgb(255, 255, 255);
+    width: 420px;
+    height: 420px;
+    transform: rotate(45deg);
+    z-index: 5;
+}
+.topleftBorder{
+    position: absolute;
+    border-top: 2px dashed rgb(255, 255, 255);
+    top: 130px;
+    left: -40px;
+    width: 380px;
+    transform: rotate(45deg);
+    height: 50px;
+    
+}
+.toprightBorder{
+  position: absolute;
+  border-top: 2px dashed rgb(255, 255, 255);
+  top: 130px;
+  left: -290px;
+  width: 380px;
+  transform: rotate(-45deg);
+  height: 50px;
+}
+.bottomleftBorder{
+    position: absolute;
+    border-bottom: 2px dashed rgb(255, 255, 255);
+    top: 405px;
+    left: -40px;
+    width: 380px;
+    transform: rotate(-45deg);
+    height: 50px;
+}
+.bottomrightBorder{
+    position: absolute;
+    border-bottom: 2px dashed rgb(255, 255, 255);
+    top: 440px;
+    left: -325px;
+    width: 380px;
+    transform: rotate(-135deg);
+    height: 50px;
+}
+
+.svg{
+    width: 70%;
+    height: 70%;
+   /*  position: absolute;
+    top: 0%; */
+    
+    }
