@@ -9,7 +9,7 @@ import SixVertical from '../assets/SVGs/6vertical.svg';
 import SevenVertical from '../assets/SVGs/7vertical.svg';
 import ThreeHorizontal from '../assets/SVGs/3horizontal.svg';
 import FourHorizontal from '../assets/SVGs/4horizontal.svg';
-import FiveHorizontal from '../assets/SVGs/5horizontal.svg';
+
 import SixHorizontal from '../assets/SVGs/6horizontal.svg';
 import SevenHorizontal from '../assets/SVGs/7horizontal.svg';
 
@@ -33,7 +33,7 @@ const Diagram = () => {
                 <Chord svg={TrigramHorizontal} className="eleven" />
                 <Chord svg={ThreeHorizontal} className="twelve" />
                 <Chord svg={FourHorizontal} className="thirteen" />
-                <Chord svg={FiveHorizontal} className="fourteen" />
+                <Chord svg={''} className="fourteen" />
                 <Chord svg={SixHorizontal} className="fifteen" />
                 <Chord svg={SevenHorizontal} className="sixteen" />
                 <Chord svg={TrigramHorizontal} className="seventeen" />
