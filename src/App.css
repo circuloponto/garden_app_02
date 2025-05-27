@@ -56,71 +56,116 @@
 
 .threeToThree1{
     position: absolute;
-    top: 18%;
+    top:12%;
     left: 26%;
     transform: rotate(0deg);
-    height: 170px;
+    height: 210px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(45deg);
+   transform: rotate(40deg);
    transform-origin: bottom;
 }
 
 .threeToThree2{
     position: absolute;
-    top: 21%;
+  top: 17%;
+  left: 27%;
+  transform: rotate(0deg);
+  height: 185px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(40deg);
+ transform-origin: bottom
+}
+.threeToFive1{
+    position: absolute;
+    top: 24%;
     left: 29%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(45deg);
+    transform: rotate(60deg);
    transform-origin: bottom;
 }
-.sevenToThree1{
-  position: absolute;
-    top: 18%;
-    left: 73%;
-    transform: rotate(0deg);
-    height: 170px;
-    width: 1px;
-    background: rgb(255, 255, 255);
-    transform: rotate(-45deg);
-    transform-origin: bottom; 
-}
-.sevenToThree2{
-  position: absolute;
-    top: 21%;
-    left: 70%;
+.threeToFive2{
+    position: absolute;
+    top: 24%;
+    left: 28%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-    transform: rotate(-45deg);
-    transform-origin: bottom; 
+   transform: rotate(60deg);
+   transform-origin:bottom;
 }
-.fourTofour1{
+.sevenToFive1{
     position: absolute;
-    top: 33%;
-    left: 38%;
+    top: 24%;
+    left: 72%;
     transform: rotate(0deg);
-    height: 80px;
+    height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(45deg);
+    transform: rotate(-60deg);
    transform-origin: bottom;
 }
-.fourTofour2{
-  position: absolute;
-  top: 36.5%;
-  left: 40.5%;
-  transform: rotate(0deg);
-  height: 60px;
-  width: 1px;
-  background: rgb(255, 255, 255);
- transform: rotate(45deg);
- transform-origin: bottom;
+.sevenToFive2{
+    position: absolute;
+    top: 24%;
+    left: 71%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-60deg);
+   transform-origin:bottom;
 }
+.sevenToThree1{
+    position: absolute;
+    top:12%;
+    left: 74%;
+    transform: rotate(0deg);
+    height: 210px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-40deg);
+   transform-origin: bottom;
+}
+.sevenToThree2{
+    position: absolute;
+    top: 17%;
+    left: 73%;
+    transform: rotate(0deg);
+    height: 185px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-40deg);
+   transform-origin: bottom
+}
+.fourToFive1{
+    position: absolute;
+    top: 33%;
+    left: 40%;
+    transform: rotate(0deg);
+    height: 90px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(50deg);
+   transform-origin: bottom;
+}
+.sixToFive1{
+    position: absolute;
+    top: 33%;
+    left: 60%;
+    transform: rotate(0deg);
+    height: 90px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-50deg);
+   transform-origin: bottom;
+}
+
 .sixTofour1{
   position: absolute;
   top: 33%;
@@ -251,46 +296,12 @@ transform-origin: bottom;
     position: absolute;
     top: 53%;
     left: 61%;
-    
     height: 100px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(41deg);
-   transform-origin: top;
+    transform: rotate(41deg);
+    transform-origin: top;
   }
-/* .fourToSix2{
-position: absolute;
-top: 55%;
-left: 40.5%;
-
-height: 60px;
-width: 1px;
-background: rgb(255, 255, 255);
-transform: rotate(-45deg);
-transform-origin: top;
-} */
-/* .sixToSix1{
-position: absolute;
-top: 55%;
-left: 61%;
-transform: rotate(0deg);
-height: 80px;
-width: 1px;
-background: rgb(255, 255, 255);
-transform: rotate(45deg);
-transform-origin: top;
-}
-.sixToSix2{
-position: absolute;
-top: 55%;
-left: 58.5%;
-transform: rotate(0deg);
-height: 60px;
-width: 1px;
-background: rgb(255, 255, 255);
-transform: rotate(45deg);
-transform-origin: top;
-} */
 
 /* DIAGRAM */
 
