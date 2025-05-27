@@ -45,9 +45,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -55%);
     width: 600px;
     height: 600px;
+    opacity: 1;
     background: rgba(255, 255, 255, 0);
     
 }
@@ -144,66 +145,120 @@ transform-origin: bottom;
 }
 
 
-.threeToSeven1{
+.threeToTen1{
     position: absolute;
     top: 55%;
     left: 26%;
     transform: rotate(0deg);
-    height: 170px;
+    height: 210px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(-45deg);
+   transform: rotate(-40deg);
    transform-origin: top;
 }
 
-.threeToSeven2{
+.threeToTen2{
   position: absolute;
-  top: 55%;
-  left: 29%;
+  top: 54%;
+  left: 27%;
   transform: rotate(0deg);
-  height: 150px;
+  height: 185px;
   width: 1px;
   background: rgb(255, 255, 255);
- transform: rotate(-45deg);
+ transform: rotate(-40deg);
  transform-origin: top;
 }
-
-
-.sevenToSeven1{
-  position: absolute;
-    top: 55%;
-    left: 73%;
-    transform: rotate(0deg);
-    height: 170px;
-    width: 1px;
-    background: rgb(255, 255, 255);
-    transform: rotate(45deg);
-    transform-origin: top; 
-}
-.sevenToSeven2{
-  position: absolute;
-    top: 55%;
-    left: 70%;
+.threeToEight1{
+    position: absolute;
+    top: 53%;
+    left: 28%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-    transform: rotate(45deg);
-    transform-origin: top; 
+   transform: rotate(-57deg);
+   transform-origin: top;
+}
+.threeToEight2{
+    position: absolute;
+    top: 52%;
+    left: 28%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(-57deg);
+   transform-origin: top;
+}
+
+.sevenToTen1{
+    position: absolute;
+    top: 55%;
+    left: 73%;
+    transform: rotate(0deg);
+    height: 210px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(40deg);
+   transform-origin: top;
+}
+.sevenToTen2{
+    position: absolute;
+    top: 54%;
+    left: 72%;
+    transform: rotate(0deg);
+    height: 185px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(40deg);
+   transform-origin: top;
+}
+.sevenToEight1{
+    position: absolute;
+    top: 53%;
+    left: 72%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(57deg);
+   transform-origin: top;
+}
+.sevenToEight2{
+    position: absolute;
+    top: 52%;
+    left: 72%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(57deg);
+   transform-origin: top;
 }
 
 .fourToSix1{
   position: absolute;
-  top: 55%;
-  left: 38%;
+  top: 53%;
+  left: 39%;
   
-  height: 80px;
+  height: 100px;
   width: 1px;
   background: rgb(255, 255, 255);
- transform: rotate(-45deg);
+ transform: rotate(-41deg);
  transform-origin: top;
 }
-.fourToSix2{
+.sixToSix1{
+    position: absolute;
+    top: 53%;
+    left: 61%;
+    
+    height: 100px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(41deg);
+   transform-origin: top;
+  }
+/* .fourToSix2{
 position: absolute;
 top: 55%;
 left: 40.5%;
@@ -213,8 +268,8 @@ width: 1px;
 background: rgb(255, 255, 255);
 transform: rotate(-45deg);
 transform-origin: top;
-}
-.sixToSix1{
+} */
+/* .sixToSix1{
 position: absolute;
 top: 55%;
 left: 61%;
@@ -235,7 +290,7 @@ width: 1px;
 background: rgb(255, 255, 255);
 transform: rotate(45deg);
 transform-origin: top;
-}
+} */
 
 /* DIAGRAM */
 
@@ -245,18 +300,37 @@ transform-origin: top;
     position: relative;
 }
 .vertical{
-  display: flex;
-    flex-direction: column;
-    height: 600px;
-    background: rgba(255, 0, 0, 0);
-    width: 50px;
-    justify-content: space-between;
-    align-items: center;
-    margin: -10px 0  0 0;
+  display: grid;
+  grid-template-rows:50px 50px 50px 50px 50px 50px 43px 43px 43px 43px 43px 43px 43px;
+  height: 600px;
+ /*  gap: 10px; */
+  background: rgba(255, 0, 0, 0);
+  width: 50px;
+  justify-items: center;
+  align-items: center;
+  border: 2px dashed rgba(0, 0, 255, 0); /* Container border for grid visibility */
 }
+.vertical > * {
+  outline: 1px solid rgba(0, 0, 255, 0);
+}
+.one{
+    margin-top: -40px;
+}
+.two{
+    margin-top: -40px;
+}
+.three{
+    margin-top: -40px;
+}
+.four{
+    margin-top: -40px;
+}
+.five{
+    margin-top: -40px;
+}    
 .horizontal{
   position: absolute;
-  top: 265px;
+  top: 255px;
   left: -275px;
   background: rgba(255, 0, 0, 0);
   width: 600px;
@@ -266,8 +340,8 @@ transform-origin: top;
     align-items: center;
 }
 .element{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: rgb(7, 7, 7);
     border-radius: 50%;
     display: flex;
@@ -277,63 +351,27 @@ transform-origin: top;
     font-size: 20px;
     position: relative;
 } 
+
 .fourteen{
  opacity: 0;   
 }
 .squared{
     position: absolute;
-    top:80px;
-    left: -186px;
+    top:55px;
+    left: -195px;
     background: rgba(255, 0, 0, 0);
     border: 2px dashed rgb(255, 255, 255);
-    width: 420px;
-    height: 420px;
+    width: 440px;
+    height: 440px;
     transform: rotate(45deg);
     z-index: 5;
 }
-.topleftBorder{
-    position: absolute;
-    border-top: 2px dashed rgb(255, 255, 255);
-    top: 130px;
-    left: -40px;
-    width: 380px;
-    transform: rotate(45deg);
-    height: 50px;
-    
-}
-.toprightBorder{
-  position: absolute;
-  border-top: 2px dashed rgb(255, 255, 255);
-  top: 130px;
-  left: -290px;
-  width: 380px;
-  transform: rotate(-45deg);
-  height: 50px;
-}
-.bottomleftBorder{
-    position: absolute;
-    border-bottom: 2px dashed rgb(255, 255, 255);
-    top: 405px;
-    left: -40px;
-    width: 380px;
-    transform: rotate(-45deg);
-    height: 50px;
-}
-.bottomrightBorder{
-    position: absolute;
-    border-bottom: 2px dashed rgb(255, 255, 255);
-    top: 440px;
-    left: -325px;
-    width: 380px;
-    transform: rotate(-135deg);
-    height: 50px;
-}
+
 
 .svg{
     width: 70%;
     height: 70%;
-   /*  position: absolute;
-    top: 0%; */
+   
     
 }
 
