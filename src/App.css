@@ -362,8 +362,11 @@ transform-origin: bottom;
     font-size: 20px;
     position: relative;
 } 
-
-.fourteen{
+.element:hover{
+    cursor: pointer;
+border: 2px dashed rgba(255, 255, 255, 1);
+}
+.seventeen{
  opacity: 0;   
 }
 .squared{
@@ -375,7 +378,7 @@ transform-origin: bottom;
     width: 440px;
     height: 440px;
     transform: rotate(45deg);
-    z-index: 5;
+    z-index: 0;
 }
 
 
@@ -386,5 +389,8 @@ transform-origin: bottom;
     
 }
 
-
+.selected-chord {
+    border: 2px dashed #00e1ff !important;
+    box-shadow: 0 0 10px #00e1ff44;
+}
 
