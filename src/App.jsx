@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Diagram from './components/Diagram'
 import Button from './components/button'
 import Connections from './components/Connections'
@@ -10,6 +10,14 @@ import './App.css'
 function App() {
   const [viewMode, setViewMode] = useState('connections'); // 'connections' or 'fruits'
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
+
+  // Reset selection when switching from 'fruits' to 'connections' and there is a selection
+ 
+  useEffect(() => {
+    if (viewMode === 'connections' && selectedChords.length > 0) {
+      setSelectedChords([]);
+    }
+  }, [viewMode]);
 
   // Chord selection handler (only allow valid pairs)
   const handleChordSelect = (chord) => {

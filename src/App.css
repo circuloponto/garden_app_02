@@ -731,7 +731,7 @@ transform-origin: bottom;
     font-size: 20px;
     position: relative;
     border: 2px dashed rgba(255, 255, 255, 0);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0);
+    box-shadow: 0 0 10px rgb(60, 60, 60);
 } 
 .element:hover{
     cursor: pointer;
