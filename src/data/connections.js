@@ -4,7 +4,7 @@ export const connections = [
         to: "three",
         className: "oneToThree1"
     },
-    {
+   /*  {
         from: "one",
         to: "three",
         className: "oneToThree2"
@@ -18,7 +18,7 @@ export const connections = [
         from: "one",
         to: "three",
         className: "oneToThree4"
-    },
+    }, */
     {
         from: "three",
         to: "five",

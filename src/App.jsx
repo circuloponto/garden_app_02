@@ -47,6 +47,20 @@ function App() {
     }
   };
 
+  // Compute possible chords for animation (only in 'fruits' mode, when one chord is selected)
+  let possibleChords = [];
+  if (viewMode === 'fruits' && selectedChords.length === 1) {
+    const first = selectedChords[0];
+    possibleChords = Array.from(new Set(
+      connections
+        .filter(c => c.from === first || c.to === first)
+        .map(c => (c.from === first ? c.to : c.from))
+    ));
+  }
+  // DEBUG: log selection and possible chords
+  console.log('selectedChords:', selectedChords);
+  console.log('possibleChords:', possibleChords);
+
   return (
     <>
       <div className='app'>
@@ -58,7 +72,8 @@ function App() {
         </div>
         <div className="scaler">
 
-        <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords}/>
+        <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+
 
         <Connections viewMode={viewMode} selectedChords={selectedChords} />
         </div>
