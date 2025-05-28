@@ -56,14 +56,14 @@
 .oneToThree1{
     position: absolute;
     top:9%;
-    left: 48%;
+    left: 50%;
     height:60px;
     width: 1px;
     background: rgb(255, 255, 255);
    transform: rotate(0deg);
    transform-origin: bottom;
 }
-.oneToThree2{
+/* .oneToThree2{
     position: absolute;
     top:9%;
     left: 49.3%;
@@ -95,7 +95,7 @@
     background: rgb(255, 255, 255);
    transform: rotate(0deg);
    transform-origin: bottom;
-}
+} */
 .threeToFive1{
     position: absolute;
     top:26%;
@@ -155,14 +155,14 @@
 .tenToTwelve1{
     position: absolute;
     top:83%;
-    left: 48%;
+    left: 50%;
     height:50px;
     width: 1px;
     background: rgb(255, 255, 255);
    transform: rotate(0deg);
    transform-origin: bottom;
 }
-.tenToTwelve2{
+/* .tenToTwelve2{
     position: absolute;
     top:83%;    
     left: 49.3%;
@@ -194,10 +194,10 @@
     background: rgb(255, 255, 255);
    transform: rotate(0deg);
    transform-origin: bottom;
-}
+} */
 .thirteenToFifteen1{
     position: absolute;
-    top:31%;
+    top:32%;
     left: 5%;
     transform: rotate(0deg);
     height: 110px;
@@ -206,7 +206,7 @@
    transform: rotate(90deg);
    transform-origin: bottom;
 }
-.thirteenToFifteen2{
+/* .thirteenToFifteen2{
     position: absolute;
     top:32%;
     left: 5%;
@@ -238,7 +238,7 @@
     background: rgb(255, 255, 255);
    transform: rotate(90deg);
    transform-origin: bottom;
-}   
+}   */ 
 .fifteenToSixteen{
     position: absolute;
     top:32.5%;
@@ -331,7 +331,7 @@
 }
 .nineteenToTwentyone1{
     position: absolute;
-    top:31%;
+    top:32%;
     left:76%;
     transform: rotate(0deg);
     height: 110px;
@@ -340,7 +340,7 @@
    transform: rotate(90deg);
    transform-origin: bottom;
 }
-.nineteenToTwentyone2{
+/* .nineteenToTwentyone2{
     position: absolute;
     top:32%;
     left:76%;
@@ -372,7 +372,7 @@
     background: rgb(255, 255, 255);
    transform: rotate(90deg);
    transform-origin: bottom;
-} 
+} */ 
 .nineteenToFive1{
     position: absolute;
     top: 24.6%;
@@ -740,12 +740,12 @@ border: 2px dashed rgba(255, 255, 255, 1);
 
 .squared{
     position: absolute;
-    top:55px;
-    left: -195px;
+    top:70px;
+    left: -175px;
     background: rgba(255, 0, 0, 0);
     border: 2px dashed rgb(255, 255, 255);
-    width: 440px;
-    height: 440px;
+    width: 400px;
+    height: 400px;
     transform: rotate(45deg);
     z-index: 0;
 }
