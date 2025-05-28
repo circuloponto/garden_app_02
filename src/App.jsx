@@ -56,9 +56,12 @@ function App() {
           <Button title="Show Trichords" state={null} />
           <Button title="Hide Electrons" state={null} />
         </div>
+        <div className="scaler">
+
         <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords}/>
 
         <Connections viewMode={viewMode} selectedChords={selectedChords} />
+        </div>
       </div>
     </>
   )
