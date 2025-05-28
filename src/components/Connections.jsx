@@ -3,6 +3,18 @@ import React from 'react'
 
 
 import { connections } from '../data/connections';
+import raiwbow1 from '../assets/SVGs/rainbow1.svg';
+import sixteenToEighteen from '../assets/SVGs/sixteenToEighteen.svg';
+import eighteenToThree from '../assets/SVGs/eighteenToThree.svg';
+import sixteenToThree from '../assets/SVGs/sixteenToThree.svg';
+import eightToThree from '../assets/SVGs/eightToThree.svg';
+const svgMap = {
+  raiwbow1,
+  sixteenToEighteen,
+  eighteenToThree,
+  sixteenToThree,
+  eightToThree,
+};
 
 const Connections = ({ viewMode, selectedChords }) => {
   // In "fruits" mode, show only connections between the two selected chords
@@ -17,8 +29,18 @@ const Connections = ({ viewMode, selectedChords }) => {
     return (
       <div className='allConnections'>
         {visibleConnections.map(conn => (
-          <div key={conn.className} className={conn.className}></div>
+          conn.svg && svgMap[conn.svg] ? (
+            <img
+              key={conn.className}
+              src={svgMap[conn.svg]}
+              className={conn.className}
+              alt="connection-svg"
+            />
+          ) : (
+            <div key={conn.className} className={conn.className}></div>
+          )
         ))}
+       {/*  <div className="squared"></div> */}
       </div>
     );
   }
@@ -27,7 +49,16 @@ const Connections = ({ viewMode, selectedChords }) => {
   return (
     <div className='allConnections'>
       {connections.map(conn => (
-        <div key={conn.className} className={conn.className}></div>
+        conn.svg && svgMap[conn.svg] ? (
+          <img
+            key={conn.className}
+            src={svgMap[conn.svg]}
+            className={conn.className}
+            alt="connection-svg"
+          />
+        ) : (
+          <div key={conn.className} className={conn.className}></div>
+        )
       ))}
     </div>
   );
