@@ -53,50 +53,246 @@
     
 }
 
-
-.threeToThree1{
+.oneToThree1{
     position: absolute;
-    top:12%;
-    left: 26%;
-    transform: rotate(0deg);
-    height: 210px;
+    top:9%;
+    left: 48%;
+    height:60px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(40deg);
+   transform: rotate(0deg);
    transform-origin: bottom;
 }
-
-.threeToThree2{
+.oneToThree2{
     position: absolute;
-  top: 17%;
-  left: 27%;
-  transform: rotate(0deg);
-  height: 185px;
-  width: 1px;
-  background: rgb(255, 255, 255);
- transform: rotate(40deg);
- transform-origin: bottom
+    top:9%;
+    left: 49.3%;
+    transform: rotate(0deg);
+    height: 60px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.oneToThree3{
+    position: absolute;
+    top:9%;
+    left: 50.6%;
+    transform: rotate(0deg);
+    height: 60px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.oneToThree4{
+    position: absolute;
+    top:9%;
+    left: 51.9%;
+    transform: rotate(0deg);
+    height: 60px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
 }
 .threeToFive1{
     position: absolute;
-    top: 24%;
-    left: 29%;
+    top:26%;
+    left: 49.3%;
     transform: rotate(0deg);
-    height: 150px;
+    height: 60px;
     width: 1px;
     background: rgb(255, 255, 255);
-    transform: rotate(60deg);
+   transform: rotate(0deg);
    transform-origin: bottom;
 }
 .threeToFive2{
     position: absolute;
-    top: 24%;
-    left: 28%;
+    top:26%;
+    left: 50.6%;
+    transform: rotate(0deg);
+    height: 60px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+   
+}
+.sixToEight1{
+    position: absolute;
+    top:54%;
+    left: 50%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.eightToTen1{
+    position: absolute;
+    top:68%;
+    left: 49.3%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.eightToTen2{
+    position: absolute;
+    top:68%;
+    left: 50.6%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.tenToTwelve1{
+    position: absolute;
+    top:83%;
+    left: 48%;
+    height:50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.tenToTwelve2{
+    position: absolute;
+    top:83%;    
+    left: 49.3%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.tenToTwelve3{
+    position: absolute;
+    top:83%;
+    left: 50.6%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.tenToTwelve4{
+    position: absolute;
+    top:83%; 
+    left: 51.9%;
+    transform: rotate(0deg);
+    height: 50px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(0deg);
+   transform-origin: bottom;
+}
+.thirteenToFifteen1{
+    position: absolute;
+    top:31%;
+    left: 5%;
+    transform: rotate(0deg);
+    height: 110px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(90deg);
+   transform-origin: bottom;
+}
+.thirteenToFifteen2{
+    position: absolute;
+    top:32%;
+    left: 5%;
+    transform: rotate(0deg);
+    height: 110px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(90deg);
+   transform-origin: bottom;
+}
+.thirteenToFifteen3{
+    position: absolute;
+    top:33%;
+    left: 5%;
+    transform: rotate(0deg);
+    height: 110px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(90deg);
+   transform-origin: bottom;
+}
+.thirteenToFifteen4{
+    position: absolute;
+    top:34%;
+    left: 5%;
+    transform: rotate(0deg);
+    height: 110px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(90deg);
+   transform-origin: bottom;
+}   
+.fifteenToSixteen{
+    position: absolute;
+    top:32.5%;
+    left: 20%;   
+    transform: rotate(0deg);
+    height: 110px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(90deg);
+   transform-origin: bottom;
+}
+.fifthteenToThree1{
+    position: absolute;
+    top:11.9%;
+    left: 23.5%;
+    transform: rotate(0deg);
+    height: 220px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(45deg);
+   transform-origin: bottom;
+}
+
+.fifthteenToThree2{
+    position: absolute;
+  top: 12%;
+  left: 25.5%;
+  transform: rotate(0deg);
+  height: 220px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ transform: rotate(45deg);
+ transform-origin: bottom
+}
+.fifteenToFive1{
+    position: absolute;
+    top: 25%;
+    left: 25%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(60deg);
+    transform: rotate(61deg);
+   transform-origin: bottom;
+}
+.fifteenToFive2{
+    position: absolute;
+    top: 26.5%;
+    left: 25%;
+    transform: rotate(0deg);
+    height: 150px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   transform: rotate(61deg);
    transform-origin:bottom;
 }
 .sevenToFive1{
@@ -190,49 +386,49 @@ transform-origin: bottom;
 }
 
 
-.threeToTen1{
+.fifteenToTen1{
     position: absolute;
-    top: 55%;
-    left: 26%;
+    top: 53.5%;
+    left: 25%;
     transform: rotate(0deg);
     height: 210px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(-40deg);
+   transform: rotate(-45deg);
    transform-origin: top;
 }
 
-.threeToTen2{
+.fifteenToTen2{
   position: absolute;
   top: 54%;
-  left: 27%;
+  left: 23.2%;
   transform: rotate(0deg);
-  height: 185px;
+  height: 210px;
   width: 1px;
   background: rgb(255, 255, 255);
- transform: rotate(-40deg);
+ transform: rotate(-45deg);
  transform-origin: top;
 }
-.threeToEight1{
+.fifteenToEight1{
     position: absolute;
-    top: 53%;
-    left: 28%;
+    top: 51%;
+    left: 26%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(-57deg);
+   transform: rotate(303deg);
    transform-origin: top;
 }
-.threeToEight2{
+.fifteenToEight2{
     position: absolute;
     top: 52%;
-    left: 28%;
+    left: 25%;
     transform: rotate(0deg);
     height: 150px;
     width: 1px;
     background: rgb(255, 255, 255);
-   transform: rotate(-57deg);
+   transform: rotate(303deg);
    transform-origin: top;
 }
 
@@ -329,16 +525,39 @@ transform-origin: bottom;
 }
 .two{
     margin-top: -40px;
+    visibility: hidden;
 }
 .three{
     margin-top: -40px;
 }
 .four{
     margin-top: -40px;
+    visibility: hidden;
 }
 .five{
     margin-top: -40px;
-}    
+}
+.seven{
+    visibility: hidden;
+}
+.nine{
+    visibility: hidden;
+}
+.eleven{
+    visibility: hidden;
+}
+.fourteen{
+    visibility: hidden;
+}
+.fifteen{
+    margin: 0px 10px 0 -40px;
+}
+.nineteen{
+    margin: 0px -40px 0 0px;
+}
+.seventeen{
+    visibility: hidden;
+} 
 .horizontal{
   position: absolute;
   top: 255px;
@@ -361,14 +580,14 @@ transform-origin: bottom;
     z-index: 1;
     font-size: 20px;
     position: relative;
+    border: 2px dashed rgba(255, 255, 255, 0);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0);
 } 
 .element:hover{
     cursor: pointer;
 border: 2px dashed rgba(255, 255, 255, 1);
 }
-.seventeen{
- opacity: 0;   
-}
+
 .squared{
     position: absolute;
     top:55px;

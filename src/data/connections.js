@@ -1,43 +1,138 @@
 export const connections = [
     {
-        from: "fifteen",
+        from: "one",
         to: "three",
-        className: "threeToThree1"
+        className: "oneToThree1"
     },
     {
-        from: "fifteen",
+        from: "one",
         to: "three",
-        className: "threeToThree2"
+        className: "oneToThree2"
     },
     {
-        from: "fifteen",
+        from: "one",
+        to: "three",
+        className: "oneToThree3"
+    },
+    {
+        from: "one",
+        to: "three",
+        className: "oneToThree4"
+    },
+    {
+        from: "three",
         to: "five",
         className: "threeToFive1"
     },
     {
-        from: "fifteen",
+        from: "three",
         to: "five",
         className: "threeToFive2"
     },
     {
-        from: "fifteen",
+        from: "six",
         to: "eight",
-        className: "threeToEight1"
+        className: "sixToEight1"
+    },
+    {
+        from: "eight",
+        to: "ten",
+        className: "eightToTen1"
+    },
+    {
+        from: "eight",
+        to: "ten",
+        className: "eightToTen2"
+    },
+    {
+        from: "ten",
+        to: "twelve",
+        className: "tenToTwelve1"
+    },
+    {
+        from: "ten",
+        to: "twelve",
+        className: "tenToTwelve2"
+    },
+    {
+        from: "ten",
+        to: "twelve",
+        className: "tenToTwelve3"
+    },
+    {
+        from: "ten",
+        to: "twelve",
+        className: "tenToTwelve4"
+    },
+    {
+        from: "fifteen",
+        to: "three",
+        className: "fifthteenToThree1"
+    },
+    {
+        from: "thirteen",
+        to: "fifteen",
+        className: "thirteenToFifteen1"
+    },
+    {
+        from: "thirteen",
+        to: "fifteen",
+        className: "thirteenToFifteen2"
+    },
+    {
+        from: "thirteen",
+        to: "fifteen",
+        className: "thirteenToFifteen3"
+    },
+    {
+        from: "thirteen",
+        to: "fifteen",
+        className: "thirteenToFifteen4"
+    },
+    {
+        from: "fifteen",
+        to: "sixteen",
+        className: "fifteenToSixteen"
+    },
+    {
+        from: "fifteen",
+        to: "three",
+        className: "fifthteenToThree2"
+    },
+    /* {
+        from: "fifteen",
+        to: "three",
+        className: "threeToThree2"
+    }, */
+    {
+        from: "fifteen",
+        to: "five",
+        className: "fifteenToFive1"
+    },
+    {
+        from: "fifteen",
+        to: "five",
+        className: "fifteenToFive2"
     },
     {
         from: "fifteen",
         to: "eight",
-        className: "threeToEight2"
+        className: "fifteenToEight1"
+    },
+    {
+        from: "fifteen",
+        to: "eight",
+        className: "fifteenToEight2"
     },
     {
         from: "fifteen",
         to: "ten",
-        className: "threeToTen1"
+        className: "fifteenToTen1"
     },
     {
         from: "fifteen",
         to: "ten",
-        className: "threeToTen2"
+        className: "fifteenToTen2"
     },
     {
         from: "sixteen",
