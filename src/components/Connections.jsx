@@ -33,11 +33,11 @@ const Connections = ({ viewMode, selectedChords }) => {
             <img
               key={conn.className}
               src={svgMap[conn.svg]}
-              className={conn.className}
+              className={`connection ${conn.className }`}
               alt="connection-svg"
             />
           ) : (
-            <div key={conn.className} className={conn.className}></div>
+            <div key={conn.className} className={`connection ${conn.className }`}></div>
           )
         ))}
        {/*  <div className="squared"></div> */}
@@ -53,11 +53,11 @@ const Connections = ({ viewMode, selectedChords }) => {
           <img
             key={conn.className}
             src={svgMap[conn.svg]}
-            className={conn.className}
+            className={conn.className }
             alt="connection-svg"
           />
         ) : (
-          <div key={conn.className} className={conn.className}></div>
+          <div key={conn.className} className={`connection ${conn.className }`}></div>
         )
       ))}
     </div>

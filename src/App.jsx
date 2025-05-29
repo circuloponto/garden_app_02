@@ -1,15 +1,47 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import Diagram from './components/Diagram'
 import Button from './components/button'
 import Connections from './components/Connections'
 import { connections } from './data/connections';
 import './App.css'
-
-
+import './tutorial.css' // Import the tutorial styles
 
 function App() {
   const [viewMode, setViewMode] = useState('connections'); // 'connections' or 'fruits'
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
+  const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
+  
+  // Start tutorial automatically when app loads
+  useEffect(() => {
+    // Show first step after a short delay
+    const timer = setTimeout(() => {
+      setTutorialStep(1);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Apply data attribute to body for CSS targeting
+  useEffect(() => {
+    if (tutorialStep > 0) {
+      document.body.setAttribute('data-tutorial-step', tutorialStep);
+    } else {
+      document.body.removeAttribute('data-tutorial-step');
+    }
+  }, [tutorialStep]);
+  
+  // Handle tutorial navigation
+  const handleNextStep = () => {
+    if (tutorialStep === 1) {
+      setTutorialStep(2);
+    } else {
+      setTutorialStep(0); // End tutorial
+    }
+  };
+  
+  const handleSkipTutorial = () => {
+    setTutorialStep(0);
+  };
 
   // Reset selection when switching from 'fruits' to 'connections' and there is a selection
  
@@ -62,23 +94,42 @@ function App() {
   console.log('possibleChords:', possibleChords);
 
   return (
-    <>
-      <div className='app'>
-        <div className="buttons">
-          <Button title="Toggle view" stateOptions={['Connections', 'Fruits']}  setViewMode={setViewMode}/>
-          <Button title="All Electrons" stateOptions={['OFF', 'ON']} />
-          <Button title="Show Trichords" state={null} />
-          <Button title="Hide Electrons" state={null} />
+    <div className='app'>
+      {/* Simple Tutorial UI */}
+      {tutorialStep > 0 && (
+        <div className="tutorial-container">
+          {/* Tutorial modal */}
+          <div className="tutorial-modal">
+            <h3>
+              {tutorialStep === 1 ? 'Chords' : 'Connections'}
+            </h3>
+            <p>
+              {tutorialStep === 1 
+                ? 'These elements are chords.' 
+                : 'These are connections.'}
+            </p>
+            <div className="tutorial-buttons">
+              <button onClick={handleSkipTutorial}>Skip</button>
+              <button onClick={handleNextStep}>
+                {tutorialStep === 1 ? 'Next' : 'Finish'}
+              </button>
+            </div>
+          </div>
         </div>
+      )}
+
+      <div className="buttons">
+        <Button title="Toggle view" stateOptions={['Connections', 'Fruits']}  setViewMode={setViewMode}/>
+        <Button title="All Electrons" stateOptions={['OFF', 'ON']} />
+        <Button title="Show Trichords" state={null} />
+        <Button title="Hide Electrons" state={null} />
+       </div>
         <div className="scaler">
-
-        <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-
-
-        <Connections viewMode={viewMode} selectedChords={selectedChords} />
+          <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+          <Connections viewMode={viewMode} selectedChords={selectedChords} />
         </div>
       </div>
-    </>
+    
   )
 }
 

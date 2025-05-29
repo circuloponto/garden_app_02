@@ -1,0 +1,94 @@
+/* Tutorial Styles - No Overlay Approach */
+.tutorial-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Step 1: Highlight elements and reduce opacity of connections */
+body[data-tutorial-step="1"] .element {
+  position: relative !important;
+  z-index: 1001 !important;
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5) !important;
+  filter: brightness(1.2) !important;
+  pointer-events: auto !important;
+}
+
+body[data-tutorial-step="1"] .allConnections {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Step 2: Highlight connections and reduce opacity of elements */
+body[data-tutorial-step="2"] .connection {
+  z-index: 1001 !important;
+  pointer-events: auto !important;
+  background: #00e1ff !important;
+}
+
+/* Target SVG connections specifically with #00e1ff color */
+body[data-tutorial-step="2"] img[alt="connection-svg"] {
+  filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
+  -webkit-filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
+}
+
+body[data-tutorial-step="2"] .element {
+  opacity: 1!important;
+  transition: opacity 0.3s ease;
+}
+
+.tutorial-modal {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  text-align: center;
+  z-index: 10000;
+  pointer-events: auto;
+}
+
+.tutorial-modal h3 {
+  color: #ffffff;
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.tutorial-modal p {
+  margin: 15px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.tutorial-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.tutorial-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tutorial-buttons button:first-child {
+  background-color: transparent;
+  color: #aaa;
+}
+
+.tutorial-buttons button:last-child {
+  background-color: #ffffff;
+  color: #000;
+  font-weight: bold;
+}
