@@ -4,7 +4,7 @@ import Button from './components/button'
 import Connections from './components/Connections'
 import { connections } from './data/connections';
 import './App.css'
-import './tutorial.css' // Import the tutorial styles
+import './tutorial.css' 
 
 function App() {
   const [viewMode, setViewMode] = useState('connections'); // 'connections' or 'fruits'
