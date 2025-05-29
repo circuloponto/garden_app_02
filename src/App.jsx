@@ -13,20 +13,26 @@ function App() {
   
   // Start tutorial automatically when app loads
   useEffect(() => {
-    // Show first step after a short delay
-    const timer = setTimeout(() => {
-      setTutorialStep(1);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    // Ensure we're in a browser environment
+    if (typeof window !== 'undefined') {
+      // Show first step after a short delay
+      const timer = setTimeout(() => {
+        setTutorialStep(1);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
   }, []);
   
   // Apply data attribute to body for CSS targeting
   useEffect(() => {
-    if (tutorialStep > 0) {
-      document.body.setAttribute('data-tutorial-step', tutorialStep);
-    } else {
-      document.body.removeAttribute('data-tutorial-step');
+    // Ensure we're in a browser environment
+    if (typeof window !== 'undefined' && document && document.body) {
+      if (tutorialStep > 0) {
+        document.body.setAttribute('data-tutorial-step', tutorialStep);
+      } else {
+        document.body.removeAttribute('data-tutorial-step');
+      }
     }
   }, [tutorialStep]);
   
@@ -93,8 +99,11 @@ function App() {
   console.log('selectedChords:', selectedChords);
   console.log('possibleChords:', possibleChords);
 
+  // Determine the app class based on tutorial step
+  const appClassName = tutorialStep > 0 ? `app tutorial-step-${tutorialStep}` : 'app';
+
   return (
-    <div className='app'>
+    <div className={appClassName}>
       {/* Simple Tutorial UI */}
       {tutorialStep > 0 && (
         <div className="tutorial-container">

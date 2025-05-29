@@ -10,7 +10,8 @@
 }
 
 /* Step 1: Highlight elements and reduce opacity of connections */
-body[data-tutorial-step="1"] .element {
+body[data-tutorial-step="1"] .element,
+.tutorial-step-1 .element {
   position: relative !important;
   z-index: 1001 !important;
   box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5) !important;
@@ -18,25 +19,29 @@ body[data-tutorial-step="1"] .element {
   pointer-events: auto !important;
 }
 
-body[data-tutorial-step="1"] .allConnections {
+body[data-tutorial-step="1"] .allConnections,
+.tutorial-step-1 .allConnections {
   opacity: 0.3 !important;
   transition: opacity 0.3s ease;
 }
 
 /* Step 2: Highlight connections and reduce opacity of elements */
-body[data-tutorial-step="2"] .connection {
+body[data-tutorial-step="2"] .connection,
+.tutorial-step-2 .connection {
   z-index: 1001 !important;
   pointer-events: auto !important;
   background: #00e1ff !important;
 }
 
 /* Target SVG connections specifically with #00e1ff color */
-body[data-tutorial-step="2"] img[alt="connection-svg"] {
+body[data-tutorial-step="2"] img[alt="connection-svg"],
+.tutorial-step-2 img[alt="connection-svg"] {
   filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
   -webkit-filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
 }
 
-body[data-tutorial-step="2"] .element {
+body[data-tutorial-step="2"] .element,
+.tutorial-step-2 .element {
   opacity: 1!important;
   transition: opacity 0.3s ease;
 }
