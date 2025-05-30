@@ -12,9 +12,17 @@
 /* Step 1: Highlight elements and reduce opacity of connections */
 body[data-tutorial-step="1"] .element,
 .tutorial-step-1 .element {
-  position: relative !important;
+  /* position: relative !important; */
   z-index: 1001 !important;
-  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5) !important;
+  border:2px dashed #00e1ff !important;
+  filter: brightness(1.2) !important;
+  pointer-events: auto !important;
+  background: black !important;
+}
+body[data-tutorial-step="1"] .squared {
+ /*  position: relative !important; */
+  z-index: 1001 !important;
+  border:2px dashed #00e1ff !important;
   filter: brightness(1.2) !important;
   pointer-events: auto !important;
 }

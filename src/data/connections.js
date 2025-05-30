@@ -4,6 +4,36 @@ export const connections = [
         to: "three",
         className: "oneToThree1"
     },
+    {
+        from: "one",
+        to: "twelve",
+       /*  className: "oneToThree1" */
+    },
+    {
+        from: "one",
+        to: "thirteen"
+       /*  className: "oneToThree1" */
+    },
+    {
+        from: "one",
+        to: "twentyOne"
+       /*  className: "oneToThree1" */
+    },
+    {
+        from: "one",
+        to: "ten"
+       /*  className: "oneToThree1" */
+    },
+    {
+        from: "one",
+        to: "fifteen"
+       /*  className: "oneToThree1" */
+    },
+    {
+        from: "one",
+        to: "nineteen"
+       /*  className: "oneToThree1" */
+    },
    /*  {
         from: "one",
         to: "three",
@@ -56,20 +86,31 @@ export const connections = [
         className: "tenToTwelve1"
     },
     {
-        from: "ten",
-        to: "twelve",
-        className: "tenToTwelve2"
+        from: "twelve",
+        to: "three",
+        /* className: "tenToTwelve1" */
     },
     {
-        from: "ten",
-        to: "twelve",
-        className: "tenToTwelve3"
+        from: "twelve",
+        to: "thirteen",
+       /*  className: "tenToTwelve1" */
     },
     {
-        from: "ten",
-        to: "twelve",
-        className: "tenToTwelve4"
+        from: "twelve",
+        to: "twentyOne",
+       /*  className: "tenToTwelve1" */
     },
+    {
+        from: "twelve",
+        to: "fifteen",
+       /*  className: "tenToTwelve1" */
+    },
+    {
+        from: "twelve",
+        to: "nineteen",
+       /*  className: "tenToTwelve1" */
+    },
+    
     {
         from: "fifteen",
         to: "three",
@@ -94,19 +135,25 @@ export const connections = [
     },
     {
         from: "thirteen",
-        to: "fifteen",
-        className: "thirteenToFifteen2"
+        to: "three",
+        /* className: "thirteenToFifteen1" */
     },
     {
         from: "thirteen",
-        to: "fifteen",
-        className: "thirteenToFifteen3"
+        to: "ten"
+        /* className: "thirteenToFifteen1" */
     },
     {
         from: "thirteen",
-        to: "fifteen",
-        className: "thirteenToFifteen4"
+        to: "nineteen",
+        /* className: "thirteenToFifteen1" */
     },
+    {
+        from: "thirteen",
+        to: "twentyOne",
+        /* className: "thirteenToFifteen1" */
+    },
+   
     {
         from: "fifteen",
         to: "sixteen",
@@ -220,24 +267,10 @@ export const connections = [
     },
     {
         from: "nineteen",
-        to: "twentyone",
+        to: "twentyOne",
         className: "nineteenToTwentyone1"
     },
-    {
-        from: "nineteen",
-        to: "twentyone",
-        className: "nineteenToTwentyone2"   
-    },
-    {
-        from: "nineteen",
-        to: "twentyone",
-        className: "nineteenToTwentyone3"   
-    },
-    {
-        from: "nineteen",
-        to: "twentyone",
-        className: "nineteenToTwentyone4"   
-    },
+    
     {
         from: "nineteen",
         to: "three",
@@ -277,6 +310,26 @@ export const connections = [
         from: "nineteen",
         to: "ten",
         className: "nineteenToTen2"
+    },
+    {
+        from: "twentyOne",
+        to: "three",
+        /* className: "nineteenToTen2" */
+    },
+    {
+        from: "twentyOne",
+        to: "ten",
+        /* className: "nineteenToTen2" */
+    },
+    {
+        from: "twentyOne",
+        to: "fifteen",
+        /* className: "nineteenToTen2" */
+    },
+    {
+        from: "twentyOne",
+        to: "nineteen",
+        /* className: "nineteenToTen2" */
     },
    
 

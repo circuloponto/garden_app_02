@@ -763,6 +763,7 @@ border: 2px dashed rgba(255, 255, 255, 1);
   transition: filter 0.3s;
   fill: #00e1ff;
   stroke: #00e1ff;
+  z-index:10
 }
 
 .possible-chord {
@@ -776,7 +777,7 @@ border: 2px dashed rgba(255, 255, 255, 1);
   border: 2px dashed #ffffff;
   border-radius: 50%;
   pointer-events: none;
-  background-color: rgba(151, 39, 39, 0);
+  background: rgba(6, 6, 6, 1);
   box-shadow: 0 0 16px 4px #37ff1411;
   animation: spin 8s linear infinite;
   transform: scale(0.5);
