@@ -21,7 +21,7 @@ body[data-tutorial-step="1"] .element,
 }
 body[data-tutorial-step="1"] .squared {
  /*  position: relative !important; */
-  z-index: 1001 !important;
+  z-index: 1 !important;
   border:2px dashed #00e1ff !important;
   filter: brightness(1.2) !important;
   pointer-events: auto !important;
