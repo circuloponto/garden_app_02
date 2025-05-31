@@ -729,6 +729,16 @@ transform-origin: bottom;
 .twenty{
     visibility: hidden;
 } 
+
+.nineteenToTwentyOne1{
+    position: absolute;
+    top: 51%;
+    left: 81.5%;
+    transform: rotate(0deg);
+    height: 1px;
+    width: 60px;
+    background: rgb(255, 255, 255);
+}
 .horizontal{
   position: absolute;
   top: 255px;
