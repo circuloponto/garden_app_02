@@ -444,6 +444,10 @@ export const connections2 = [
         classNames:[ "seventeenToEighteen"],
     },
     {
+        chords: ["nineteen","eighteen"],
+        classNames:[ "eighteenToNineteen"],
+    },
+    {
         chords: ["nineteen","twentyOne"],
         classNames:[ "nineteenToTwentyOne1"],
     },

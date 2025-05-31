@@ -732,11 +732,12 @@ transform-origin: bottom;
 
 .nineteenToTwentyOne1{
     position: absolute;
-    top: 51%;
-    left: 81.5%;
+    top: 50.2%;
+    left: 81%;
     transform: rotate(0deg);
+    transform-style: preserve-3d;
     height: 1px;
-    width: 60px;
+    width: 110px;
     background: rgb(255, 255, 255);
 }
 .horizontal{
