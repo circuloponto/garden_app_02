@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Diagram from './components/Diagram'
-import Button from './components/button'
 import Connections from './components/Connections'
+import Sidebar from './components/Sidebar'
 import { connections } from './data/connections';
 import './App.css'
 import './tutorial.css' 
@@ -140,12 +140,7 @@ function App() {
         </div>
       )}
 
-      <div className="buttons">
-        <Button title="Toggle view" stateOptions={['Connections', 'Fruits']}  setViewMode={setViewMode}/>
-        <Button title="All Electrons" stateOptions={['OFF', 'ON']} />
-        <Button title="Show Trichords" state={null} />
-        <Button title="Hide Electrons" state={null} />
-       </div>
+      <Sidebar setViewMode={setViewMode} />
         <div className="scaler">
           <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
           <Connections viewMode={viewMode} selectedChords={selectedChords} />
