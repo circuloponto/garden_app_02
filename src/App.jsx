@@ -57,10 +57,11 @@ function App() {
     }
   }, [viewMode]);
 
-  // Chord selection handler (only allow valid pairs)
+  // Chord selection handler for both view modes
   const handleChordSelect = (chord) => {
-  console.log(chord)
-  console.log('its working')
+    console.log(chord)
+    console.log('its working')
+    
     if (viewMode === 'fruits') {
       if (selectedChords.length === 0) {
         setSelectedChords([chord]);
@@ -80,6 +81,18 @@ function App() {
         }
         // else do nothing if not a valid pair
       } else {
+        setSelectedChords([chord]);
+      }
+    } else if (viewMode === 'connections') {
+      // In connections view, handle chord selection for filtering
+      if (selectedChords.includes(chord)) {
+        // If chord is already selected, deselect it
+        setSelectedChords(selectedChords.filter(c => c !== chord));
+      } else if (selectedChords.length < 2) {
+        // Add chord to selection if we have less than 2 chords selected
+        setSelectedChords([...selectedChords, chord]);
+      } else {
+        // If we already have 2 chords selected, replace with the new chord
         setSelectedChords([chord]);
       }
     }

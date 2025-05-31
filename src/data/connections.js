@@ -335,3 +335,100 @@ export const connections = [
 
 
 ]
+
+
+export const connections2 = [
+    {
+        chords: ["one","three"],
+        classNames:[ "oneToThree1"]
+    },
+    {
+        chords: ["three","five"],
+        classNames:[ "threeToFive1","threeToFive2"]
+    },
+    {
+        chords: ["three","eight"],
+        classNames:[ "eightToThree"],
+        svg: "eightToThree"
+    },
+    {
+        chords: ["three","eighteen"],
+        classNames:[ "eighteenToThree"],
+        svg: "eighteenToThree"
+    },
+    {
+        chords: ["three","nineteen"],
+        classNames:[ "nineteenToThree1","nineteenToThree2"]
+    },
+    {
+        chords: ["three","sixteen"],
+        classNames:[ "sixteenToThree"],
+        svg: "sixteenToThree"
+    },
+    {
+        chords: ["five","fifteen"],
+        classNames:[ "fifteenToFive1","fifteenToFive2"]
+    },
+    {
+        chords: ["five","nineteen"],
+        classNames:[ "nineteenToFive1","nineteenToFive2"]
+    },
+    {
+        chords: ["five","eighteen"],
+        classNames:[ "eighteenToFive1"]
+    },
+    {
+        chords: ["five","sixteen"],
+        classNames:[ "sixteenToFive1"]
+    },
+    {
+        chords: ["eight","fifteen"],
+        classNames:[ "fifteenToEight1","fifteenToEight2"]
+    },
+    {
+        chords: ["eight","nineteen"],
+        classNames:[ "nineteenToEight1","nineteenToEight2"]
+    },
+    {
+        chords: ["eight","ten"],
+        classNames:[ "eightToTen1","eightToTen2"]
+    },
+    {
+        chords: ["ten","twelve"],
+        classNames:[ "tenToTwelve1"]
+    },
+    {
+        chords: ["ten","fifteen"],
+        classNames:[ "fifteenToTen1","fifteenToTen2"]
+    },
+    {
+        chords: ["ten","nineteen"],
+        classNames:[ "nineteenToTen1","nineteenToTen2"]
+    },
+    {
+        chords: ["thirteen","one"],
+        classNames:[ "oneToThirteen1"]
+    },
+    {
+        chords: ["fifteen","nineteen"],
+        classNames:[ "fifteenToNineteen1","fifteenToNineteen2","fifteenToNineteen3"],
+        svg:"raiwbow1"
+    },
+    {
+        chords: ["fifteen","three"],
+        classNames:[ "fifthteenToThree1","fifthteenToThree2"],
+    },
+    {
+        chords: ["fifteen","sixteen"],
+        classNames:[ "fifteenToSixteen"],
+    },
+    {
+        chords: ["sixteen","eighteen"],
+        classNames:[ "sixteenToEighteen"],
+        svg: "sixteenToEighteen"
+    },
+    {
+        chords: ["sixteen","seventeen"],
+        classNames:[ "sixteenToSeventeen"],
+    }
+]

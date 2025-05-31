@@ -119,7 +119,7 @@
    transform-origin: bottom;
    
 }
-.sixToEight1{
+/* .sixToEight1{
     position: absolute;
     top:54%;
     left: 50%;
@@ -129,7 +129,7 @@
     background: rgb(255, 255, 255);
    transform: rotate(0deg);
    transform-origin: bottom;
-}
+} */
 .eightToTen1{
     position: absolute;
     top:68%;

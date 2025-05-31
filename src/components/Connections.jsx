@@ -1,8 +1,6 @@
 import React from 'react'
 
-
-
-import { connections } from '../data/connections';
+import { connections, connections2 } from '../data/connections';
 import raiwbow1 from '../assets/SVGs/rainbow1.svg';
 import sixteenToEighteen from '../assets/SVGs/sixteenToEighteen.svg';
 import eighteenToThree from '../assets/SVGs/eighteenToThree.svg';
@@ -45,23 +43,111 @@ const Connections = ({ viewMode, selectedChords }) => {
     );
   }
 
-  // In "connections" mode, show all connections
-  return (
-    <div className='allConnections'>
-      {connections.map(conn => (
-        conn.svg && svgMap[conn.svg] ? (
-          <img
-            key={conn.className}
-            src={svgMap[conn.svg]}
-            className={conn.className }
-            alt="connection-svg"
-          />
-        ) : (
-          <div key={conn.className} className={`connection ${conn.className }`}></div>
-        )
-      ))}
-    </div>
-  );
+  // In "connections" mode, implement the new filtering logic
+  if (viewMode === 'connections') {
+    // If no chords are selected, show all connections
+    if (selectedChords.length === 0) {
+      return (
+        <div className='allConnections'>
+          {connections.map(conn => (
+            conn.svg && svgMap[conn.svg] ? (
+              <img
+                key={conn.className}
+                src={svgMap[conn.svg]}
+                className={conn.className}
+                alt="connection-svg"
+              />
+            ) : (
+              <div key={conn.className} className={`connection ${conn.className}`}></div>
+            )
+          ))}
+        </div>
+      );
+    }
+
+    // If one chord is selected, show all connections related to that chord
+    if (selectedChords.length === 1) {
+      const selectedChord = selectedChords[0];
+      // Only show connections that explicitly include the selected chord
+      const relevantConnections = connections2.filter(conn => 
+        conn.chords.includes(selectedChord)
+      );
+
+      console.log(`Selected chord: ${selectedChord}`);
+      console.log('Relevant connections:', relevantConnections);
+      
+      return (
+        <div className='allConnections'>
+          {relevantConnections.flatMap(conn => {
+            // For debugging
+            console.log(`Connection for ${conn.chords.join('-')}:`, conn);
+            
+            return conn.classNames.map(className => {
+              // Only render this connection if it's actually related to the selected chord
+              if (conn.svg && svgMap[conn.svg]) {
+                return (
+                  <img
+                    key={`${selectedChord}-${className}`}
+                    src={svgMap[conn.svg]}
+                    className={`connection ${className}`}
+                    alt={`Connection between ${conn.chords.join(' and ')}`}
+                  />
+                );
+              } else {
+                return (
+                  <div 
+                    key={`${selectedChord}-${className}`} 
+                    className={`connection ${className}`}
+                  ></div>
+                );
+              }
+            });
+          })}
+        </div>
+      );
+    }
+
+    // If two chords are selected, show only connections between those two chords
+    if (selectedChords.length === 2) {
+      const [chordA, chordB] = selectedChords;
+      // Find the exact connection between the two selected chords
+      const connectionBetweenSelected = connections2.find(conn => 
+        conn.chords.includes(chordA) && conn.chords.includes(chordB)
+      );
+
+      console.log(`Selected chords: ${chordA} and ${chordB}`);
+      console.log('Connection between selected:', connectionBetweenSelected);
+
+      if (!connectionBetweenSelected) return null;
+
+      return (
+        <div className='allConnections'>
+          {connectionBetweenSelected.classNames.map(className => {
+            if (connectionBetweenSelected.svg && svgMap[connectionBetweenSelected.svg]) {
+              return (
+                <img
+                  key={`${chordA}-${chordB}-${className}`}
+                  src={svgMap[connectionBetweenSelected.svg]}
+                  className={`connection ${className}`}
+                  alt={`Connection between ${chordA} and ${chordB}`}
+                />
+              );
+            } else {
+              return (
+                <div 
+                  key={`${chordA}-${chordB}-${className}`} 
+                  className={`connection ${className}`}
+                ></div>
+              );
+            }
+          })}
+        </div>
+      );
+    }
+  }
+
+  // Default return if none of the conditions match
+  return null;
 };
 
 
