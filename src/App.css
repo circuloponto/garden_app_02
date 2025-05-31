@@ -104,7 +104,6 @@
     background: rgba(0, 0, 0, 0.7);
     border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 5%; /* Make it a circle */
-    
     color: white;
     font-size: 14px;
     font-family: 'Courier New', Courier, monospace;
@@ -115,49 +114,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease; /* Smoother transition */
+    transition: all 0.6s ease; /* Slower transition - 1 second */
+    cursor: ew-resize; /* East-west resize cursor to indicate dragging */
 }
 
 .root-selector:hover {
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    border-radius: 10px; /* Change to rounded rectangle on hover */
-    width: auto;
-    padding: 0px 0px;
 }
 
-.root-selector-arrows {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+.root-selector.dragging {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
 }
 
-.root-selector-arrow {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    cursor: pointer;
-    margin: 0 2px;
-    transition: all 0.3s ease;
-    opacity: 0; /* Hide arrows by default */
-}
-
-.root-selector:hover .root-selector-arrow {
-    opacity: 1; /* Show arrows on hover */
-}
-
-.root-selector-arrow:hover {
-    color: white;
-    transform: scale(1.2);
-  /*   margin: 0 10px; */
+.root-selector.changing {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    pointer-events: none; /* Disable mouse events during transition */
 }
 
 .root-selector-value {
     font-weight: bold;
     font-size: 16px;
-    transition: all 0.3s ease; /* Smoother transition for value changes */
+    transition: all 0.6s ease; /* Slower transition for value changes - 1 second */
     margin: 0;
     text-align: center;
     width: 100%;
@@ -165,11 +145,7 @@
     left: 0;
 }
 
-.root-selector-hint {
-    font-size: 10px;
-    opacity: 0.6;
-    margin-top: 2px;
-}
+/* Hint removed */
 .button .on{
     color: green;
 }

@@ -1,59 +1,95 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
   const selectorRef = useRef(null);
   
-  // Function to move to the previous note
-  const movePrev = () => {
-    setSelectedIndex(prevIndex => {
-      return (prevIndex + 1) % options.length;
-    });
-  };
+  // Threshold for drag distance to trigger a note change
+  const dragThreshold = 20;
   
-  // Function to move to the next note
-  const moveNext = () => {
-    setSelectedIndex(prevIndex => {
-      return (prevIndex - 1 + options.length) % options.length;
-    });
-  };
-  
-  // Handle click on the left side (move to prev note)
-  const handleLeftClick = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const halfWidth = rect.width / 2;
+  // Function to change the note
+  const changeNote = (direction) => {
+    if (isChanging) return; // Prevent changes during transition
     
-    if (clickX < halfWidth) {
-      moveNext();
-    } else {
-      movePrev();
-    }
+    setIsChanging(true);
+    
+    // Change the note
+    setSelectedIndex(prevIndex => {
+      const newIndex = (prevIndex + direction + options.length) % options.length;
+      return newIndex;
+    });
+    
+    // Force stop dragging
+    setIsDragging(false);
+    
+    // Reset after transition completes
+    setTimeout(() => {
+      setIsChanging(false);
+    }, 600);
   };
+  
+  // Handle mouse down - start dragging
+  const handleMouseDown = (e) => {
+    if (isChanging) return; // Don't start dragging during transitions
+    setIsDragging(true);
+    setStartX(e.clientX);
+  };
+  
+  // Handle mouse up - stop dragging
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+  
+  // Global mouse events
+  useEffect(() => {
+    // Only add listeners if we're dragging
+    if (!isDragging) return;
+    
+    // Mouse move handler
+    const handleMouseMove = (e) => {
+      if (!isDragging || isChanging) return;
+      
+      const currentDragDistance = e.clientX - startX;
+      
+      // Check if we've dragged past the threshold
+      if (Math.abs(currentDragDistance) > dragThreshold) {
+        const direction = currentDragDistance > 0 ? 1 : -1;
+        changeNote(direction);
+      }
+    };
+    
+    // Mouse up handler - force stop dragging
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+    };
+    
+    // Add event listeners
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    document.addEventListener('mouseleave', handleGlobalMouseUp);
+    
+    // Clean up
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener('mouseleave', handleGlobalMouseUp);
+    };
+  }, [isDragging, isChanging, startX, options.length, dragThreshold]);
   
   return (
     <div className="root-selector-container">
-      <div className="root-selector" ref={selectorRef}>
-        <div className="root-selector-arrows">
-          <button 
-            className="root-selector-arrow left" 
-            onClick={moveNext}
-          >
-            ←
-          </button>
-          <div className="root-selector-value">
-            {options[selectedIndex]}
-          </div>
-          <button 
-            className="root-selector-arrow right" 
-            onClick={movePrev}
-          >
-            →
-          </button>
+      <div 
+        className={`root-selector ${isDragging ? 'dragging' : ''} ${isChanging ? 'changing' : ''}`} 
+        ref={selectorRef}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
+        <div className="root-selector-value">
+          {options[selectedIndex]}
         </div>
-      {/*   <div className="root-selector-hint">
-          choose note
-        </div> */}
       </div>
       <div className="root-selector-label">
         <span>choose root</span>
