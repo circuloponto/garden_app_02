@@ -29,13 +29,13 @@ const Connections = ({ viewMode, selectedChords }) => {
         {visibleConnections.map(conn => (
           conn.svg && svgMap[conn.svg] ? (
             <img
-              key={conn.className}
+              key={`fruits-${conn.from}-${conn.to}-${conn.className}`}
               src={svgMap[conn.svg]}
               className={`connection ${conn.className }`}
               alt="connection-svg"
             />
           ) : (
-            <div key={conn.className} className={`connection ${conn.className }`}></div>
+            <div key={`fruits-${conn.from}-${conn.to}-${conn.className}-div`} className={`connection ${conn.className }`}></div>
           )
         ))}
        {/*  <div className="squared"></div> */}
@@ -52,13 +52,13 @@ const Connections = ({ viewMode, selectedChords }) => {
           {connections.map(conn => (
             conn.svg && svgMap[conn.svg] ? (
               <img
-                key={conn.className}
+                key={`zero-${conn.from}-${conn.to}-${conn.className}`}
                 src={svgMap[conn.svg]}
                 className={conn.className}
                 alt="connection-svg"
               />
             ) : (
-              <div key={conn.className} className={`connection ${conn.className}`}></div>
+              <div key={`zero-${conn.from}-${conn.to}-${conn.className}-div`} className={`connection ${conn.className}`}></div>
             )
           ))}
         </div>
@@ -76,18 +76,41 @@ const Connections = ({ viewMode, selectedChords }) => {
       console.log(`Selected chord: ${selectedChord}`);
       console.log('Relevant connections:', relevantConnections);
       
+      // Special debugging for seventeen
+      if (selectedChord === 'seventeen') {
+        console.log('SEVENTEEN SELECTED!');
+        const seventeenToSixteen = connections2.filter(conn => 
+          conn.chords.includes('seventeen') && conn.chords.includes('sixteen')
+        );
+        console.log('Found connections with sixteen:', seventeenToSixteen);
+        
+        // Check if the CSS class exists in the DOM
+        if (seventeenToSixteen.length > 0) {
+          console.log('CSS classes to look for:', seventeenToSixteen[0].classNames);
+          setTimeout(() => {
+            seventeenToSixteen[0].classNames.forEach(className => {
+              const elements = document.querySelectorAll(`.${className}`);
+              console.log(`Found ${elements.length} elements with class ${className}`);
+            });
+          }, 100);
+        }
+      }
+      
       return (
         <div className='allConnections'>
           {relevantConnections.flatMap(conn => {
             // For debugging
             console.log(`Connection for ${conn.chords.join('-')}:`, conn);
             
-            return conn.classNames.map(className => {
+            return conn.classNames.map((className, index) => {
+              // Create a unique key using chord names, className and index
+              const uniqueKey = `${conn.chords.join('-')}-${className}-${index}`;
+              
               // Only render this connection if it's actually related to the selected chord
               if (conn.svg && svgMap[conn.svg]) {
                 return (
                   <img
-                    key={`${selectedChord}-${className}`}
+                    key={uniqueKey}
                     src={svgMap[conn.svg]}
                     className={`connection ${className}`}
                     alt={`Connection between ${conn.chords.join(' and ')}`}
@@ -96,7 +119,7 @@ const Connections = ({ viewMode, selectedChords }) => {
               } else {
                 return (
                   <div 
-                    key={`${selectedChord}-${className}`} 
+                    key={uniqueKey} 
                     className={`connection ${className}`}
                   ></div>
                 );

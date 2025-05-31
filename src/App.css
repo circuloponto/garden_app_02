@@ -663,9 +663,16 @@ transform-origin: bottom;
   justify-items: center;
   align-items: center;
   border: 2px dashed rgba(0, 0, 255, 0); /* Container border for grid visibility */
+  z-index: 5;
 }
-.vertical > * {
+.horizontal > * {
   outline: 1px solid rgba(0, 0, 255, 0);
+}
+
+.seventeen {
+  position: relative;
+  z-index: 100 !important;
+  pointer-events: all;
 }
 .one{
     margin-top: -40px;
@@ -684,6 +691,9 @@ transform-origin: bottom;
 .five{
     margin-top: -40px;
 }
+.six{
+   /*  z-index: 0; */
+}
 .seven{
     visibility: hidden;
 }
@@ -699,18 +709,30 @@ transform-origin: bottom;
 .fifteen{
     margin: 0px 10px 0 -40px;
 }
+.seventeen{
+    cursor: pointer;
+    z-index: 100;
+  /*   position: relative; */
+    width: 60px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-left: 5px;
+}
 .nineteen{
     margin: 0px -40px 0 0px;
 }
-.seventeen{
+/* .seventeen{
     visibility: hidden;
-} 
+} */
 .twenty{
     visibility: hidden;
 } 
 .horizontal{
   position: absolute;
   top: 255px;
+  z-index: 10;
   left: -275px;
   background: rgba(255, 0, 0, 0);
   width: 600px;

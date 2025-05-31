@@ -419,6 +419,10 @@ export const connections2 = [
         classNames:[ "fifthteenToThree1","fifthteenToThree2"],
     },
     {
+        chords: ["fifteen","thirteen"],
+        classNames:[ "thirteenToFifteen1"],
+    },
+    {
         chords: ["fifteen","sixteen"],
         classNames:[ "fifteenToSixteen"],
     },
@@ -430,5 +434,17 @@ export const connections2 = [
     {
         chords: ["sixteen","seventeen"],
         classNames:[ "sixteenToSeventeen"],
-    }
+    },
+    {
+        chords: ["seventeen","sixteen"],
+        classNames:[ "sixteenToSeventeen"],
+    },
+    {
+        chords: ["seventeen","eighteen"],
+        classNames:[ "seventeenToEighteen"],
+    },
+    {
+        chords: ["nineteen","twentyOne"],
+        classNames:[ "nineteenToTwentyOne1"],
+    },
 ]

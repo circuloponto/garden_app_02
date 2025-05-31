@@ -26,7 +26,8 @@ const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [] }) => 
                 <Chord svg={ThreeVertical} className="three" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={FourVertical} className="four" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={FiveVertical} className="five" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-                <Chord svg={SixVertical} className="six" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+               
+                <div className="six-spacer" style={{ width: '30px', height: '30px', display: 'block' }}></div>
                 <Chord svg={SevenVertical} className="seven" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={EightVertical} className="eight" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={NineVertical} className="nine" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
@@ -39,8 +40,8 @@ const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [] }) => 
                 <Chord svg={TrigramHorizontal} className="fourteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={ThreeHorizontal} className="fifteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={FourHorizontal} className="sixteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-                <Chord svg={null} className="seventeen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-                <Chord svg={SixHorizontal} className="eighteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+                <Chord svg={SixVertical} className="seventeen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+                <Chord svg={SevenHorizontal} className="eighteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={SevenHorizontal} className="nineteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={TrigramHorizontal} className="twenty" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={Dash} className="twentyOne" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
