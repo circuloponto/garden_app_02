@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
+
 import Diagram from './components/Diagram'
 import Connections from './components/Connections'
+import InfoBox from './components/InfoBox'
+import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
+
 import { connections } from './data/connections';
+
+import logo from './assets/SVGs/logo.svg'
+
 import './App.css'
 import './tutorial.css' 
 
@@ -139,13 +146,19 @@ function App() {
           </div>
         </div>
       )}
-
-      <Sidebar setViewMode={setViewMode} />
-        <div className="scaler">
-          <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-          <Connections viewMode={viewMode} selectedChords={selectedChords} />
-        </div>
-      </div>
+<div className="logo">
+  <img src={logo} width={100} height={100} alt="" />
+</div>
+        <Sidebar setViewMode={setViewMode} />
+        <div className="content-wrapper">
+          <div className="scaler">
+            <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+            <Connections viewMode={viewMode} selectedChords={selectedChords} />
+          </div>
+          <InfoBox />
+         
+        </div> 
+    </div>
     
   )
 }
