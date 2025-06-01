@@ -1059,20 +1059,21 @@ border: 2px dashed rgba(255, 255, 255, 1);
     align-items: center;
 }
   .infoBox{
-   width: auto;
-   height: auto;
-   min-height: 240px;
-   border: 2px solid white;
-   border-radius: 40px;
-   z-index: 100;
-   margin: -300px 20px 0 0; 
-   padding: 20px;
-   display: flex;
-   flex-direction: column;
-   gap: 15px;
-   background-color: rgba(0, 0, 0, 0.7);
-   color: white;
-   position: relative;
+    width: 400px;
+    height: auto;
+    min-height: 240px;
+    border: 2px solid white;
+    border-radius: 40px;
+    z-index: 100;
+    margin: -100px 20px 0 0;
+    padding: 20px;
+    display: flex
+;
+    flex-direction: column;
+    gap: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    position: relative;
 }
   .infoBox .infoTitle{
     text-align: center;

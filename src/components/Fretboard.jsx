@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import styles from './fretboard.module.css'
+import classNames from 'classnames';
 
-const Fretboard = ({chord}) => {
-  const {name, fretStart, spelling = []} = chord;
+const Fretboard = ({chord, type}) => {
+  const {name, fretStart, positions, spelling = []} = chord;
   // Ensure fretStart is at least 1 to avoid negative indices
   const startFret = Math.max(1, fretStart);
   
   const [notes] = useState([
-    ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'], 
-    ['B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'], 
-    ['G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G'], 
-    ['D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D'], 
-    ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'], 
-    ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'], 
+    ['E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E'], 
+    ['B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], 
+    ['G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G'], 
+    ['D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D'], 
+    ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A'], 
+    ['E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E'], 
   ]);
   
   // Get the 6 notes for each string starting from startFret - 1
@@ -42,6 +43,23 @@ const Fretboard = ({chord}) => {
     return enharmonic && spelling.includes(enharmonic);
   };
 
+  // Function to check if a position should be displayed based on positions prop
+  const shouldShowPosition = (string, fretIndex) => {
+    if (!positions || positions.length === 0) {
+      // If no positions provided, show all notes that are in the chord
+      return true;
+    }
+    
+    // Convert fretIndex to actual fret number
+    const actualFret = startFret + fretIndex - 1;
+    
+    // Find the position for this string (strings are 1-indexed in the positions array)
+    const position = positions.find(pos => pos.string === 6 - string);
+    
+    // Return true if this position matches the fret
+    return position && position.fret === actualFret;
+  };
+
   // Create a grid of cells for the fretboard
   const renderFretboard = () => {
     const cells = [];
@@ -53,18 +71,26 @@ const Fretboard = ({chord}) => {
     for (let string = 0; string < 6; string++) {
       for (let fret = 0; fret < 6; fret++) {
         const note = visibleNotes[string][fret];
-        const inChord = isNoteInChord(note);
+        const isInChord = isNoteInChord(note);
+        const shouldShow = shouldShowPosition(string, fret);
+        
         cells.push(
           <div 
-            key={`${string}-${fret}`} 
+            key={`cell-${string}-${fret}`} 
             className={styles.cell}
-            style={{
-              gridRow: string + 1,
-              gridColumn: fret + 1
-            }}
+            style={{ gridRow: string + 1, gridColumn: fret + 1 }}
           >
-            <div className={`${styles.note} ${inChord ? styles.inChord : ''}`}>
-              {inChord ? note : ''}
+            <div 
+              className={classNames(
+                styles.note,
+                {
+                  [styles.inChord]: isInChord && shouldShow && !type,
+                  [styles.firstChord]: isInChord && shouldShow && type === 'first',
+                  [styles.secondChord]: isInChord && shouldShow && type === 'second'
+                }
+              )}
+            >
+              {isInChord && shouldShow ? note : ''}
             </div>
           </div>
         );
