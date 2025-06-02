@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './SlidePresentation.module.css';
+// Import SVG files directly
+import slide2SVG from '../assets/SVGs/slide2.svg';
+import slide3SVG from '../assets/SVGs/slide3.svg';
 
 // Total number of slides in the presentation
 const TOTAL_SLIDES = 3;
@@ -100,7 +103,7 @@ const SlidePresentation = ({ onClose }) => {
             </div>
             <motion.object
               type="image/svg+xml"
-              data={"/src/assets/SVGs/slide2.svg"}
+              data={slide2SVG}
               className={styles.svgObject}
               width="500"
               height="500"
@@ -150,7 +153,7 @@ const SlidePresentation = ({ onClose }) => {
           <div className={styles.svgContent}>
             <motion.object
               type="image/svg+xml"
-              data={"/src/assets/SVGs/slide3.svg"}
+              data={slide3SVG}
               className={styles.svgObject}
               width="500"
               height="500"
