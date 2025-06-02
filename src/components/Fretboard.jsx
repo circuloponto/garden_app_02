@@ -3,9 +3,14 @@ import styles from './fretboard.module.css'
 import classNames from 'classnames';
 
 const Fretboard = ({chord, type}) => {
-  const {name, fretStart, positions, spelling = []} = chord;
+  const {name, fretStart, positions, spelling = [], root} = chord;
   // Ensure fretStart is at least 1 to avoid negative indices
   const startFret = Math.max(1, fretStart);
+  
+  // Use the spelling array from the chord data
+  const chordNotes = spelling || [];
+  
+  // Use chord notes for highlighting on the fretboard
   
   const [notes] = useState([
     ['E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E'], 
@@ -22,57 +27,43 @@ const Fretboard = ({chord, type}) => {
     return stringNotes.slice(startFret - 1, startFret + 5);
   });
   
-  // Function to check if a note is in the chord spelling
-  const isNoteInChord = (note) => {
-    // Direct match first
-    if (spelling.includes(note)) {
-      return true;
-    }
-    
-    // Handle enharmonic equivalents
-    const enharmonicMap = {
-      'C#': 'Db', 'Db': 'C#',
-      'D#': 'Eb', 'Eb': 'D#',
-      'F#': 'Gb', 'Gb': 'F#',
-      'G#': 'Ab', 'Ab': 'G#',
-      'A#': 'Bb', 'Bb': 'A#'
-    };
-    
-    // Check if the enharmonic equivalent is in the spelling
-    const enharmonic = enharmonicMap[note];
-    return enharmonic && spelling.includes(enharmonic);
+  // Define enharmonic equivalents for note comparison
+  const enharmonicMap = {
+    'C#': 'Db', 'Db': 'C#',
+    'D#': 'Eb', 'Eb': 'D#',
+    'F#': 'Gb', 'Gb': 'F#',
+    'G#': 'Ab', 'Ab': 'G#',
+    'A#': 'Bb', 'Bb': 'A#'
   };
 
-  // Function to check if a position should be displayed based on positions prop
+  // Function to check if a position should be displayed
   const shouldShowPosition = (string, fretIndex) => {
-    if (!positions || positions.length === 0) {
-      // If no positions provided, show all notes that are in the chord
-      return true;
-    }
-    
-    // Convert fretIndex to actual fret number
-    const actualFret = startFret + fretIndex - 1;
-    
-    // Find the position for this string (strings are 1-indexed in the positions array)
-    const position = positions.find(pos => pos.string === 6 - string);
-    
-    // Return true if this position matches the fret
-    return position && position.fret === actualFret;
+    // Always return true to show all notes that are in the chord
+    // This ensures all chord notes are highlighted regardless of positions
+    return true;
   };
 
   // Create a grid of cells for the fretboard
   const renderFretboard = () => {
     const cells = [];
     
-    // We don't need to add fret numbers here anymore as they're added separately
-    // to be properly centered between fret lines
-    
     // Add notes and create the grid
     for (let string = 0; string < 6; string++) {
       for (let fret = 0; fret < 6; fret++) {
         const note = visibleNotes[string][fret];
-        const isInChord = isNoteInChord(note);
         const shouldShow = shouldShowPosition(string, fret);
+        
+        // Check if the note is in the chord directly
+        let isInChord = false;
+        
+        // Direct match
+        if (chordNotes.includes(note)) {
+          isInChord = true;
+        } 
+        // Check enharmonic equivalent
+        else if (enharmonicMap[note] && chordNotes.includes(enharmonicMap[note])) {
+          isInChord = true;
+        }
         
         cells.push(
           <div 

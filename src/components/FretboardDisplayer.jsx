@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './FretboardDisplayer.module.css'
 import Fretboard from './Fretboard'
-const FretboardDisplayer = () => {
+const FretboardDisplayer = ({ firstChord, secondChord }) => {
 
   const mockChord1 = {
     name: 'C7',
@@ -30,10 +30,18 @@ const FretboardDisplayer = () => {
     fretStart: 5,
   }
   
+  // Use passed chord data or fall back to mock data if not provided
+  const firstChordData = firstChord || mockChord1;
+  const secondChordData = secondChord || mockChord2;
+  
+  // Log the chord data being passed to the Fretboard components
+  console.log('FretboardDisplayer - First chord data:', firstChordData);
+  console.log('FretboardDisplayer - Second chord data:', secondChordData);
+  
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Fretboard chord={mockChord1} type="first" />
-      <Fretboard chord={mockChord2} type="second" />
+      <Fretboard chord={firstChordData} type="first" />
+      <Fretboard chord={secondChordData} type="second" />
     </div>
   )
 }

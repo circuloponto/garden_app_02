@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] }) => {
+const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -19,6 +19,10 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
     // Change the note
     setSelectedIndex(prevIndex => {
       const newIndex = (prevIndex + direction + options.length) % options.length;
+      // Notify parent component about the root change
+      if (onRootChange) {
+        onRootChange(options[newIndex]);
+      }
       return newIndex;
     });
     
@@ -42,6 +46,13 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
   const handleMouseUp = () => {
     setIsDragging(false);
   };
+  
+  // Initialize root note on component mount
+  useEffect(() => {
+    if (onRootChange) {
+      onRootChange(options[selectedIndex]);
+    }
+  }, []);
   
   // Global mouse events
   useEffect(() => {

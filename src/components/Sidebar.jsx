@@ -3,7 +3,7 @@ import Button from './button'
 import RootSelector from './RootSelector'
 import { FaEye, FaEyeSlash, FaLink, FaApple, FaChessBoard } from 'react-icons/fa'
 
-const Sidebar = ({ setViewMode }) => {
+const Sidebar = ({ setViewMode, onRootChange }) => {
   return (
     <div className='buttons'>
       <Button 
@@ -29,6 +29,7 @@ const Sidebar = ({ setViewMode }) => {
       />
       <RootSelector 
         options={['C', 'Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B']}
+        onRootChange={onRootChange}
       />
     </div>
   )

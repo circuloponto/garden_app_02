@@ -6,7 +6,7 @@ import InfoBox from './components/InfoBox'
 import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
 
-import { connections } from './data/connections';
+import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
 import logo from './assets/SVGs/logo.svg'
 
@@ -17,6 +17,7 @@ function App() {
   const [viewMode, setViewMode] = useState('connections'); // 'connections' or 'fruits'
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
+  const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -149,13 +150,13 @@ function App() {
 <div className="logo">
   <img src={logo} width={100} height={100} alt="" />
 </div>
-        <Sidebar setViewMode={setViewMode} />
+        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} />
         <div className="content-wrapper">
           <div className="scaler">
             <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
             <Connections viewMode={viewMode} selectedChords={selectedChords} />
           </div>
-          <InfoBox />
+          <InfoBox selectedRoot={selectedRoot} selectedChords={selectedChords} chordTypes={chordTypes} chordRootOffsets={chordRootOffsets} />
          
         </div> 
     </div>

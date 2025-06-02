@@ -452,3 +452,83 @@ export const connections2 = [
         classNames:[ "nineteenToTwentyOne1"],
     },
 ]
+
+
+export const chordTypes = [
+    {
+        className: "one",
+        name: "dim7",
+        intervals: ["0","b3","b5","6"],
+    },
+    
+    {
+        className: "three",
+        name: "min7",
+        intervals: ["0","b3","5","b7"],
+    },
+    
+    {
+        className: "five",
+        name: "maj9",
+        intervals: ["0","3","5","7","9"],
+    },
+    
+    
+   
+    {
+        className: "ten",
+        name: "min7b5",
+        intervals: ["0","b3","b5","b7"],
+    },
+   
+    {
+        className: "twelve",
+        name: "dim7",
+        intervals: ["0","b3","b5","6"],
+    },
+    {
+        className: "thirteen",
+        name: "dim7",
+        intervals: ["0","b3","b5","6"],
+    },
+   
+    {
+        className: "fifteen",
+        name: "min6",
+        intervals: ["0","b3","5","6"],
+    },
+   
+    
+    
+    {
+        className: "nineteen",
+        name: "7",
+        intervals: ["0","3","5","b7"],
+    },
+    
+    {
+        className: "twentyOne",
+        name: "dim7",
+        intervals: ["0","b3","b5","6"],
+    },
+]
+
+
+export const chordRootOffsets = {
+    // Format: "firstChord_secondChord": semitoneOffset
+    "one_three": 3,    // If chord "one" is selected first and "three" second, offset root by 3 semitones
+    "three_one": -3,   // If chord "three" is selected first and "one" second, offset root by -3 semitones
+    "one_thirteen": 3,
+    "thirteen_one": -3,
+    "one_twelve": 6,
+    "twelve_one": -6,
+    "one_twentyOne": 6,
+    "twentyOne_one": -6,
+    "one_fifteen": 6,
+    "fifteen_one": -6,
+    "one_ten": 6,      // Example: offset by tritone (6 semitones)
+    "ten_one": -6,
+    "one_nineteen": 3,
+    "nineteen_one": -3,
+    // Add entries for all possible chord pairs
+  }
