@@ -15,6 +15,7 @@ const svgMap = {
 };
 
 const Connections = ({ viewMode, selectedChords }) => {
+  // Create a wrapper with fixed dimensions to prevent layout shifts
   // In "fruits" mode, show only connections between the two selected chords
   if (viewMode === 'fruits') {
     if (selectedChords.length !== 2) return null;
