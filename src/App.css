@@ -1163,7 +1163,8 @@ transform-origin: bottom;
     gap: 15px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    position: relative;
+    position: absolute;
+    right: 40px;
     transition: transform 0.5s ease-in-out;
     transform: translateX(0);
     /* Fix layout shift issues */
