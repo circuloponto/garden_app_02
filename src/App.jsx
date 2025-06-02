@@ -5,6 +5,7 @@ import Connections from './components/Connections'
 import InfoBox from './components/InfoBox'
 import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
+import SlidePresentation from './components/SlidePresentation'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
@@ -18,6 +19,7 @@ function App() {
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
+  const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -150,14 +152,19 @@ function App() {
 <div className="logo">
   <img src={logo} width={100} height={100} alt="" />
 </div>
-        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} />
+        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
         <div className="content-wrapper">
-          <div className="scaler">
-            <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-            <Connections viewMode={viewMode} selectedChords={selectedChords} />
-          </div>
-          <InfoBox selectedRoot={selectedRoot} selectedChords={selectedChords} chordTypes={chordTypes} chordRootOffsets={chordRootOffsets} />
-         
+          {showSlides ? (
+            <SlidePresentation onClose={() => setShowSlides(false)} />
+          ) : (
+            <>
+              <div className="scaler">
+                <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+                <Connections viewMode={viewMode} selectedChords={selectedChords} />
+              </div>
+              <InfoBox selectedRoot={selectedRoot} selectedChords={selectedChords} chordTypes={chordTypes} chordRootOffsets={chordRootOffsets} />
+            </>
+          )}
         </div> 
     </div>
     

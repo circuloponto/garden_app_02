@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from './button'
 import RootSelector from './RootSelector'
-import { FaEye, FaEyeSlash, FaLink, FaApple, FaChessBoard } from 'react-icons/fa'
+import { FaEye, FaEyeSlash, FaLink, FaApple, FaChessBoard, FaSlidersH } from 'react-icons/fa'
 
-const Sidebar = ({ setViewMode, onRootChange }) => {
+const Sidebar = ({ setViewMode, onRootChange, onToggleSlides }) => {
   return (
     <div className='buttons'>
       <Button 
@@ -30,6 +30,14 @@ const Sidebar = ({ setViewMode, onRootChange }) => {
       <RootSelector 
         options={['C', 'Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B']}
         onRootChange={onRootChange}
+      />
+      <Button 
+        title="Slide Presentation" 
+        stateOptions={['OFF', 'ON']} 
+        setViewMode={(mode) => {
+          onToggleSlides();
+        }} 
+        icon={FaSlidersH}
       />
     </div>
   )
