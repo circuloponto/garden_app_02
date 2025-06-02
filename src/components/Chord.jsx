@@ -1,9 +1,15 @@
 import React from 'react'
+import { connections2 } from '../data/connections';
 
 // Chord component: renders a chord with optional selection and possible-chord animation
 const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [] }) => {
   const isSelected = selectedChords.includes(className);
+  const isFirstSelected = selectedChords.length > 0 && selectedChords[0] === className;
   const isPossible = possibleChords.includes(className);
+  
+  // Determine if this chord is connected to the first selected chord
+  const isConnectedToFirstSelected = selectedChords.length === 1 && !isFirstSelected && 
+    connections2.some(conn => conn.chords.includes(selectedChords[0]) && conn.chords.includes(className));
   
 console.log("svg",svg, className)
   const handleClick = (e) => {
@@ -19,7 +25,7 @@ console.log("svg",svg, className)
   
   return (
     <div
-      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
+      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
       onClick={handleClick}
     >
       <img className="svg" src={svg} alt="" />
