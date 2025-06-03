@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FaPlay, FaPause } from 'react-icons/fa'
 import FretboardDisplayer from './FretboardDisplayer'
 import "./FretboardDisplayer.module.css"
-import { calculateChordNotes, getFullChordName, findChordTypeByClassName, getOffsetRoot, getRootOffset } from '../utils/noteCalculator'
+import { calculateChordNotes, getFullChordName, findChordTypeByClassName, getOffsetRoot, getRootOffset, getNoteIndex } from '../utils/noteCalculator'
 
 const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -60,13 +60,37 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
       
       setCalculatedChords(chordData);
       
-      // Get all unique notes from both chords
+      // Get all unique notes from both chords and track which chord(s) each note belongs to
       if (chordData.length > 0) {
-        const notesSet = new Set();
-        chordData.forEach(chord => {
-          chord.notes.forEach(note => notesSet.add(note));
-        });
-        setAllNotes(Array.from(notesSet));
+        // Create a map to track which chord(s) each note belongs to
+        const notesMap = new Map();
+        
+        // Process notes from first chord
+        if (chordData[0]) {
+          chordData[0].notes.forEach(note => {
+            notesMap.set(note, { note, inFirstChord: true, inSecondChord: false });
+          });
+        }
+        
+        // Process notes from second chord
+        if (chordData[1]) {
+          chordData[1].notes.forEach(note => {
+            if (notesMap.has(note)) {
+              // Update existing entry if note is in both chords
+              const noteData = notesMap.get(note);
+              noteData.inSecondChord = true;
+            } else {
+              // Add new entry if note is only in second chord
+              notesMap.set(note, { note, inFirstChord: false, inSecondChord: true });
+            }
+          });
+        }
+        
+        // Convert map to array and sort by chromatic order
+        const notesArray = Array.from(notesMap.values());
+        notesArray.sort((a, b) => getNoteIndex(a.note) - getNoteIndex(b.note));
+        
+        setAllNotes(notesArray);
       } else {
         setAllNotes([]);
       }
@@ -119,21 +143,18 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
         <div className="infoSection">
             <div className="sectionTitle">Notes:</div>
             <div className="sectionContent">
-                {allNotes.map((note, index) => {
-                    const isInFirstChord = calculatedChords[0]?.notes.includes(note);
-                    const isInSecondChord = calculatedChords.length > 1 && calculatedChords[1].notes.includes(note);
-                    
+                {allNotes.map((noteData, index) => {
                     let className = '';
-                    if (isInFirstChord && isInSecondChord) {
+                    if (noteData.inFirstChord && noteData.inSecondChord) {
                         className = 'bothChords';
-                    } else if (isInFirstChord) {
+                    } else if (noteData.inFirstChord) {
                         className = 'firstChord';
-                    } else if (isInSecondChord) {
+                    } else if (noteData.inSecondChord) {
                         className = 'secondChord';
                     }
                     
                     return (
-                        <span key={index} className={className}>{note}</span>
+                        <span key={index} className={className}>{noteData.note}</span>
                     );
                 })}
                 {allNotes.length === 0 && <span>No notes to display</span>}

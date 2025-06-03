@@ -140,7 +140,7 @@ export const connections = [
     },
     {
         from: "thirteen",
-        to: "ten"
+        to: "ten",
         /* className: "thirteenToFifteen1" */
     },
     {
@@ -458,44 +458,64 @@ export const chordTypes = [
     {
         className: "one",
         name: "dim7",
-        intervals: ["0","b3","b5","6"],
+        intervals: ["1","b3","b5","6"],
     },
     
     {
         className: "three",
         name: "min7",
-        intervals: ["0","b3","5","b7"],
+        intervals: ["1","b3","5","b7"],
     },
     
     {
         className: "five",
-        name: "maj9",
-        intervals: ["0","3","5","7","9"],
+        name: "7sus4",
+        intervals: ["1","2","4","5"],
+    },
+    {
+        className: "eight",
+        name: "dom7#5",
+        intervals: ["1","3","#5","b7"],
     },
     
     
    
     {
         className: "ten",
-        name: "min7b5",
-        intervals: ["0","b3","b5","b7"],
+        name: "Dom7b5",
+        intervals: ["1","3","b5","b7"],
     },
    
     {
         className: "twelve",
         name: "dim7",
-        intervals: ["0","b3","b5","6"],
+        intervals: ["1","b3","b5","6"],
     },
     {
         className: "thirteen",
         name: "dim7",
-        intervals: ["0","b3","b5","6"],
+        intervals: ["1","b3","b5","6"],
     },
    
     {
         className: "fifteen",
-        name: "min6",
-        intervals: ["0","b3","5","6"],
+        name: "min7b5",
+        intervals: ["1","b3","b5","b7"],
+    },
+    {
+        className: "sixteen",
+        name: "Add9",
+        intervals: ["1","2","3","5"],
+    },
+    {
+        className: "seventeen",
+        name: "Aug7sus2",
+        intervals: ["1","2","3","#4"],
+    },
+    {
+        className: "eighteen",
+        name: "Min add11",
+        intervals: ["1","b3","4","5"],
     },
    
     
@@ -503,32 +523,102 @@ export const chordTypes = [
     {
         className: "nineteen",
         name: "7",
-        intervals: ["0","3","5","b7"],
+        intervals: ["1","3","5","b7"],
     },
     
     {
         className: "twentyOne",
         name: "dim7",
-        intervals: ["0","b3","b5","6"],
+        intervals: ["1","b3","b5","6"],
     },
 ]
 
 
 export const chordRootOffsets = {
     // Format: "firstChord_secondChord": semitoneOffset
-    "one_three": 3,    // If chord "one" is selected first and "three" second, offset root by 3 semitones
-    "three_one": -3,   // If chord "three" is selected first and "one" second, offset root by -3 semitones
-    "one_thirteen": 3,
-    "thirteen_one": -3,
-    "one_twelve": 6,
-    "twelve_one": -6,
-    "one_twentyOne": 6,
-    "twentyOne_one": -6,
-    "one_fifteen": 6,
-    "fifteen_one": -6,
-    "one_ten": 6,      // Example: offset by tritone (6 semitones)
-    "ten_one": -6,
-    "one_nineteen": 3,
-    "nineteen_one": -3,
-    // Add entries for all possible chord pairs
-  }
+    "one_three": 1,    // If chord "one" is selected first and "three" second, offset root by 1 semitone
+    "three_one": -11,   // If chord "three" is selected first and "one" second, offset root by -11 semitones
+    "one_thirteen": 1,
+    "thirteen_one": -11,
+    "one_twelve": 1,
+    "twelve_one": -11,
+    "one_twentyOne": 1,
+    "twentyOne_one": -11,
+    
+    // three
+    "three_five": 1,
+    "five_three": -11,
+    "three_fifteen": 1,
+    "fifteen_three": -11,
+    "three_sixteen": 1,
+    "sixteen_three": -11,
+    "three_eighteen": 1,
+    "eighteen_three": -11,
+    "three_nineteen": 1,
+    "nineteen_three": -11,
+    
+    // five
+    "five_fifteen": 1,
+    "fifteen_five": -11,
+    "five_sixteen": 1,
+    "sixteen_five": -11,
+    "five_eighteen": 1,
+    "eighteen_five": -11,
+    "five_nineteen": 1,
+    "nineteen_five": -11,
+    
+    //eight
+    "eight_ten": 1,
+    "ten_eight": -11,
+    "eight_fifteen": 1,
+    "fifteen_eight": -11,
+    "eight_nineteen": 1,
+    "nineteen_eight": -11,
+
+
+    // ten
+    "ten_twelve": 1,
+    "twelve_ten": -11,
+    "ten_fifteen": 1,
+    "fifteen_ten": -11,
+    "ten_nineteen": 1,
+    "nineteen_ten": -11,
+
+
+    // twelve
+    "twelve_thirteen": 1,
+    "thirteen_twelve": -11,
+    "twelve_twentyOne": 1,
+    "twentyOne_twelve": -11,
+    "one_twelve": 1,
+    "twelve_one": -11,
+
+    // thirteen
+    "thirteen_fifteen": 1,
+    "fifteen_thirteen": -11,
+    "fifteen_one": 1,
+    "one_fifteen": -11,
+
+
+    "thirteen_twentyOne": 1,
+    "twentyOne_thirteen": -11,
+    "twelve_thirteen": 1,
+    "thirteen_twelve": -11,
+    
+    // fifteen
+    
+    "fifteen_nineteen": 1,
+    "nineteen_fifteen": -11,
+    "fifteen_three": 1,
+    "three_fifteen": -11,
+    "fifteen_five": 1,
+    "five_fifteen": -11,
+    "fifteen_sixteen": 1,
+    "sixteen_fifteen": -11,
+    "fifteen_eight": 1,
+    "eight_fifteen": -11,
+    "eight_ten": 1,
+    "ten_eight": -11,
+    
+
+}
