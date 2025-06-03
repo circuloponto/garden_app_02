@@ -166,10 +166,19 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
+    min-height: 500px;
 }
 
 /* SVG content styling */
 .svgContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px; /* Reduced fixed height */
     max-width: 100%;
     max-height: 100%;
     z-index: 50;
@@ -180,14 +189,16 @@
 .svgObject {
     width: 500px;
     height: 500px;
+    visibility: hidden; /* Hide initially */
     display: block;
     margin: 0 auto;
+    position: absolute; /* Position absolutely */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center perfectly */
 }
 
 /* Instruction box styling */
-.svgContent {
-    position: relative;
-}
 
 .instructionBox {
     position: absolute;
@@ -197,8 +208,9 @@
     padding: 10px 15px;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10;
+    z-index: 100; /* Higher z-index to ensure it's above SVG */
     text-align: center;
+    pointer-events: none; /* Prevent interaction with the box */
 }
 
 .instructionText {
