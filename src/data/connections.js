@@ -535,90 +535,83 @@ export const chordTypes = [
 
 
 export const chordRootOffsets = {
-    // Format: "firstChord_secondChord": semitoneOffset
-    "one_three": 1,    // If chord "one" is selected first and "three" second, offset root by 1 semitone
-    "three_one": -11,   // If chord "three" is selected first and "one" second, offset root by -11 semitones
-    "one_thirteen": 1,
-    "thirteen_one": -11,
+    // Format: "firstChord_secondChord": semitoneOffset or array of offsets
+    // Single offset example: "one_three": 1
+    // Multiple offsets example: "one_three": [1, 4, 7] for different scale options
+    
+    // one
+    "one_three": 1,    // Multiple offset options
+    "three_one": -11,   // Corresponding offsets for the reverse direction
+    "one_thirteen": [1, 5],
+    "thirteen_one": [-11, -7],
     "one_twelve": 1,
     "twelve_one": -11,
-    "one_twentyOne": 1,
-    "twentyOne_one": -11,
+    "one_twentyOne": [1, 3, 6],
+    "twentyOne_one": [-11, -9, -6],
     
     // three
-    "three_five": 1,
-    "five_three": -11,
-    "three_fifteen": 1,
-    "fifteen_three": -11,
-    "three_sixteen": 1,
-    "sixteen_three": -11,
-    "three_eighteen": 1,
-    "eighteen_three": -11,
-    "three_nineteen": 1,
-    "nineteen_three": -11,
+    "three_five": [1, 5, 8],
+    "five_three": [-11, -7, -4],
+    "three_fifteen": [1, 3],
+    "fifteen_three": [-11, -9],
+    "three_sixteen": [1, 4],
+    "sixteen_three": [-11, -8],
+    "three_eighteen": [1, 5],
+    "eighteen_three": [-11, -7],
+    "three_nineteen": [1, 3, 6],
+    "nineteen_three": [-11, -9, -6],
     
     // five
-    "five_fifteen": 1,
-    "fifteen_five": -11,
-    "five_sixteen": 1,
-    "sixteen_five": -11,
+    "five_fifteen": [1, 4],
+    "fifteen_five": [-11, -8],
+    "five_sixteen": [1, 3, 7],
+    "sixteen_five": [-11, -9, -5],
     "five_eighteen": 1,
     "eighteen_five": -11,
-    "five_nineteen": 1,
-    "nineteen_five": -11,
+    "five_nineteen": [1, 5, 8],
+    "nineteen_five": [-11, -7, -4],
     
-    //eight
-    "eight_ten": 1,
-    "ten_eight": -11,
-    "eight_fifteen": 1,
-    "fifteen_eight": -11,
-    "eight_nineteen": 1,
-    "nineteen_eight": -11,
-
+    // eight
+    "eight_ten": [1, 3, 6],
+    "ten_eight": [-11, -9, -6],
+    "eight_fifteen": [1, 4],
+    "fifteen_eight": [-11, -8],
+    "eight_nineteen": [1, 5],
+    "nineteen_eight": [-11, -7],
 
     // ten
-    "ten_twelve": 1,
-    "twelve_ten": -11,
-    "ten_fifteen": 1,
-    "fifteen_ten": -11,
-    "ten_nineteen": 1,
-    "nineteen_ten": -11,
-
+    "ten_twelve": [1, 3, 7],
+    "twelve_ten": [-11, -9, -5],
+    "ten_fifteen": [1, 4],
+    "fifteen_ten": [-11, -8],
+    "ten_nineteen": [1, 5, 8],
+    "nineteen_ten": [-11, -7, -4],
 
     // twelve
-    "twelve_thirteen": 1,
-    "thirteen_twelve": -11,
-    "twelve_twentyOne": 1,
-    "twentyOne_twelve": -11,
-    "one_twelve": 1,
-    "twelve_one": -11,
+    "twelve_thirteen": [1, 4, 7],
+    "thirteen_twelve": [-11, -8, -5],
+    "twelve_twentyOne": [1, 3],
+    "twentyOne_twelve": [-11, -9],
+    "one_twelve": [1, 5],
+    "twelve_one": [-11, -7],
 
     // thirteen
-    "thirteen_fifteen": 1,
-    "fifteen_thirteen": -11,
-    "fifteen_one": 1,
-    "one_fifteen": -11,
-
-
-    "thirteen_twentyOne": 1,
-    "twentyOne_thirteen": -11,
-    "twelve_thirteen": 1,
-    "thirteen_twelve": -11,
+    "thirteen_fifteen": [1, 4],
+    "fifteen_thirteen": [-11, -8],
+    "fifteen_one": [1, 3, 6],
+    "one_fifteen": [-11, -9, -6],
+    "thirteen_twentyOne": [1, 5, 8],
+    "twentyOne_thirteen": [-11, -7, -4],
     
     // fifteen
-    
-    "fifteen_nineteen": 1,
-    "nineteen_fifteen": -11,
-    "fifteen_three": 1,
-    "three_fifteen": -11,
-    "fifteen_five": 1,
-    "five_fifteen": -11,
-    "fifteen_sixteen": 1,
-    "sixteen_fifteen": -11,
-    "fifteen_eight": 1,
-    "eight_fifteen": -11,
-    "eight_ten": 1,
-    "ten_eight": -11,
-    
-
+    "fifteen_nineteen": [1, 3, 7],
+    "nineteen_fifteen": [-11, -9, -5],
+    "fifteen_three": [1, 4],
+    "three_fifteen": [-11, -8],
+    "fifteen_five": [1, 5],
+    "five_fifteen": [-11, -7],
+    "fifteen_sixteen": [1, 3, 6],
+    "sixteen_fifteen": [-11, -9, -6],
+    "fifteen_eight": [1, 4, 7],
+    "eight_fifteen": [-11, -8, -5]
 }
