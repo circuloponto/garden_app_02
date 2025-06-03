@@ -20,9 +20,9 @@ const SlidePresentation = ({ onClose }) => {
         pathLength: 1, 
         opacity: 1,
         transition: { 
-          duration: 1.5, 
+          duration: 0.8, 
           ease: "easeInOut",
-          delay: 0.2
+          delay: 0.1
         } 
       }
     };
@@ -33,7 +33,7 @@ const SlidePresentation = ({ onClose }) => {
         pathLength: 1, 
         opacity: 1,
         transition: { 
-          duration: 2, 
+          duration: 1, 
           ease: "easeInOut" 
         } 
       }
@@ -130,7 +130,7 @@ const SlidePresentation = ({ onClose }) => {
                   path.style.strokeDashoffset = length;
                   
                   // Animate with delay based on index
-                  path.style.animation = `drawPath 1.5s ease-in-out ${index * 0.2}s forwards`;
+                  path.style.animation = `drawPath 0.8s ease-in-out ${index * 0.1}s forwards`;
                 });
                 
                 // Add the keyframe animation to the SVG document
@@ -151,6 +151,15 @@ const SlidePresentation = ({ onClose }) => {
         // For slide 3, we'll use the existing SVG file with Framer Motion animations
         return (
           <div className={styles.svgContent}>
+            <motion.div
+              className={styles.instructionBox}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className={styles.instructionText}>connect the notes</div>
+              <div className={styles.instructionExample}>ex C to G</div>
+            </motion.div>
             <motion.object
               type="image/svg+xml"
               data={slide3SVG}
@@ -160,7 +169,7 @@ const SlidePresentation = ({ onClose }) => {
               aria-label="Slide 3 SVG"
               initial={{ opacity: 0 }}
               animate={{ 
-                opacity: 1,
+                opacity: 0.5,
                 transition: { duration: 0.5 }
               }}
               onLoad={(e) => {
@@ -181,7 +190,7 @@ const SlidePresentation = ({ onClose }) => {
                   path.style.strokeDashoffset = length;
                   
                   // Animate with delay based on index
-                  path.style.animation = `drawPath 1.5s ease-in-out ${index * 0.15}s forwards`;
+                  path.style.animation = `drawPath 0.8s ease-in-out ${index * 0.08}s forwards`;
                 });
                 
                 // Apply animation to circles
@@ -194,7 +203,7 @@ const SlidePresentation = ({ onClose }) => {
                   circle.style.strokeDashoffset = circumference;
                   
                   // Animate with delay
-                  circle.style.animation = `drawPath 1.2s ease-in-out ${paths.length * 0.15 + index * 0.2}s forwards`;
+                  circle.style.animation = `drawPath 0.7s ease-in-out ${paths.length * 0.08 + index * 0.1}s forwards`;
                 });
                 
                 // Add the keyframe animation to the SVG document
