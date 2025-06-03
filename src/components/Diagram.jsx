@@ -41,7 +41,7 @@ const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [] }) => 
                 <Chord svg={ThreeHorizontal} className="fifteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={FourHorizontal} className="sixteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={SixVertical} className="seventeen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-                <Chord svg={SevenHorizontal} className="eighteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+                <Chord svg={SixHorizontal} className="eighteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={SevenHorizontal} className="nineteen" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={TrigramHorizontal} className="twenty" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={Dash} className="twentyOne" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>

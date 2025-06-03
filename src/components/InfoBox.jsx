@@ -8,8 +8,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
   const [isPlaying, setIsPlaying] = useState(false);
   const [calculatedChords, setCalculatedChords] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
+  const [electronNotes, setElectronNotes] = useState([]);
   const [availableOffsets, setAvailableOffsets] = useState([]);
-  const [selectedOffsetIndex, setSelectedOffsetIndex] = useState(0);
+  const [selectedOffsetIndex, setSelectedOffsetIndex] = useState(-1);
 
   useEffect(() => {
     if (selectedRoot && selectedChords.length > 0 && chordTypes) {
@@ -133,8 +134,19 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
       notesArray.sort((a, b) => getNoteIndex(a.note) - getNoteIndex(b.note));
       
       setAllNotes(notesArray);
+      
+      // Calculate electron notes (notes from the chromatic scale that don't appear in the current scale)
+      const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+      const scaleNotes = new Set(notesArray.map(noteData => noteData.note));
+      const electrons = flatNotes.filter(note => !scaleNotes.has(note));
+      
+      // Sort electron notes chromatically
+      electrons.sort((a, b) => getNoteIndex(a) - getNoteIndex(b));
+      
+      setElectronNotes(electrons);
     } else {
       setAllNotes([]);
+      setElectronNotes([]);
     }
   };
 
@@ -218,10 +230,10 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
         <div className="infoSection">
             <div className="sectionTitle">Electrons:</div>
             <div className="sectionContent">
-                <span className='infoElectrons'>D</span>
-                <span className='infoElectrons'>F</span>
-                <span className='infoElectrons'>Ab</span>
-                <span className='infoElectrons'>B</span>
+                {electronNotes.map((note, index) => (
+                    <span key={index} className='infoElectrons'>{note}</span>
+                ))}
+                {electronNotes.length === 0 && <span>No electron notes to display</span>}
             </div>
         </div>
         {calculatedChords.length === 2 && (
