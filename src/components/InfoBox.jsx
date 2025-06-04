@@ -16,15 +16,35 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
     if (selectedRoot && selectedChords.length > 0 && chordTypes) {
       // Get available offsets for this chord pair
       let offsets = [];
+      
       if (selectedChords.length > 1) {
-        const key = `${selectedChords[0]}_${selectedChords[1]}`;
-        const offsetValue = chordRootOffsets[key];
-        
-        // Check if offset is an array or a single value
-        if (Array.isArray(offsetValue)) {
-          offsets = offsetValue;
-        } else if (offsetValue !== undefined) {
-          offsets = [offsetValue];
+        // Check if the same chord is selected twice (creating a semitone scale)
+        if (selectedChords[0] === selectedChords[1]) {
+          // When the same chord is selected twice, look up the offset from chordRootOffsets
+          const chord = selectedChords[0];
+          const key = `${chord}_${chord}`;
+          const offsetValue = chordRootOffsets[key];
+          
+          // Check if offset is an array or a single value
+          if (Array.isArray(offsetValue)) {
+            offsets = offsetValue;
+          } else if (offsetValue !== undefined) {
+            offsets = [offsetValue];
+          } else {
+            // Fallback to semitone if no specific offset is defined
+            offsets = [1];
+          }
+        } else {
+          // Normal case: two different chords selected
+          const key = `${selectedChords[0]}_${selectedChords[1]}`;
+          const offsetValue = chordRootOffsets[key];
+          
+          // Check if offset is an array or a single value
+          if (Array.isArray(offsetValue)) {
+            offsets = offsetValue;
+          } else if (offsetValue !== undefined) {
+            offsets = [offsetValue];
+          }
         }
       }
       
@@ -164,7 +184,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
   };
 
   return (
-    <div className={`infoBox ${selectedChords.length < 2 ? 'hidden' : ''}`}>
+    <div className={`infoBox ${selectedChords.length === 2 ? '' : 'hidden'}`}>
         {/* Scale tabs - now at the very top */}
         {availableOffsets.length > 1 && (
           <div className="scaleTabs">

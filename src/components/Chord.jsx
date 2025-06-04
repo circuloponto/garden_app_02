@@ -5,6 +5,8 @@ import { connections2 } from '../data/connections';
 const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [] }) => {
   const isSelected = selectedChords.includes(className);
   const isFirstSelected = selectedChords.length > 0 && selectedChords[0] === className;
+  const isDittoScale = selectedChords.length === 2 && selectedChords[0] === className && selectedChords[1] === className;
+  console.log(`Chord ${className} - isDittoScale:`, isDittoScale, 'selectedChords:', selectedChords);
   const isPossible = possibleChords.includes(className);
   
   // Determine if this chord is connected to the first selected chord
@@ -25,7 +27,7 @@ console.log("svg",svg, className)
   
   return (
     <div
-      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
+      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isDittoScale ? ' dittoScale' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
       onClick={handleClick}
     >
       <img className="svg" src={svg} alt="" />

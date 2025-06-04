@@ -15,7 +15,7 @@ import './App.css'
 import './tutorial.css' 
 
 function App() {
-  const [viewMode, setViewMode] = useState('connections'); // 'connections' or 'fruits'
+  const [viewMode, setViewMode] = useState('fruits'); // 'connections' or 'fruits'
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
@@ -67,42 +67,96 @@ function App() {
     }
   }, [viewMode]);
 
+  // Deselect all chords function
+  const deselectAllChords = () => {
+    setSelectedChords([]);
+  };
+
   // Chord selection handler for both view modes
   const handleChordSelect = (chord) => {
-    console.log(chord)
-    console.log('its working')
+    console.log('Chord selected:', chord, 'Current viewMode:', viewMode);
+    console.log('Current selectedChords:', JSON.stringify(selectedChords));
     
     if (viewMode === 'fruits') {
       if (selectedChords.length === 0) {
+        // First click: select the chord
+        console.log('First selection:', chord);
         setSelectedChords([chord]);
       } else if (selectedChords.length === 1) {
         const first = selectedChords[0];
-        // Only allow if a connection exists in either direction
-        const isValidPair = connections.some(
-          c =>
-            (c.from === first && c.to === chord) ||
-            (c.from === chord && c.to === first)
-        );
-        if (isValidPair && first !== chord) {
-          setSelectedChords([first, chord]);
-        } else if (first === chord) {
-          // Optionally, deselect if the same chord is clicked again
-          setSelectedChords([]);
+        console.log('Second selection attempt. First chord:', first, 'Current chord:', chord);
+        
+        if (first === chord) {
+          // Second click on the same chord: create a scale with two versions of the chord a semitone apart
+          console.log('Same chord clicked twice - creating scale');
+          // We add the same chord twice to the selection array
+          const newSelection = [chord, chord];
+          console.log('Setting new selection:', JSON.stringify(newSelection));
+          setSelectedChords(newSelection);
+        } else {
+          // Clicking a different chord when one is already selected
+          // Only allow if a connection exists in either direction
+          const isValidPair = connections.some(
+            c =>
+              (c.from === first && c.to === chord) ||
+              (c.from === chord && c.to === first)
+          );
+          console.log('Is valid pair?', isValidPair);
+          if (isValidPair) {
+            const newSelection = [first, chord];
+            console.log('Setting valid pair:', JSON.stringify(newSelection));
+            setSelectedChords(newSelection);
+          }
+          // else do nothing if not a valid pair
         }
-        // else do nothing if not a valid pair
+      } else if (selectedChords.length === 2) {
+        // If two chords are already selected
+        if (selectedChords[0] === selectedChords[1] && selectedChords[0] === chord) {
+          // Third click on the same chord that was selected twice - deselect it
+          console.log('Third click on same chord - deselecting');
+          setSelectedChords([]);
+        } else {
+          // Clicking a different chord when two chords are already selected
+          console.log('Resetting selection to:', chord);
+          setSelectedChords([chord]);
+        }
       } else {
+        // Fallback case
+        console.log('Resetting selection to:', chord);
         setSelectedChords([chord]);
       }
     } else if (viewMode === 'connections') {
-      // In connections view, handle chord selection for filtering
-      if (selectedChords.includes(chord)) {
-        // If chord is already selected, deselect it
-        setSelectedChords(selectedChords.filter(c => c !== chord));
-      } else if (selectedChords.length < 2) {
-        // Add chord to selection if we have less than 2 chords selected
-        setSelectedChords([...selectedChords, chord]);
+      console.log('In connections mode, chord:', chord);
+      console.log('Includes chord?', selectedChords.includes(chord), 'Length:', selectedChords.length);
+      
+      if (selectedChords.length === 0) {
+        // First click: select the chord
+        console.log('First selection in connections mode:', chord);
+        setSelectedChords([chord]);
+      } else if (selectedChords.length === 1) {
+        const first = selectedChords[0];
+        
+        if (first === chord) {
+          // Second click on the same chord: create a scale
+          console.log('Same chord clicked twice in connections mode - creating scale');
+          setSelectedChords([chord, chord]);
+        } else {
+          // Clicking a different chord when one is already selected
+          setSelectedChords([first, chord]);
+        }
+      } else if (selectedChords.length === 2) {
+        // If two chords are already selected
+        if (selectedChords[0] === selectedChords[1] && selectedChords[0] === chord) {
+          // Third click on the same chord that was selected twice - deselect it
+          console.log('Third click on same chord in connections mode - deselecting');
+          setSelectedChords([]);
+        } else {
+          // Clicking a different chord when two chords are already selected
+          console.log('Resetting selection in connections mode to:', chord);
+          setSelectedChords([chord]);
+        }
       } else {
-        // If we already have 2 chords selected, replace with the new chord
+        // Fallback case
         setSelectedChords([chord]);
       }
     }
@@ -159,6 +213,9 @@ function App() {
           ) : (
             <>
               <div className="scaler">
+                <div className="controls">
+                  <button className="deselect-button" onClick={deselectAllChords}>Deselect All</button>
+                </div>
                 <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Connections viewMode={viewMode} selectedChords={selectedChords} />
               </div>

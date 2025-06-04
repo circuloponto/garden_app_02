@@ -539,6 +539,14 @@ export const chordRootOffsets = {
     // Single offset example: "one_three": 1
     // Multiple offsets example: "one_three": [1, 4, 7] for different scale options
     
+    
+    "one_one": 1,
+    "twelve_twelve": 1,
+    "thirteen_thirteen": 1,
+    "twentyOne_twentyOne": 1,
+    
+    
+    
     // one
     "one_three": 1,    // Multiple offset options
     "three_one": -11,   // Corresponding offsets for the reverse direction
