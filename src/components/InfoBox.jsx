@@ -58,7 +58,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
       }
       
       // Calculate chords based on the selected offset
-      calculateChordsWithOffset(selectedOffsetIndex >= 0 && offsets.length > 0 ? offsets[0] : 0);
+      // Make sure to use the first available offset or 0 if none available
+      const offsetToUse = (selectedOffsetIndex >= 0 && offsets.length > 0) ? offsets[0] : 0;
+      calculateChordsWithOffset(offsetToUse);
     } else {
       setCalculatedChords([]);
       setAllNotes([]);
@@ -70,9 +72,12 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
   // Update when selected offset changes
   useEffect(() => {
     if (availableOffsets.length > 0 && selectedOffsetIndex >= 0 && selectedOffsetIndex < availableOffsets.length) {
-      calculateChordsWithOffset(availableOffsets[selectedOffsetIndex]);
+      // Get the current offset value from the available offsets
+      const currentOffset = availableOffsets[selectedOffsetIndex];
+      console.log(`Selected offset index changed to ${selectedOffsetIndex}, using offset: ${currentOffset}`);
+      calculateChordsWithOffset(currentOffset);
     }
-  }, [selectedOffsetIndex]);
+  }, [selectedOffsetIndex, availableOffsets]);
   
   // Function to calculate chords with a specific offset
   const calculateChordsWithOffset = (offset) => {
@@ -80,21 +85,23 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
     
     const chordData = [];
     
-    // Process first chord with the selected root
+    // Process first chord - ALWAYS use the original selected root (no offset)
     if (selectedChords.length > 0) {
       const firstChordId = selectedChords[0];
       const firstChordType = findChordTypeByClassName(chordTypes, firstChordId);
       
       if (firstChordType) {
-        const firstFullName = getFullChordName(selectedRoot, firstChordType.name);
-        const firstNotes = calculateChordNotes(selectedRoot, firstChordType.intervals);
+        // First chord ALWAYS uses the original root note (e.g., C) with NO OFFSET
+        const firstRoot = selectedRoot; // Always use the original selected root
+        const firstFullName = getFullChordName(firstRoot, firstChordType.name);
+        const firstNotes = calculateChordNotes(firstRoot, firstChordType.intervals);
         
         chordData.push({
           id: firstChordId,
           fullName: firstFullName,
           notes: firstNotes,
           chordType: firstChordType,
-          root: selectedRoot
+          root: firstRoot
         });
       }
     }
@@ -105,8 +112,10 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
       const secondChordType = findChordTypeByClassName(chordTypes, secondChordId);
       
       if (secondChordType && chordData.length > 0) {
-        // Calculate the offset root using the provided offset
+        // Apply offset ONLY to the second chord
+        // This is where we use the offset to calculate a different root note
         const offsetRoot = getOffsetRoot(selectedRoot, offset);
+        console.log(`Applying offset ${offset} to root ${selectedRoot} gives ${offsetRoot}`);
         
         const secondFullName = getFullChordName(offsetRoot, secondChordType.name);
         const secondNotes = calculateChordNotes(offsetRoot, secondChordType.intervals);

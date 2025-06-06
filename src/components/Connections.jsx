@@ -20,6 +20,12 @@ const Connections = ({ viewMode, selectedChords }) => {
   if (viewMode === 'fruits') {
     if (selectedChords.length !== 2) return null;
     const [chordA, chordB] = selectedChords;
+    
+    // If the same chord is selected twice (dittoScale), don't show any connections
+    if (chordA === chordB) {
+      return null;
+    }
+    
     const visibleConnections = connections.filter(
       c =>
         (c.from === chordA && c.to === chordB) ||
@@ -134,6 +140,13 @@ const Connections = ({ viewMode, selectedChords }) => {
     // If two chords are selected, show only connections between those two chords
     if (selectedChords.length === 2) {
       const [chordA, chordB] = selectedChords;
+      
+      // If the same chord is selected twice (dittoScale), don't show any connections
+      if (chordA === chordB) {
+        console.log('Same chord selected twice - hiding all connections');
+        return null;
+      }
+      
       // Find the exact connection between the two selected chords
       const connectionBetweenSelected = connections2.find(conn => 
         conn.chords.includes(chordA) && conn.chords.includes(chordB)

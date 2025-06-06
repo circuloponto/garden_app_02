@@ -178,9 +178,44 @@ function App() {
 
   // Determine the app class based on tutorial step
   const appClassName = tutorialStep > 0 ? `app tutorial-step-${tutorialStep}` : 'app';
+  
+  // Handle background click to deselect all chords
+  const handleBackgroundClick = (e) => {
+    // Only deselect if clicking directly on the background elements
+    // Check if the clicked element or its parent has specific classes
+    const isClickableElement = (element) => {
+      if (!element) return false;
+      
+      // List of class names that should not trigger deselection
+      const nonDeselectClasses = ['element', 'chord', 'selected-chord', 'first-selected-chord', 'dittoScale',
+                                 'connected-chord', 'possible-chord', 'deselect-button', 'controls', 'button',
+                                 'tutorial-modal', 'tutorial-buttons', 'sidebar', 'info-box'];
+      
+      // Check if the element or any parent up to 3 levels has one of these classes
+      let currentElement = element;
+      let depth = 0;
+      while (currentElement && depth < 3) {
+        if (currentElement.classList) {
+          for (const className of nonDeselectClasses) {
+            if (currentElement.classList.contains(className)) {
+              return true;
+            }
+          }
+        }
+        currentElement = currentElement.parentElement;
+        depth++;
+      }
+      return false;
+    };
+    
+    // If the click was not on a chord or related element, deselect all chords
+    if (!isClickableElement(e.target)) {
+      deselectAllChords();
+    }
+  };
 
   return (
-    <div className={appClassName}>
+    <div className={appClassName} onClick={handleBackgroundClick}>
       {/* Simple Tutorial UI */}
       {tutorialStep > 0 && (
         <div className="tutorial-container">
