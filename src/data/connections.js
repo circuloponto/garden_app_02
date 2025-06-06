@@ -568,7 +568,7 @@ export const chordRootOffsets = {
     "thirteen_thirteen": 1,
     "thirteen_ten":1, 
     "thirteen_eight":[1],
-    "thirteen_fifteen":-3,
+    "thirteen_fifteen":1,
     
     
     "fifteen_three":[1,4],
@@ -613,3 +613,5 @@ export const chordRootOffsets = {
     
    
 }
+
+export const matrix = ["Gb","G","Ab","Eb","E","F","C","Db","D","A","Bb","B",]

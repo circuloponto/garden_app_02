@@ -92,3 +92,27 @@ export const getRootOffset = (chordRootOffsets, firstChord, secondChord) => {
   const key = `${firstChord}_${secondChord}`;
   return chordRootOffsets[key] || 0; // Default to 0 if no offset is defined
 };
+
+// Scale patterns defined by semitone intervals from the root
+const scalePatterns = {
+  major: [0, 2, 4, 5, 7, 9, 11], // Major scale: W-W-H-W-W-W-H
+  minor: [0, 2, 3, 5, 7, 8, 10], // Natural minor scale: W-H-W-W-H-W-W
+  chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // All 12 semitones
+};
+
+// Function to calculate a scale based on the root note
+export const calculateScale = (root, scaleType = 'chromatic') => {
+  const rootIndex = getNoteIndex(root);
+  
+  if (rootIndex === -1) {
+    console.error(`Invalid root note: ${root}`);
+    return [];
+  }
+  
+  const pattern = scalePatterns[scaleType] || scalePatterns.chromatic;
+  
+  return pattern.map(interval => {
+    const noteIndex = (rootIndex + interval) % 12;
+    return flatNotes[noteIndex];
+  });
+};

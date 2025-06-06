@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaPlay, FaPause } from 'react-icons/fa'
 import FretboardDisplayer from './FretboardDisplayer'
 import "./FretboardDisplayer.module.css"
-import { calculateChordNotes, getFullChordName, findChordTypeByClassName, getOffsetRoot, getRootOffset, getNoteIndex } from '../utils/noteCalculator'
+import { calculateChordNotes, getFullChordName, findChordTypeByClassName, getOffsetRoot, getRootOffset, getNoteIndex, calculateScale } from '../utils/noteCalculator'
 
-const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets }) => {
+const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange }) => {
+  // Internal display root for ordering notes, without affecting the app's selectedRoot
+  const [displayRoot, setDisplayRoot] = useState(selectedRoot);
   const [isPlaying, setIsPlaying] = useState(false);
   const [calculatedChords, setCalculatedChords] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
   const [electronNotes, setElectronNotes] = useState([]);
   const [availableOffsets, setAvailableOffsets] = useState([]);
   const [selectedOffsetIndex, setSelectedOffsetIndex] = useState(-1);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [scaleNotes, setScaleNotes] = useState([]);
+  const [scaleType, setScaleType] = useState('chromatic'); // Default to chromatic scale
+  const dragThreshold = 30; // Minimum drag distance to trigger a note change
+  const notesContainerRef = useRef(null);
 
   useEffect(() => {
     if (selectedRoot && selectedChords.length > 0 && chordTypes) {
@@ -78,6 +87,22 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
       calculateChordsWithOffset(currentOffset);
     }
   }, [selectedOffsetIndex, availableOffsets]);
+  
+  // Calculate scale notes whenever the selected root changes
+  // Sync displayRoot with selectedRoot when it changes from outside
+  useEffect(() => {
+    setDisplayRoot(selectedRoot);
+  }, [selectedRoot]);
+
+  useEffect(() => {
+    if (selectedRoot) {
+      const scale = calculateScale(selectedRoot, scaleType);
+      setScaleNotes(scale);
+      console.log(`Calculated ${scaleType} scale for root ${selectedRoot}:`, scale);
+    } else {
+      setScaleNotes([]);
+    }
+  }, [selectedRoot, scaleType]);
   
   // Function to calculate chords with a specific offset
   const calculateChordsWithOffset = (offset) => {
@@ -182,14 +207,112 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
   const handlePlayClick = () => {
     // Toggle play state
     setIsPlaying(!isPlaying);
-    
-    // Here you would add actual audio playback logic in the future
-    console.log(`${isPlaying ? 'Stopping' : 'Playing'} chord audio`);
   };
-  
-  // Handle tab selection
+
   const handleTabClick = (index) => {
     setSelectedOffsetIndex(index);
+  };
+  
+  // Define the chromatic scale for reference
+  const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  
+  // Handle arrow clicks - only navigate through the chromatic scale for display purposes
+  const handleArrowClick = (e, direction) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
+    
+    if (!displayRoot) return;
+    
+    // Use the chromatic scale for navigation, not the chord notes
+    const currentIndex = flatNotes.indexOf(displayRoot);
+    if (currentIndex !== -1) {
+      if (direction === 'left') {
+        // Navigate to previous note in the chromatic scale
+        const prevIndex = (currentIndex - 1 + flatNotes.length) % flatNotes.length;
+        setDisplayRoot(flatNotes[prevIndex]);
+      } else {
+        // Navigate to next note in the chromatic scale
+        const nextIndex = (currentIndex + 1) % flatNotes.length;
+        setDisplayRoot(flatNotes[nextIndex]);
+      }
+    }
+  };
+  
+  // Get ordered notes starting with the display root note
+  const getOrderedChordNotes = () => {
+    if (!selectedRoot || calculatedChords.length === 0) return [];
+    
+    // Get all unique notes from both chords
+    const uniqueNotes = new Set();
+    
+    // Add all notes from both chords
+    calculatedChords.forEach(chord => {
+      chord.notes.forEach(note => uniqueNotes.add(note));
+    });
+    
+    // Convert to array and sort starting from the display root note
+    const rootIndex = flatNotes.indexOf(displayRoot || selectedRoot);
+    if (rootIndex === -1) return Array.from(uniqueNotes);
+    
+    // Create an array of all notes in chromatic order starting from the display root
+    const orderedNotes = [];
+    for (let i = 0; i < flatNotes.length; i++) {
+      const noteIndex = (rootIndex + i) % flatNotes.length;
+      const note = flatNotes[noteIndex];
+      if (uniqueNotes.has(note)) {
+        orderedNotes.push(note);
+      }
+    }
+    
+    return orderedNotes;
+  };
+
+  // Drag functionality for notes
+  const handleDragStart = (e) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
+    
+    setIsDragging(true);
+    setStartX(e.clientX || (e.touches && e.touches[0].clientX) || 0);
+    setCurrentTranslate(0);
+  };
+
+  const handleDragMove = (e) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
+    
+    if (!isDragging) return;
+    const currentX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+    const diff = currentX - startX;
+    setCurrentTranslate(diff);
+  };
+  
+  const handleDragEnd = (e) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    if (e) e.stopPropagation();
+    
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    // If dragged far enough, change the display root note
+    if (Math.abs(currentTranslate) > dragThreshold && displayRoot) {
+      const currentIndex = flatNotes.indexOf(displayRoot);
+      
+      if (currentIndex !== -1) {
+        // If dragged right, go to previous note in the chromatic scale
+        if (currentTranslate > dragThreshold) {
+          const prevIndex = (currentIndex - 1 + flatNotes.length) % flatNotes.length;
+          setDisplayRoot(flatNotes[prevIndex]);
+        }
+        // If dragged left, go to next note in the chromatic scale
+        else if (currentTranslate < -dragThreshold) {
+          const nextIndex = (currentIndex + 1) % flatNotes.length;
+          setDisplayRoot(flatNotes[nextIndex]);
+        }
+      }
+    }
+    
+    setCurrentTranslate(0);
   };
 
   return (
@@ -233,27 +356,70 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets })
             </div>
         </div>
         
-        {/* Notes section */}
+        {/* Notes section without navigation arrows */}
         <div className="infoSection">
-            <div className="sectionTitle">Notes:</div>
-            <div className="sectionContent">
-                {allNotes.map((noteData, index) => {
-                    let className = '';
-                    if (noteData.inFirstChord && noteData.inSecondChord) {
-                        className = 'bothChords';
-                    } else if (noteData.inFirstChord) {
-                        className = 'firstChord';
-                    } else if (noteData.inSecondChord) {
-                        className = 'secondChord';
-                    }
-                    
-                    return (
-                        <span key={index} className={className}>{noteData.note}</span>
-                    );
-                })}
-                {allNotes.length === 0 && <span>No notes to display</span>}
+            <h3>Notes</h3>
+            
+            <div className="sectionContent notesContainer" ref={notesContainerRef}>
+                {/* Left arrow */}
+                <div className="arrow-left" onClick={(e) => handleArrowClick(e, 'left')}></div>
+                
+                {/* Notes container with drag functionality */}
+                <div 
+                    className="notes-wrapper"
+                    onMouseDown={handleDragStart}
+                    onMouseMove={handleDragMove}
+                    onMouseUp={handleDragEnd}
+                    onMouseLeave={handleDragEnd}
+                    onTouchStart={handleDragStart}
+                    onTouchMove={handleDragMove}
+                    onTouchEnd={handleDragEnd}
+                    style={{ 
+                        cursor: isDragging ? 'grabbing' : 'grab',
+                        transition: isDragging ? 'none' : 'transform 0.3s ease',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        gap: '5px',
+                        padding: '10px'
+                    }}
+                >
+                    {/* Display notes that appear in the selected chords, starting with root note */}
+                    {getOrderedChordNotes().map((note, index) => {
+                        // Check if the note is in any of the chords
+                        const inFirstChord = calculatedChords.length > 0 && calculatedChords[0].notes.includes(note);
+                        const inSecondChord = calculatedChords.length > 1 && calculatedChords[1].notes.includes(note);
+                        
+                        // Skip notes that don't appear in any chord
+                        if (!inFirstChord && !inSecondChord) {
+                            return null;
+                        }
+                        
+                        let className = '';
+                        if (inFirstChord && inSecondChord) {
+                            className = 'bothChords';
+                        } else if (inFirstChord) {
+                            className = 'firstChord';
+                        } else if (inSecondChord) {
+                            className = 'secondChord';
+                        }
+                        
+                        // Highlight the root note
+                        if (note === selectedRoot) {
+                            className += ' rootNote';
+                        }
+                        
+                        return (
+                            <span key={index} className={className}>{note}</span>
+                        );
+                    })}
+                </div>
+                
+                {/* Right arrow */}
+                <div className="arrow-right" onClick={(e) => handleArrowClick(e, 'right')}></div>
             </div>
         </div>
+        {allNotes.length === 0 && <span>No notes to display</span>}
         
         {/* Electrons section */}
         <div className="infoSection">

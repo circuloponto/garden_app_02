@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange }) => {
+const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange, selectedRoot }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -53,6 +53,16 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
       onRootChange(options[selectedIndex]);
     }
   }, []);
+  
+  // Update selectedIndex when selectedRoot prop changes externally
+  useEffect(() => {
+    if (selectedRoot) {
+      const newIndex = options.indexOf(selectedRoot);
+      if (newIndex !== -1 && newIndex !== selectedIndex) {
+        setSelectedIndex(newIndex);
+      }
+    }
+  }, [selectedRoot, options]);
   
   // Global mouse events
   useEffect(() => {

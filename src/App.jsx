@@ -6,6 +6,7 @@ import InfoBox from './components/InfoBox'
 import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
 import SlidePresentation from './components/SlidePresentation'
+import Matrix from './components/Matrix'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
@@ -241,20 +242,39 @@ function App() {
 <div className="logo">
   <img src={logo} width={100} height={100} alt="" />
 </div>
-        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
+        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} selectedRoot={selectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
         <div className="content-wrapper">
           {showSlides ? (
             <SlidePresentation onClose={() => setShowSlides(false)} />
           ) : (
             <>
               <div className="scaler">
-                <div className="controls">
-                  <button className="deselect-button" onClick={deselectAllChords}>Deselect All</button>
-                </div>
                 <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Connections viewMode={viewMode} selectedChords={selectedChords} />
               </div>
-              <InfoBox selectedRoot={selectedRoot} selectedChords={selectedChords} chordTypes={chordTypes} chordRootOffsets={chordRootOffsets} />
+              {/* Always show InfoBox when chords are selected */}
+              <InfoBox 
+                selectedRoot={selectedRoot} 
+                selectedChords={selectedChords} 
+                chordTypes={chordTypes} 
+                chordRootOffsets={chordRootOffsets} 
+                onRootChange={(note) => {
+                  console.log('InfoBox changing root to:', note);
+                  setSelectedRoot(note);
+                }}
+              />
+              
+              {/* Show Matrix when exactly two chords are selected */}
+              <Matrix 
+                isVisible={selectedChords.length === 2} 
+                onRootChange={(note) => {
+                  console.log('Matrix changing root to:', note);
+                  // Force update the root selector by setting the state directly
+                  setSelectedRoot(note);
+                  // Don't deselect chords when changing root
+                }} 
+                selectedRoot={selectedRoot}
+              />
             </>
           )}
         </div> 

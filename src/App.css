@@ -1201,19 +1201,19 @@ transform-origin: bottom;
     z-index: 100;
     margin: -100px 20px 0 0;
     padding: 20px;
-    display: flex
-;
+    display: flex;
     flex-direction: column;
     gap: 15px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    position: absolute;
+    position: fixed; /* Changed from absolute to fixed */
     right: 40px;
-    transition: transform 0.5s ease-in-out;
-    transform: translateX(0);
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
     contain: layout;
     overflow: hidden;
     min-width: 400px;
+    pointer-events: auto; /* Ensure it's clickable */
 }
 
   .infoBox.hidden {
@@ -1413,13 +1413,85 @@ transform-origin: bottom;
 /* Section content styling */
 .sectionContent {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 10px;
+    padding: 10px 0;
+    gap: 5px;
+    justify-content: center;
+    position: relative;
+}
+
+/* Notes container styling */
+.notesContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding-bottom: 5px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    position: relative;
+    padding: 0 10px;
+    margin: 0 10px 0 -12px;
+}
+
+.notes-wrapper {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.arrow-left,
+.arrow-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.arrow-left {
+    left: 0;
+}
+
+.arrow-right {
+    right: 0;
+}
+
+.arrow-left::before,
+.arrow-right::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.arrow-left::before {
+    border-width: 8px 12px 8px 0;
+    border-color: transparent #ffffff transparent transparent;
+}
+
+.arrow-right::before {
+    border-width: 8px 0 8px 12px;
+    border-color: transparent transparent transparent #ffffff;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .infoElectrons {
@@ -1430,6 +1502,50 @@ transform-origin: bottom;
     border-radius: 12px;
     font-size: 16px;
     border: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+.sectionContent span {
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(100, 100, 100, 0.3);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+.sectionContent .firstChord {
+    color: #f08c00;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-color: #f08c00;
+}
+
+.sectionContent .secondChord {
+    color: #00e1ff;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-color: #00e1ff;
+}
+
+.sectionContent .bothChords {
+    background: linear-gradient(135deg, #f08c00 50%, #00e1ff 50%);
+    font-weight: bold;
+    border-color: white;
+}
+
+.rootNote {
+    border: 2px solid #ffcc00 !important;
+    box-shadow: 0 0 8px #ffcc00;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
 }
 
 /* Custom scrollbar for webkit browsers */
