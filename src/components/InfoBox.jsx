@@ -335,6 +335,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         {/* Header section */}
         <div className="infoTitle">
             <div className="titleRow">
+              <div className="tabbytitle">Tabby Pair</div>
               <span className="play-button" onClick={handlePlayClick}>
                 {isPlaying ? <FaPause className="play-icon" /> : <FaPlay className="play-icon" />}
               </span>
@@ -344,7 +345,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                     <span className='firstChord'>{calculatedChords[0].fullName}</span>
                     {calculatedChords.length > 1 && (
                       <>
-                        <span className='plus'>+</span>
+                        <span className='plus'>&</span>
                         <span className='secondChord'>{calculatedChords[1].fullName}</span>
                       </>
                     )}
@@ -358,7 +359,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         
         {/* Notes section without navigation arrows */}
         <div className="infoSection">
-            <h3>Notes</h3>
+            <h3>Scale</h3>
             
             <div className="sectionContent notesContainer" ref={notesContainerRef}>
                 {/* Left arrow */}
@@ -410,7 +411,12 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                         }
                         
                         return (
-                            <span key={index} className={className}>{note}</span>
+                            <span 
+                                key={index} 
+                                className={`${className}${index === 0 ? ' currentRoot' : ''}`}
+                            >
+                                {note}
+                            </span>
                         );
                     })}
                 </div>
