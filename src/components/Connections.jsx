@@ -38,7 +38,7 @@ const Connections = ({ viewMode, selectedChords }) => {
             <img
               key={`fruits-${conn.from}-${conn.to}-${conn.className}`}
               src={svgMap[conn.svg]}
-              className={`connection ${conn.className }`}
+              className={`connection ${conn.className || '' }`}
               alt="connection-svg"
             />
           ) : (
@@ -61,7 +61,7 @@ const Connections = ({ viewMode, selectedChords }) => {
               <img
                 key={`zero-${conn.from}-${conn.to}-${conn.className}`}
                 src={svgMap[conn.svg]}
-                className={conn.className}
+                className={`connection ${conn.className || '' }`}
                 alt="connection-svg"
               />
             ) : (

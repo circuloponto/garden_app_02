@@ -2,7 +2,7 @@ export const connections = [
     {
         from: "one",
         to: "three",
-        className: "oneToThree"
+        className: "oneToThree1"
     },
     {
         from: "one",
