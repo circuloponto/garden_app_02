@@ -2,7 +2,7 @@ export const connections = [
     {
         from: "one",
         to: "three",
-        className: "oneToThree1"
+        className: "oneToThree"
     },
     {
         from: "one",
@@ -540,68 +540,112 @@ export const chordRootOffsets = {
     // Multiple offsets example: "one_three": [1, 4, 7] for different scale options
     
     
-    "one_one": 1,
-    "one_three":1,
-    "one_twelve":1,
-    "one_thirteen":1,
-    "one_twentyOne":1,
+    "one_one": 1,  // x 
+    "one_three":1,  // x 
+    "one_thirteen":1,  // x 
+    "one_twentyOne": -11,// x
 
-    "three_three":1, 
+    "three_three":1, // x 
+    "three_five":[6,-3],  // x
+    "three_eight":1, // x
+    "three_sixteen":-9, // x
+    "three_eighteen":6,  // x
     "three_nineteen":[1,4], 
-    "three_five":[6,-3], 
-    "three_eight":1, 
+   // "three_nineteen":[-11,-8], // x
+   
     
-    "five_five":1, 
-    "fifteen_five":-3, 
-    
-    "eight_ten":1,
-    "eight_eight":1,
-    "eight_seventeen":7,
+    "five_five":1, // x
+    "five_three":[-6,9],  // x
+    "five_fifteen":9, // x
+    "five_sixteen":-11,  // x
+    "five_eighteen":-11,  // x
+    "five_nineteen":-6, // x
+
+    "eight_eight":1, // x
+    "eight_three":-11, 
+    "eight_ten":1, // falta o segundo
+    "eight_fifteen":-5,  // x
+    "eight_nineteen":-11, // x
+   //"eight_thirteen":-11,
+   // "eight_seventeen":7, // x
+    //"seventeen_eight":-5, // x
     
     "ten_twelve":1,
+    "ten_eight":-11,
     "ten_ten":1,
-    "ten_nineteen":[1],
+    "ten_thirteen":-11, 
+    "ten_fifteen":-11, // x
+    "ten_nineteen":1,
+    "ten_nineteen":-11, // x
+   
     
     "twelve_twelve": 1,
+    "twelve_ten":-11,
+    "thirteen_twelve":-11,
     "twelve_thirteen":1,
+    "twelve_twentyOne":1,
+  
     
+    "thirteen_twelve": 1,
     "thirteen_thirteen": 1,
-    "thirteen_ten":1, 
-    "thirteen_eight":[1],
     "thirteen_fifteen":1,
+    "thirteen_one": 1,
+    //"thirteen_eight":1,
+    //"thirteen_ten":1, 
     
+    "fifteen_fifteen":1, 
+    "fifteen_thirteen":-11,
+    "fifteen_three":[1,4], // x
+    "fifteen_five":-3,  // x
+    "fifteen_eight":7,  // x
+    "fifteen_ten":1, // x
+    "fifteen_sixteen":-3, // x
+    "fifteen_nineteen":[1,4,7], // x
     
-    "fifteen_three":[1,4],
-    "fifteen_nineteen":[1,4,7],
-    "fifteen_fifteen":1,
-    "fifteen_sixteen":-3,
-    "fifteen_eight":7,
-    "fifteen_ten":1,
-    "fifteen_five":3, //fifteen_five1
-
    
-    "sixteen_five":1, 
+    "sixteen_sixteen":1, // x completo
+    "sixteen_three":3, // x
+    "sixteen_five":1,  // x
+    "sixteen_fifteen":9, // x
     "sixteen_seventeen":1, 
-    "sixteen_eighteen":-2, 
-    "sixteen_three":3, 
+    "sixteen_eighteen":-2, //  x
+    
+    
+    "seventeen_seventeen":1, // x completo
+    "seventeen_eighteen":2, // x
+    "seventeen_sixteen":-11, 
+    
 
-    "seventeen_eighteen":2, 
-    "seventeen_seventeen":1, 
+    "eighteen_eighteen":1,  // x  completo
+    "eighteen_three":6,  // x
+    "eighteen_five":1,  // x
+    "eighteen_sixteen":-10, //  x   
+    "eighteen_seventeen":-10, // x
+    "eighteen_nineteen":6, // x
+    //"eighteen_eight":6,    // x
+    //"eight_eighteen":6,    // x
+    
+    
+    "nineteen_nineteen":1, // x
+    "nineteen_three":[-11,-8], // x
+    "nineteen_five":6, // x
+    "nineteen_eight":1, // x
+    "nineteen_ten":-11,
+    "nineteen_eighteen":-6, // x
+    "nineteen_twentyOne":1,   // x 
 
-    "eighteen_eighteen":1,    
-    "eighteen_eight":6,    
-    "eighteen_three":6, 
-    "eighteen_five":1,    
-    "eighteen_nineteen":6,
-
-    "nineteen_twentyOne":1,    
-    "nineteen_nineteen":1, 
-    "nineteen_five":6, 
-    "nineteen_ten":1, 
-    "nineteen_eight":1, 
-    "nineteen_three":[1,4], 
-
-    "twentyOne_twentyOne": 1,
+    
+   
+    
+    
+    
+    "twentyOne_twentyOne": 1,// x
+    "twentyOne_one": 1,// x
+    "twentyOne_twelve":-11,
+    "twentyOne_nineteen":-11,    // x
+   
+    
+   
    
 
     

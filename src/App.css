@@ -180,15 +180,15 @@
     position: absolute;
     top:9%;
     left: 50%;
-    .infoElectrons{
     margin-right: 10px;
     color: rgb(255, 255, 255);
     background-color: rgba(100, 100, 100, 0.3);
     padding: 3px 8px;
+   
     border-radius: 12px;
     font-size: 16px;
     border: 1px dashed rgba(255, 255, 255, 0.5);
-  } 
+   
   transform: rotate(0deg);
    transform-origin: bottom;
 }
