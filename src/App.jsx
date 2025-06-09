@@ -186,28 +186,6 @@ function App() {
   
   // Handle background click to deselect all chords
   const handleBackgroundClick = (e) => {
-    // Check if the clicked element is the squared div or a child of it
-    const isInsideSquared = (element) => {
-      if (!element) return false;
-      
-      // Check if the element itself is the squared div
-      if (element.classList && element.classList.contains('squared')) {
-        return true;
-      }
-      
-      // Check if any parent up to 3 levels is the squared div
-      let currentElement = element.parentElement;
-      let depth = 0;
-      while (currentElement && depth < 3) {
-        if (currentElement.classList && currentElement.classList.contains('squared')) {
-          return true;
-        }
-        currentElement = currentElement.parentElement;
-        depth++;
-      }
-      return false;
-    };
-    
     // Check if the clicked element should not trigger deselection
     const isProtectedElement = (element) => {
       if (!element) return false;
@@ -215,7 +193,7 @@ function App() {
       // List of class names that should not trigger deselection
       const nonDeselectClasses = ['element', 'chord', 'selected-chord', 'first-selected-chord', 'dittoScale',
                                  'connected-chord', 'possible-chord', 'deselect-button', 'controls', 'button',
-                                 'tutorial-modal', 'tutorial-buttons', 'sidebar', 'info-box'];
+                                 'tutorial-modal', 'tutorial-buttons', 'sidebar'];
       
       // Check if the element or any parent up to 3 levels has one of these classes
       let currentElement = element;
@@ -234,10 +212,9 @@ function App() {
       return false;
     };
     
-    // Only deselect if:
-    // 1. The click is inside the squared div AND
-    // 2. The click is not on a protected element
-    if (isInsideSquared(e.target) && !isProtectedElement(e.target)) {
+    // Deselect if the click is not on a protected element
+    // Removed the requirement for the click to be inside the squared div
+    if (!isProtectedElement(e.target)) {
       deselectAllChords();
     }
   };
