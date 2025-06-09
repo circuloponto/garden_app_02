@@ -6,7 +6,7 @@ const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', '
 // Map of interval semitones
 const intervalMap = {
   '0': 0,
-  '1': 0,  // Root note (1) should be 0 semitones from the root
+  '1':1, 
   '2': 2,
   'b3': 3,
   '3': 4,
@@ -35,10 +35,27 @@ export const calculateChordNotes = (root, intervals) => {
     return [];
   }
   
+  // For debugging chord five
+  const isChordFive = intervals.length === 4 && 
+                     intervals.includes("0") && 
+                     intervals.includes("4") && 
+                     intervals.includes("5") && 
+                     intervals.includes("b7");
+  
+  if (isChordFive) {
+    console.log("DEBUGGING CHORD FIVE:");
+    console.log("Original intervals:", intervals);
+  }
+  
   // Always include the root note as the first note in the chord
-  // Check if "1" is already in the intervals to avoid duplicates
-  const includesRoot = intervals.includes("1");
-  const notesToCalculate = includesRoot ? intervals : ["1", ...intervals];
+  // Check if "0" or "1" is already in the intervals to avoid duplicates
+  const includesRoot = intervals.includes("0") || intervals.includes("1");
+  const notesToCalculate = includesRoot ? [...intervals] : ["0", ...intervals];
+  
+  if (isChordFive) {
+    console.log("After root check - notesToCalculate:", notesToCalculate);
+  }
+  
   console.log(`Root index: ${rootIndex}, Root note: ${flatNotes[rootIndex]}`);
   console.log(`Includes root interval? ${includesRoot}, Will calculate with: ${notesToCalculate.join(', ')}`);
   
@@ -93,15 +110,8 @@ export const getRootOffset = (chordRootOffsets, firstChord, secondChord) => {
   return chordRootOffsets[key] || 0; // Default to 0 if no offset is defined
 };
 
-// Scale patterns defined by semitone intervals from the root
-const scalePatterns = {
-  major: [0, 2, 4, 5, 7, 9, 11], // Major scale: W-W-H-W-W-W-H
-  minor: [0, 2, 3, 5, 7, 8, 10], // Natural minor scale: W-H-W-W-H-W-W
-  chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // All 12 semitones
-};
-
-// Function to calculate a scale based on the root note
-export const calculateScale = (root, scaleType = 'chromatic') => {
+// Function to calculate a scale based on the root note and chord offset
+export const calculateScale = (root, chordOffset = 0) => {
   const rootIndex = getNoteIndex(root);
   
   if (rootIndex === -1) {
@@ -109,10 +119,21 @@ export const calculateScale = (root, scaleType = 'chromatic') => {
     return [];
   }
   
-  const pattern = scalePatterns[scaleType] || scalePatterns.chromatic;
-  
-  return pattern.map(interval => {
-    const noteIndex = (rootIndex + interval) % 12;
-    return flatNotes[noteIndex];
-  });
+  // Handle both single offset and array of offsets (for multiple scale alternatives)
+  if (Array.isArray(chordOffset)) {
+    // Return an object with multiple scales
+    return chordOffset.reduce((scales, offset, index) => {
+      scales[`scale${index + 1}`] = Array.from({ length: 12 }, (_, i) => {
+        const noteIndex = (rootIndex + i + offset) % 12;
+        return flatNotes[noteIndex];
+      });
+      return scales;
+    }, {});
+  } else {
+    // Return a single scale as an array
+    return Array.from({ length: 12 }, (_, i) => {
+      const noteIndex = (rootIndex + i + chordOffset) % 12;
+      return flatNotes[noteIndex];
+    });
+  }
 };

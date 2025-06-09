@@ -209,7 +209,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     setIsPlaying(!isPlaying);
   };
 
-  const handleTabClick = (index) => {
+  const handleTabClick = (e, index) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
     setSelectedOffsetIndex(index);
   };
   
@@ -324,7 +326,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
               <div 
                 key={index} 
                 className={`scaleTab ${selectedOffsetIndex === index ? 'active' : ''}`}
-                onClick={() => handleTabClick(index)}
+                onClick={(e) => handleTabClick(e, index)}
               >
                 Scale {index + 1}
               </div>

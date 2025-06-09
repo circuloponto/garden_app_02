@@ -182,9 +182,30 @@ function App() {
   
   // Handle background click to deselect all chords
   const handleBackgroundClick = (e) => {
-    // Only deselect if clicking directly on the background elements
-    // Check if the clicked element or its parent has specific classes
-    const isClickableElement = (element) => {
+    // Check if the clicked element is the squared div or a child of it
+    const isInsideSquared = (element) => {
+      if (!element) return false;
+      
+      // Check if the element itself is the squared div
+      if (element.classList && element.classList.contains('squared')) {
+        return true;
+      }
+      
+      // Check if any parent up to 3 levels is the squared div
+      let currentElement = element.parentElement;
+      let depth = 0;
+      while (currentElement && depth < 3) {
+        if (currentElement.classList && currentElement.classList.contains('squared')) {
+          return true;
+        }
+        currentElement = currentElement.parentElement;
+        depth++;
+      }
+      return false;
+    };
+    
+    // Check if the clicked element should not trigger deselection
+    const isProtectedElement = (element) => {
       if (!element) return false;
       
       // List of class names that should not trigger deselection
@@ -209,8 +230,10 @@ function App() {
       return false;
     };
     
-    // If the click was not on a chord or related element, deselect all chords
-    if (!isClickableElement(e.target)) {
+    // Only deselect if:
+    // 1. The click is inside the squared div AND
+    // 2. The click is not on a protected element
+    if (isInsideSquared(e.target) && !isProtectedElement(e.target)) {
       deselectAllChords();
     }
   };

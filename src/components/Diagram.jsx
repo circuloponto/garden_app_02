@@ -46,7 +46,16 @@ const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [] }) => 
                 <Chord svg={TrigramHorizontal} className="twenty" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
                 <Chord svg={Dash} className="twentyOne" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
             </div>
-            <div className="squared"></div>
+            <div 
+                className="squared" 
+                onClick={(e) => {
+                    // Only handle clicks directly on the squared div, not its children
+                    if (e.target.className === 'squared') {
+                        // This will propagate up to the App's handleBackgroundClick
+                        // No need to stop propagation
+                    }
+                }}
+            ></div>
            
            
         </div>

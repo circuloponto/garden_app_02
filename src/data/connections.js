@@ -60,9 +60,9 @@ export const connections = [
         className: "threeToFive2"
     },
     {
-        from: "six",
-        to: "eight",
-        className: "sixToEight1"
+        from: "five",
+        to: "fifteen",
+        className: "fifteenToFive1"
     },
     {
         from: "eight",
@@ -458,7 +458,7 @@ export const chordTypes = [
     {
         className: "one",
         name: "dim7",
-        intervals: ["1","b3","b5","6"],
+        intervals: ["0","b3","b5","6"],
     },
     
     {
@@ -475,7 +475,7 @@ export const chordTypes = [
     {
         className: "eight",
         name: "dom7#5",
-        intervals: ["1","3","#5","b7"],
+        intervals: ["0","3","#5","b7"],
     },
     
     
@@ -483,39 +483,39 @@ export const chordTypes = [
     {
         className: "ten",
         name: "Dom7b5",
-        intervals: ["1","3","b5","b7"],
+        intervals: ["0","3","b5","b7"],
     },
    
     {
         className: "twelve",
         name: "dim7",
-        intervals: ["1","b3","b5","6"],
+        intervals: ["0","b3","b5","6"],
     },
     {
         className: "thirteen",
         name: "dim7",
-        intervals: ["1","b3","b5","6"],
+        intervals: ["0","b3","b5","6"],
     },
    
     {
         className: "fifteen",
         name: "min7b5",
-        intervals: ["1","b3","b5","b7"],
+        intervals: ["0","b3","b5","b7"],
     },
     {
         className: "sixteen",
         name: "Add9",
-        intervals: ["1","2","3","5"],
+        intervals: ["0","2","3","5"],
     },
     {
         className: "seventeen",
         name: "Aug7sus2",
-        intervals: ["1","2","3","#4"],
+        intervals: ["0","2","3","#4"],
     },
     {
         className: "eighteen",
         name: "Min add11",
-        intervals: ["1","b3","4","5"],
+        intervals: ["0","b3","4","5"],
     },
    
     
@@ -523,13 +523,13 @@ export const chordTypes = [
     {
         className: "nineteen",
         name: "7",
-        intervals: ["1","3","5","b7"],
+        intervals: ["0","3","5","b7"],
     },
     
     {
         className: "twentyOne",
         name: "dim7",
-        intervals: ["1","b3","b5","6"],
+        intervals: ["0","b3","b5","6"],
     },
 ]
 
@@ -633,7 +633,7 @@ export const chordRootOffsets = {
     "nineteen_ten":-11,
     "nineteen_eighteen":-6, // x
     "nineteen_twentyOne":1,   // x 
-
+"fifteen_nineteen":[-11,-8,-7], 
     
    
     
