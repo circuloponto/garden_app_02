@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange, selectedRoot }) => {
+const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange, selectedRoot, onToggleMatrix, matrixExpanded }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -40,6 +40,14 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
     if (isChanging) return; // Don't start dragging during transitions
     setIsDragging(true);
     setStartX(e.clientX);
+  };
+  
+  // Handle click to toggle matrix
+  const handleClick = (e) => {
+    // If we're not dragging (just a simple click), toggle the matrix
+    if (!isDragging && !isChanging && onToggleMatrix) {
+      onToggleMatrix();
+    }
   };
   
   // Handle mouse up - stop dragging
@@ -103,10 +111,11 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
   return (
     <div className="root-selector-container">
       <div 
-        className={`root-selector ${isDragging ? 'dragging' : ''} ${isChanging ? 'changing' : ''}`} 
+        className={`root-selector ${isDragging ? 'dragging' : ''} ${isChanging ? 'changing' : ''} ${matrixExpanded ? 'matrix-active' : ''}`} 
         ref={selectorRef}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        onClick={handleClick}
       >
         <div className="root-selector-value">
           {options[selectedIndex]}

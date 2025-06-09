@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Matrix.module.css';
 import { matrix } from '../data/connections';
 
-const Matrix = ({ isVisible, onRootChange, selectedRoot }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+const Matrix = ({ isVisible, onRootChange, selectedRoot, isExpanded, setIsExpanded }) => {
   
   // Toggle expanded/collapsed state
   const toggleExpanded = (event) => {
@@ -50,17 +49,10 @@ const Matrix = ({ isVisible, onRootChange, selectedRoot }) => {
     return null;
   }
 
-  // Render collapsed version
+  // If matrix is not expanded, don't render anything
+  // The RootSelector will now handle the collapsed state
   if (!isExpanded) {
-    return (
-      <div 
-        className={styles['matrix-collapsed']} 
-        onClick={(event) => handleCollapsedClick(event)}
-        title="Click to expand matrix"
-      >
-        <span>{selectedRoot}</span>
-      </div>
-    );
+    return null;
   }
 
   // Render expanded version

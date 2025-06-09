@@ -16,12 +16,13 @@ import './App.css'
 import './tutorial.css' 
 
 function App() {
-  // Only using 'fruits' view mode now
-  const [viewMode] = useState('fruits');
+  // Dynamic view mode based on selection count
+  const [viewMode, setViewMode] = useState('connections');
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
   const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
+  const [matrixExpanded, setMatrixExpanded] = useState(false); // Control matrix expansion
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -266,15 +267,21 @@ function App() {
 <div className="logo">
   <img src={logo} width={100} height={100} alt="" />
 </div>
-        <Sidebar onRootChange={setSelectedRoot} selectedRoot={selectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
+        <Sidebar 
+          onRootChange={setSelectedRoot} 
+          selectedRoot={selectedRoot} 
+          onToggleSlides={() => setShowSlides(prev => !prev)} 
+          onToggleMatrix={() => setMatrixExpanded(prev => !prev)}
+          matrixExpanded={!matrixExpanded && selectedChords.length === 2}
+        />
         <div className="content-wrapper">
           {showSlides ? (
             <SlidePresentation onClose={() => setShowSlides(false)} />
           ) : (
             <>
-              <div className="scaler">
+              <div className="scaler" style={{ marginTop: selectedChords.length < 2 ? '200px' : '0' }}>
                 <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
-                <Connections viewMode={viewMode} selectedChords={selectedChords} />
+                <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>
               {/* Always show InfoBox when chords are selected */}
               <InfoBox 
@@ -298,6 +305,8 @@ function App() {
                   // Don't deselect chords when changing root
                 }} 
                 selectedRoot={selectedRoot}
+                isExpanded={matrixExpanded}
+                setIsExpanded={setMatrixExpanded}
               />
             </>
           )}

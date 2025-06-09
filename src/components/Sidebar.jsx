@@ -3,7 +3,7 @@ import Button from './button'
 import RootSelector from './RootSelector'
 import { FaEye, FaEyeSlash, FaChessBoard, FaSlidersH } from 'react-icons/fa'
 
-const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot }) => {
+const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot, onToggleMatrix, matrixExpanded }) => {
   return (
     <div className='buttons'>
       <Button 
@@ -25,6 +25,8 @@ const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot }) => {
         options={['C', 'Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B']}
         onRootChange={onRootChange}
         selectedRoot={selectedRoot}
+        onToggleMatrix={onToggleMatrix}
+        matrixExpanded={matrixExpanded}
       />
       <Button 
         title="Slide Presentation" 
