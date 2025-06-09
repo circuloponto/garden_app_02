@@ -1213,17 +1213,18 @@ transform-origin: bottom;
     color: white;
     position: fixed; /* Changed from absolute to fixed */
     right: 40px;
-    top: 50%; /* Center vertically */
+    top: 60%; /* Center vertically */
     transform: translateY(-50%); /* Center vertically */
     contain: layout;
     overflow: hidden;
     min-width: 400px;
+    min-height: 650px;
     pointer-events: auto; /* Ensure it's clickable */
     transition: all 0.5s ease;
 }
 
   .infoBox.hidden {
-    transform: translate(calc(100% + 40px), -50%);
+    transform: translate(calc(100% + 60px), -50%);
 }
 
   /* When InfoBox is visible, adjust the content wrapper and scaler */
