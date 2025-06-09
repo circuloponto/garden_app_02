@@ -15,12 +15,8 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
   const [electronNotes, setElectronNotes] = useState([]);
   const [availableOffsets, setAvailableOffsets] = useState([]);
   const [selectedOffsetIndex, setSelectedOffsetIndex] = useState(-1);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [currentTranslate, setCurrentTranslate] = useState(0);
   const [scaleNotes, setScaleNotes] = useState([]);
   const [scaleType, setScaleType] = useState('chromatic'); // Default to chromatic scale
-  const dragThreshold = 30; // Minimum drag distance to trigger a note change
   const notesContainerRef = useRef(null);
 
   useEffect(() => {
@@ -266,27 +262,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
   // Define the chromatic scale for reference
   const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
   
-  // Handle arrow clicks - only navigate through the chromatic scale for display purposes
-  const handleArrowClick = (e, direction) => {
-    // Stop event propagation to prevent dismissing the InfoBox
-    e.stopPropagation();
-    
-    if (!displayRoot) return;
-    
-    // Use the chromatic scale for navigation, not the chord notes
-    const currentIndex = flatNotes.indexOf(displayRoot);
-    if (currentIndex !== -1) {
-      if (direction === 'left') {
-        // Navigate to previous note in the chromatic scale
-        const prevIndex = (currentIndex - 1 + flatNotes.length) % flatNotes.length;
-        setDisplayRoot(flatNotes[prevIndex]);
-      } else {
-        // Navigate to next note in the chromatic scale
-        const nextIndex = (currentIndex + 1) % flatNotes.length;
-        setDisplayRoot(flatNotes[nextIndex]);
-      }
-    }
-  };
+  // Define the chromatic scale for reference
   
   // Get ordered notes starting with the display root note
   const getOrderedChordNotes = () => {
@@ -317,52 +293,33 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     return orderedNotes;
   };
 
-  // Drag functionality for notes
-  const handleDragStart = (e) => {
-    // Stop event propagation to prevent dismissing the InfoBox
-    e.stopPropagation();
+  // Enhanced arrow click handler that only navigates to notes in the current scale
+  const handleArrowClick = (e, direction) => {
+    // Get the available notes in the current chord/scale
+    const availableNotes = getOrderedChordNotes();
     
-    setIsDragging(true);
-    setStartX(e.clientX || (e.touches && e.touches[0].clientX) || 0);
-    setCurrentTranslate(0);
-  };
-
-  const handleDragMove = (e) => {
-    // Stop event propagation to prevent dismissing the InfoBox
-    e.stopPropagation();
+    if (!displayRoot || availableNotes.length === 0) return;
     
-    if (!isDragging) return;
-    const currentX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-    const diff = currentX - startX;
-    setCurrentTranslate(diff);
-  };
-  
-  const handleDragEnd = (e) => {
-    // Stop event propagation to prevent dismissing the InfoBox
-    if (e) e.stopPropagation();
+    // Find the current note's position in the available notes
+    const currentNoteIndex = availableNotes.indexOf(displayRoot);
     
-    if (!isDragging) return;
-    setIsDragging(false);
-    
-    // If dragged far enough, change the display root note
-    if (Math.abs(currentTranslate) > dragThreshold && displayRoot) {
-      const currentIndex = flatNotes.indexOf(displayRoot);
-      
-      if (currentIndex !== -1) {
-        // If dragged right, go to previous note in the chromatic scale
-        if (currentTranslate > dragThreshold) {
-          const prevIndex = (currentIndex - 1 + flatNotes.length) % flatNotes.length;
-          setDisplayRoot(flatNotes[prevIndex]);
-        }
-        // If dragged left, go to next note in the chromatic scale
-        else if (currentTranslate < -dragThreshold) {
-          const nextIndex = (currentIndex + 1) % flatNotes.length;
-          setDisplayRoot(flatNotes[nextIndex]);
-        }
-      }
+    // If the current note isn't in the available notes, default to the first note
+    if (currentNoteIndex === -1) {
+      setDisplayRoot(availableNotes[0]);
+      console.log('Note not in scale, defaulting to:', availableNotes[0]);
+      return;
     }
     
-    setCurrentTranslate(0);
+    // Navigate to the next/previous note in the available notes
+    if (direction === 'left') {
+      const prevIndex = (currentNoteIndex - 1 + availableNotes.length) % availableNotes.length;
+      setDisplayRoot(availableNotes[prevIndex]);
+      console.log('Left arrow clicked, new root:', availableNotes[prevIndex]);
+    } else {
+      const nextIndex = (currentNoteIndex + 1) % availableNotes.length;
+      setDisplayRoot(availableNotes[nextIndex]);
+      console.log('Right arrow clicked, new root:', availableNotes[nextIndex]);
+    }
   };
 
   return (
@@ -412,22 +369,13 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
             <h3>Scale</h3>
             
             <div className="sectionContent notesContainer" ref={notesContainerRef}>
-                {/* Left arrow */}
-                <div className="arrow-left" onClick={(e) => handleArrowClick(e, 'left')}></div>
+                {/* Left arrow - using button for better accessibility and click handling */}
+                <button className="arrow-left" onClick={(e) => handleArrowClick(e, 'left')} aria-label="Previous note"></button>
                 
-                {/* Notes container with drag functionality */}
+                {/* Notes container without drag functionality */}
                 <div 
                     className="notes-wrapper"
-                    onMouseDown={handleDragStart}
-                    onMouseMove={handleDragMove}
-                    onMouseUp={handleDragEnd}
-                    onMouseLeave={handleDragEnd}
-                    onTouchStart={handleDragStart}
-                    onTouchMove={handleDragMove}
-                    onTouchEnd={handleDragEnd}
                     style={{ 
-                        cursor: isDragging ? 'grabbing' : 'grab',
-                        transition: isDragging ? 'none' : 'transform 0.3s ease',
                         display: 'flex',
                         flexWrap: 'wrap',
                         justifyContent: 'center',
@@ -471,8 +419,8 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                     })}
                 </div>
                 
-                {/* Right arrow */}
-                <div className="arrow-right" onClick={(e) => handleArrowClick(e, 'right')}></div>
+                {/* Right arrow - using button for better accessibility and click handling */}
+                <button className="arrow-right" onClick={(e) => handleArrowClick(e, 'right')} aria-label="Next note"></button>
             </div>
         </div>
         {allNotes.length === 0 && <span>No notes to display</span>}

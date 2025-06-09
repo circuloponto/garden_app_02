@@ -200,9 +200,9 @@
 
 .oneToThree1{
   position: absolute;
-  top:10%;
+  top:55px;
   left: 50%;
-  height:50px;
+  height:60px;
   width: 1px;
   background: rgb(255, 255, 255);
  transform: rotate(0deg);
@@ -682,10 +682,10 @@ transform-origin: bottom;
 }
 .fifteenToNineteen3 {
     position: absolute;
-    top: -73%;
-    left: 23.3%  ;
-    width: 52%;
-    height: 180%;
+    top: -78%;
+    left: 21.5%  ;
+    width: 56%;
+    height: 195%;
     pointer-events: none;
 }
 /* .fifteenToNineteen2{
@@ -1535,17 +1535,20 @@ transform-origin: bottom;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
+    z-index: 100;
     transition: all 0.2s ease;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    border: none;
+    outline: none;
+    padding: 0;
 }
 
 .arrow-left {
