@@ -7,6 +7,7 @@ import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
 import SlidePresentation from './components/SlidePresentation'
 import Matrix from './components/Matrix'
+import Inspector from './components/Inspector'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
@@ -23,6 +24,7 @@ function App() {
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
   const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
   const [matrixExpanded, setMatrixExpanded] = useState(false); // Control matrix expansion
+  const [hoveredChord, setHoveredChord] = useState(null); // Track which chord is being hovered
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -264,9 +266,18 @@ function App() {
           </div>
         </div>
       )}
-<div className="logo">
-  <img src={logo} width={100} height={100} alt="" />
-</div>
+<>
+  <Inspector 
+    hoveredChord={hoveredChord} 
+    selectedChords={selectedChords} 
+    selectedRoot={selectedRoot} 
+    chordTypes={chordTypes} 
+    chordRootOffsets={chordRootOffsets} 
+  />
+  <div className="logo">
+    <img src={logo} width={100} height={100} alt="" />
+  </div>
+</>
         <Sidebar 
           onRootChange={setSelectedRoot} 
           selectedRoot={selectedRoot} 
@@ -280,7 +291,12 @@ function App() {
           ) : (
             <>
               <div className="scaler" style={{ marginTop: selectedChords.length < 2 ? '200px' : '0' }}>
-                <Diagram handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords}/>
+                <Diagram 
+  handleChordSelect={handleChordSelect} 
+  selectedChords={selectedChords} 
+  possibleChords={possibleChords}
+  onChordHover={setHoveredChord}
+/>
                 <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>
               {/* Always show InfoBox when chords are selected */}

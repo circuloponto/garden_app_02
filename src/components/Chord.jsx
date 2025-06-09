@@ -2,7 +2,7 @@ import React from 'react'
 import { connections2 } from '../data/connections';
 
 // Chord component: renders a chord with optional selection and possible-chord animation
-const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [] }) => {
+const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [], onChordHover }) => {
   const isSelected = selectedChords.includes(className);
   const isFirstSelected = selectedChords.length > 0 && selectedChords[0] === className;
   const isDittoScale = selectedChords.length === 2 && selectedChords[0] === className && selectedChords[1] === className;
@@ -25,10 +25,26 @@ console.log("svg",svg, className)
     handleChordSelect(className);
   };
   
+  // Handle mouse enter event to show chord info in the Inspector
+  const handleMouseEnter = () => {
+    if (onChordHover) {
+      onChordHover(className);
+    }
+  };
+
+  // Handle mouse leave event to hide chord info in the Inspector
+  const handleMouseLeave = () => {
+    if (onChordHover) {
+      onChordHover(null);
+    }
+  };
+
   return (
     <div
       className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isDittoScale ? ' dittoScale' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <img className="svg" src={svg} alt="" />
     </div>
