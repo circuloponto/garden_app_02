@@ -52,8 +52,8 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
         }
       }
       
-      // Get the chord name for display with the appropriate root
-      const chordName = getFullChordName(displayRoot, hoveredChordType.name);
+      // Just show the chord type name without the root
+      const chordName = hoveredChordType.name;
       
       content = (
         <>
@@ -66,7 +66,7 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
 
   return (
     <div className="inspector">
-      <div className="inspector-content">
+      <div className="inspector-content" style={{ textAlign: 'center' }}>
         {content}
       </div>
     </div>
