@@ -1,17 +1,11 @@
 import React from 'react'
 import Button from './button'
 import RootSelector from './RootSelector'
-import { FaEye, FaEyeSlash, FaLink, FaApple, FaChessBoard, FaSlidersH } from 'react-icons/fa'
+import { FaEye, FaEyeSlash, FaChessBoard, FaSlidersH } from 'react-icons/fa'
 
-const Sidebar = ({ setViewMode, onRootChange, onToggleSlides, selectedRoot }) => {
+const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot }) => {
   return (
     <div className='buttons'>
-      <Button 
-        title="Toggle view" 
-        stateOptions={['Connections', 'Fruits']} 
-        setViewMode={setViewMode} 
-        icon={FaLink}
-      />
       <Button 
         title="All Electrons" 
         stateOptions={['OFF', 'ON']} 

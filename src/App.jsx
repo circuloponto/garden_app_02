@@ -16,7 +16,8 @@ import './App.css'
 import './tutorial.css' 
 
 function App() {
-  const [viewMode, setViewMode] = useState('fruits'); // 'connections' or 'fruits'
+  // Only using 'fruits' view mode now
+  const [viewMode] = useState('fruits');
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
@@ -265,7 +266,7 @@ function App() {
 <div className="logo">
   <img src={logo} width={100} height={100} alt="" />
 </div>
-        <Sidebar setViewMode={setViewMode} onRootChange={setSelectedRoot} selectedRoot={selectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
+        <Sidebar onRootChange={setSelectedRoot} selectedRoot={selectedRoot} onToggleSlides={() => setShowSlides(prev => !prev)} />
         <div className="content-wrapper">
           {showSlides ? (
             <SlidePresentation onClose={() => setShowSlides(false)} />
