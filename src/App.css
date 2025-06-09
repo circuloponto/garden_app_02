@@ -1176,6 +1176,7 @@ transform-origin: bottom;
     box-sizing: border-box;
     /* Ensure the wrapper maintains a stable size */
     min-height: 600px;
+    transition: all 0.5s ease;
 }
 
 .scaler{
@@ -1184,6 +1185,15 @@ transform-origin: bottom;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.5s ease;
+    transform-origin: center;
+}
+
+/* When no chords are selected, make scaler bigger and centered */
+.content-wrapper:not(:has(.infoBox:not(.hidden))) .scaler {
+    width: 85%;
+    margin: 0 auto;
+    transform: scale(1.2);
 }
 
   .infoBox{
@@ -1209,11 +1219,24 @@ transform-origin: bottom;
     overflow: hidden;
     min-width: 400px;
     pointer-events: auto; /* Ensure it's clickable */
+    transition: all 0.5s ease;
 }
 
   .infoBox.hidden {
-    transform: translateX(calc(100% + 40px));
+    transform: translate(calc(100% + 40px), -50%);
 }
+
+  /* When InfoBox is visible, adjust the content wrapper and scaler */
+  .content-wrapper:has(.infoBox:not(.hidden)) {
+    justify-content: flex-start;
+    padding-left: 40px;
+  }
+
+  .content-wrapper:has(.infoBox:not(.hidden)) .scaler {
+    width: 55%;
+    margin-right: auto;
+    transform: scale(0.9);
+  }
   .infoBox .infoTitle{
     text-align: center;
     padding-bottom: 15px;
