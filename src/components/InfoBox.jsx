@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import { FaPlay, FaPause } from 'react-icons/fa'
 import FretboardDisplayer from './FretboardDisplayer'
 import "./FretboardDisplayer.module.css"
-import { calculateChordNotes, getFullChordName, findChordTypeByClassName, getOffsetRoot, getRootOffset, getNoteIndex, calculateScale } from '../utils/noteCalculator'
+import { flatNotes, getNoteIndex, calculateChordNotes, calculateTwoChords } from '../utils/noteCalculator2'
+// Import some functions we still need from the original calculator
+import { getFullChordName, findChordTypeByClassName, getOffsetRoot } from '../utils/noteCalculator'
 
 const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange }) => {
   // Internal display root for ordering notes, without affecting the app's selectedRoot
@@ -45,14 +47,34 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
           }
         } else {
           // Normal case: two different chords selected
+          // Try to find offsets for the exact order of chord selection
           const key = `${selectedChords[0]}_${selectedChords[1]}`;
           const offsetValue = chordRootOffsets[key];
           
-          // Check if offset is an array or a single value
-          if (Array.isArray(offsetValue)) {
-            offsets = offsetValue;
-          } else if (offsetValue !== undefined) {
-            offsets = [offsetValue];
+          // If we don't find offsets for this order, we'll need to check the reverse order
+          // and invert the offsets
+          if (offsetValue === undefined) {
+            const reverseKey = `${selectedChords[1]}_${selectedChords[0]}`;
+            const reverseOffsetValue = chordRootOffsets[reverseKey];
+            
+            if (reverseOffsetValue !== undefined) {
+              console.log(`Found offsets for reverse order: ${reverseKey}`);
+              // Invert the offsets to maintain the correct musical relationship
+              if (Array.isArray(reverseOffsetValue)) {
+                offsets = reverseOffsetValue.map(val => -val);
+              } else {
+                offsets = [-reverseOffsetValue];
+              }
+            }
+          } else {
+            // We found offsets for the direct order
+            console.log(`Found offsets for direct order: ${key}`);
+            // Check if offset is an array or a single value
+            if (Array.isArray(offsetValue)) {
+              offsets = offsetValue;
+            } else if (offsetValue !== undefined) {
+              offsets = [offsetValue];
+            }
           }
         }
       }
@@ -84,42 +106,39 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
       // Get the current offset value from the available offsets
       const currentOffset = availableOffsets[selectedOffsetIndex];
       console.log(`Selected offset index changed to ${selectedOffsetIndex}, using offset: ${currentOffset}`);
+      
+      // Always pass the current single offset value
       calculateChordsWithOffset(currentOffset);
     }
   }, [selectedOffsetIndex, availableOffsets]);
   
-  // Calculate scale notes whenever the selected root changes
   // Sync displayRoot with selectedRoot when it changes from outside
   useEffect(() => {
     setDisplayRoot(selectedRoot);
   }, [selectedRoot]);
-
-  useEffect(() => {
-    if (selectedRoot) {
-      const scale = calculateScale(selectedRoot, scaleType);
-      setScaleNotes(scale);
-      console.log(`Calculated ${scaleType} scale for root ${selectedRoot}:`, scale);
-    } else {
-      setScaleNotes([]);
-    }
-  }, [selectedRoot, scaleType]);
+  
+  // We don't need the separate scale calculation useEffect anymore
+  // as the scale is now calculated in calculateChordsWithOffset
+  // and stored directly in setScaleNotes
   
   // Function to calculate chords with a specific offset
   const calculateChordsWithOffset = (offset) => {
     if (!selectedRoot || selectedChords.length === 0 || !chordTypes) return;
     
+    console.log('calculateChordsWithOffset called with offset:', offset);
+    
     const chordData = [];
     
-    // Process first chord - ALWAYS use the original selected root (no offset)
+    // Process first chord
     if (selectedChords.length > 0) {
       const firstChordId = selectedChords[0];
       const firstChordType = findChordTypeByClassName(chordTypes, firstChordId);
       
-      if (firstChordType) {
-        // First chord ALWAYS uses the original root note (e.g., C) with NO OFFSET
-        const firstRoot = selectedRoot; // Always use the original selected root
+      // If we only have one chord, calculate it using the original method
+      if (firstChordType && selectedChords.length === 1) {
+        const firstRoot = selectedRoot;
         const firstFullName = getFullChordName(firstRoot, firstChordType.name);
-        const firstNotes = calculateChordNotes(firstRoot, firstChordType.intervals);
+        const firstNotes = calculateChordNotes(firstRoot, firstChordType);
         
         chordData.push({
           id: firstChordId,
@@ -129,29 +148,59 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
           root: firstRoot
         });
       }
-    }
-    
-    // Process second chord with offset root if available
-    if (selectedChords.length > 1) {
-      const secondChordId = selectedChords[1];
-      const secondChordType = findChordTypeByClassName(chordTypes, secondChordId);
-      
-      if (secondChordType && chordData.length > 0) {
-        // Apply offset ONLY to the second chord
-        // This is where we use the offset to calculate a different root note
-        const offsetRoot = getOffsetRoot(selectedRoot, offset);
-        console.log(`Applying offset ${offset} to root ${selectedRoot} gives ${offsetRoot}`);
+      // If we have two chords, use the new calculateTwoChords function
+      else if (firstChordType && selectedChords.length > 1) {
+        const secondChordId = selectedChords[1];
+        const secondChordType = findChordTypeByClassName(chordTypes, secondChordId);
         
-        const secondFullName = getFullChordName(offsetRoot, secondChordType.name);
-        const secondNotes = calculateChordNotes(offsetRoot, secondChordType.intervals);
-        
-        chordData.push({
-          id: secondChordId,
-          fullName: secondFullName,
-          notes: secondNotes,
-          chordType: secondChordType,
-          root: offsetRoot
-        });
+        if (secondChordType) {
+          console.log('Using calculateTwoChords with:', {
+            root: selectedRoot,
+            firstChord: firstChordType,
+            secondChord: secondChordType,
+            offset: offset
+          });
+          
+          // Use our new function to calculate both chords and the scale
+          // Always pass a single offset value
+          console.log(`Using offset: ${offset}`);
+          const result = calculateTwoChords(selectedRoot, firstChordType, secondChordType, offset);
+          console.log('calculateTwoChords result:', result);
+          
+          // Always respect the original chord selection order for display
+          // First selected chord
+          chordData.push({
+            id: selectedChords[0],
+            fullName: getFullChordName(
+              selectedChords[0] === firstChordId ? result.firstChord.root : result.secondChord.root,
+              selectedChords[0] === firstChordId ? result.firstChord.type : result.secondChord.type
+            ),
+            notes: selectedChords[0] === firstChordId ? result.firstChord.notes : result.secondChord.notes,
+            chordType: selectedChords[0] === firstChordId ? firstChordType : secondChordType,
+            root: selectedChords[0] === firstChordId ? result.firstChord.root : result.secondChord.root
+          });
+          
+          // Second selected chord
+          chordData.push({
+            id: selectedChords[1],
+            fullName: getFullChordName(
+              selectedChords[1] === secondChordId ? result.secondChord.root : result.firstChord.root,
+              selectedChords[1] === secondChordId ? result.secondChord.type : result.firstChord.type
+            ),
+            notes: selectedChords[1] === secondChordId ? result.secondChord.notes : result.firstChord.notes,
+            chordType: selectedChords[1] === secondChordId ? secondChordType : firstChordType,
+            root: selectedChords[1] === secondChordId ? result.secondChord.root : result.firstChord.root
+          });
+          
+          // Store the scale for later use
+          // Always use the scale directly since we're passing a single offset
+          if (result.scale) {
+            console.log(`Using scale:`, result.scale);
+            setScaleNotes(result.scale);
+          } else {
+            console.warn('No scale found in result');
+          }
+        }
       }
     }
     
@@ -163,14 +212,14 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
       const notesMap = new Map();
       
       // Process notes from first chord
-      if (chordData[0]) {
+      if (chordData[0] && chordData[0].notes && Array.isArray(chordData[0].notes)) {
         chordData[0].notes.forEach(note => {
           notesMap.set(note, { note, inFirstChord: true, inSecondChord: false });
         });
       }
       
       // Process notes from second chord
-      if (chordData[1]) {
+      if (chordData[1] && chordData[1].notes && Array.isArray(chordData[1].notes)) {
         chordData[1].notes.forEach(note => {
           if (notesMap.has(note)) {
             // Update existing entry if note is in both chords
@@ -190,7 +239,6 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
       setAllNotes(notesArray);
       
       // Calculate electron notes (notes from the chromatic scale that don't appear in the current scale)
-      const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
       const scaleNotes = new Set(notesArray.map(noteData => noteData.note));
       const electrons = flatNotes.filter(note => !scaleNotes.has(note));
       

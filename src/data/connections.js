@@ -547,6 +547,7 @@ export const chordRootOffsets = {
 
     "three_three":1, // x 
     "three_five":[6,-3],  // x
+    "three_one":-11,
     "three_eight":1, // x
     "three_sixteen":-9, // x
     "three_eighteen":6,  // x
@@ -633,7 +634,7 @@ export const chordRootOffsets = {
     "nineteen_ten":-11,
     "nineteen_eighteen":-6, // x
     "nineteen_twentyOne":1,   // x 
-"fifteen_nineteen":[-11,-8,-7], 
+    "nineteen_fifteen":[-11,-8,-5],
     
    
     
