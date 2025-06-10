@@ -365,6 +365,8 @@ export const connections2 = [
         classNames:[ "sixteenToThree"],
         svg: "sixteenToThree"
     },
+
+
     {
         chords: ["five","fifteen"],
         classNames:[ "fifteenToFive1","fifteenToFive2"]
@@ -381,6 +383,8 @@ export const connections2 = [
         chords: ["five","sixteen"],
         classNames:[ "sixteenToFive1"]
     },
+
+
     {
         chords: ["eight","fifteen"],
         classNames:[ "fifteenToEight1","fifteenToEight2"]
@@ -393,6 +397,9 @@ export const connections2 = [
         chords: ["eight","ten"],
         classNames:[ "eightToTen1","eightToTen2"]
     },
+
+
+
     {
         chords: ["ten","twelve"],
         classNames:[ "tenToTwelve1"]
@@ -405,10 +412,14 @@ export const connections2 = [
         chords: ["ten","nineteen"],
         classNames:[ "nineteenToTen1","nineteenToTen2"]
     },
+
+
     {
         chords: ["thirteen","one"],
         classNames:[ "oneToThirteen1"]
     },
+
+
     {
         chords: ["fifteen","nineteen"],
         classNames:[ "fifteenToNineteen1","fifteenToNineteen2","fifteenToNineteen3"],
@@ -426,6 +437,8 @@ export const connections2 = [
         chords: ["fifteen","sixteen"],
         classNames:[ "fifteenToSixteen"],
     },
+
+
     {
         chords: ["sixteen","eighteen"],
         classNames:[ "sixteenToEighteen"],
@@ -443,6 +456,8 @@ export const connections2 = [
         chords: ["seventeen","eighteen"],
         classNames:[ "seventeenToEighteen"],
     },
+
+     
     {
         chords: ["nineteen","eighteen"],
         classNames:[ "eighteenToNineteen"],
@@ -470,7 +485,8 @@ export const chordTypes = [
     {
         className: "five",
         name: "7sus4",
-        intervals: ["0","4","5","b7"],
+     //intervals: ["0","4","5","b7"],
+        intervals: ["0","2","4","5"],
     },
     {
         className: "eight",
@@ -540,108 +556,126 @@ export const chordRootOffsets = {
     // Multiple offsets example: "one_three": [1, 4, 7] for different scale options
     
     
-    "one_one": 1,  // x 
-    "one_three":1,  // x 
-    "one_thirteen":1,  // x 
-    "one_twentyOne": -11,// x
+    "one_one": 1,  // original GOOD
+    "one_three":1,  // original GOOD
+    "three_one":-1, // GOOD
+    "one_twentyOne": 1,// original GOOD
+    "twentyOne_one": -1, // GOOD
+    "one_twelve":1, // original // GOOD
+    "twelve_one":-1, // GOOD
 
-    "three_three":1, // x 
-    "three_five":[6,-3],  // x
-    "three_one":-11,
-    "three_eight":1, // x
-    "three_sixteen":-9, // x
-    "three_eighteen":6,  // x
-    "three_nineteen":[1,4], 
-   // "three_nineteen":[-11,-8], // x
-   
-    
-    "five_five":1, // x
-    "five_three":[-6,9],  // x
-    "five_fifteen":9, // x
-    "five_sixteen":-11,  // x
-    "five_eighteen":-11,  // x
-    "five_nineteen":-6, // x
 
-    "eight_eight":1, // x
-    "eight_three":-11, 
-    "eight_ten":1, // falta o segundo
-    "eight_fifteen":-5,  // x
-    "eight_nineteen":-11, // x
-   //"eight_thirteen":-11,
-   // "eight_seventeen":7, // x
-    //"seventeen_eight":-5, // x
+    "three_three":1,// original GOOD
+    "three_five":[-6,3], // original GOOD
+    "five_three":[6,-3], // GOOD
+    "three_eight":1, // original GOOD
+    "eight_three":-1, // GOOD
+    "three_nineteen":[1,4],// original GOOD
+    "nineteen_three":[-1,-4], // GOOD
+  // // x
     
-    "ten_twelve":1,
-    "ten_eight":-11,
-    "ten_ten":1,
-    "ten_thirteen":-11, 
-    "ten_fifteen":-11, // x
-    "ten_nineteen":1,
-    "ten_nineteen":-11, // x
+    "five_five":1, // original
+    
+      
+    "eight_eight":1, // original GOOD
+    "eight_ten":-1,// original GOOD
+    "ten_eight":1, // GOOD
+    "eight_seventeen":7, // original GOOD
+    "seventeen_eight":-7, // GOOD
+
    
-    
-    "twelve_twelve": 1,
-    "twelve_ten":-11,
-    "thirteen_twelve":-11,
-    "twelve_thirteen":1,
-    "twelve_twentyOne":1,
+   
   
     
-    "thirteen_twelve": 1,
-    "thirteen_thirteen": 1,
-    "thirteen_fifteen":1,
-    "thirteen_one": 1,
+    "ten_ten":1, // original
+    "ten_twelve":-1,// originalGOOD
+    "twelve_ten":1, // GOOD
+    "ten_nineteen":1,// original GOOD
+    "nineteen_ten":-1, // GOOD
+  //"ten_thirteen":-11, 
+   
+   
+    
+    "twelve_twelve": 1, // GOOD
+  //"twelve_ten":-11,
+  "twelve_thirteen":1, // GOOD
+  "thirteen_twelve": 1, // GOOD
+
+  
+  
+  // "thirteen_twelve": 1,
+  "thirteen_thirteen": 1, // GOOD
+   "thirteen_fifteen":1, // original  GOOD
+   "fifteen_thirteen":-1, // GOOD
+    "thirteen_one": 1, // original GOOD
+    "one_thirteen":-1,  // GOOD
     //"thirteen_eight":1,
     //"thirteen_ten":1, 
     
-    "fifteen_fifteen":1, 
-    "fifteen_thirteen":-11,
-    "fifteen_three":[1,4], // x
-    "fifteen_five":-3,  // x
-    "fifteen_eight":7,  // x
-    "fifteen_ten":1, // x
-    "fifteen_sixteen":-3, // x
-    "fifteen_nineteen":[1,4,7], // x
+    "fifteen_fifteen":1, // original GOOD
+    "fifteen_three":[1,4],// original
+
+    "fifteen_five":-3, // original GOOD
+    "five_fifteen":3, //GOOD
     
+    "fifteen_eight":1,  // original GOOD
+    "eight_fifteen":-1,  // GOOD
+    "fifteen_ten":1,// original GOOD
+    "ten_fifteen":-1, // GOOD
+    "fifteen_sixteen":-3, // original GOOD
+    "sixteen_fifteen":3, // GOOD
+    "fifteen_nineteen":[1,4,7], // original GOOD
+    "nineteen_fifteen":[-1,-4,-7], // GOOD
    
-    "sixteen_sixteen":1, // x completo
-    "sixteen_three":3, // x
-    "sixteen_five":1,  // x
-    "sixteen_fifteen":9, // x
-    "sixteen_seventeen":1, 
-    "sixteen_eighteen":-2, //  x
+    "sixteen_sixteen":1,// original GOOD
+    "sixteen_three":3, // original GOOD
+    "three_sixteen":-3, // GOOD
+    "sixteen_five":1, // GOOD
+    "five_sixteen":-1,  //  GOOD
+  //"sixteen_fifteen":3, // x
+
+    "sixteen_seventeen":-1, // original GOOD
+    "seventeen_sixteen":1, // GOOD   
+    "sixteen_eighteen":-2, // original GOOD
+    "eighteen_sixteen":-2, //  GOOD
     
-    
-    "seventeen_seventeen":1, // x completo
-    "seventeen_eighteen":2, // x
-    "seventeen_sixteen":-11, 
+    "seventeen_seventeen":1, // original GOOD
+    "seventeen_eighteen":-2,// original GOOD
+    "eighteen_seventeen":2, // GOOD
     
 
-    "eighteen_eighteen":1,  // x  completo
-    "eighteen_three":6,  // x
-    "eighteen_five":1,  // x
-    "eighteen_sixteen":-10, //  x   
-    "eighteen_seventeen":-10, // x
-    "eighteen_nineteen":6, // x
-    //"eighteen_eight":6,    // x
-    //"eight_eighteen":6,    // x
+    "eighteen_eighteen":1,  // original GOOD
+    "eighteen_three":6, // original GOOD
+    "three_eighteen":-6, // GOOD
+ 
+    "eighteen_five":1, // original non tabby
+    "five_eighteen":-1, // non tabby
+ 
+  
+    "eighteen_nineteen":6, // original GOOD
+    "nineteen_eighteen":-6, // GOOD
+    "eighteen_eight":6, // original GOOD
+    "eight_eighteen":-6, // GOOD
+       
     
-    
-    "nineteen_nineteen":1, // x
-    "nineteen_three":[-11,-8], // x
-    "nineteen_five":6, // x
-    "nineteen_eight":1, // x
-    "nineteen_ten":-11,
-    "nineteen_eighteen":-6, // x
-    "nineteen_twentyOne":1,   // x 
-    "nineteen_fifteen":[-11,-8,-5],
+    "nineteen_nineteen":1,// original GOOD
+   
+
+    "nineteen_five":6, // original GOOD
+    "five_nineteen":-6, // GOOD
+    "nineteen_eight":1, // original GOOD
+    "eight_nineteen":-1, // GOOD
+   
+ 
+    "nineteen_twentyOne":-1,//original GOOD
+  
     
    
     
     
     
     "twentyOne_twentyOne": 1,// x
-    "twentyOne_one": 1,// x
+   
     "twentyOne_twelve":-11,
     "twentyOne_nineteen":-11,    // x
    
