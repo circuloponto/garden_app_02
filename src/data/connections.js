@@ -632,12 +632,14 @@ export const chordRootOffsets = {
     "three_sixteen":-3, // GOOD
     "sixteen_five":1, // GOOD
     "five_sixteen":-1,  //  GOOD
+ "sixteen_eighteen":-2,//original
+ "eighteen_sixteen":2,// 
   //"sixteen_fifteen":3, // x
 
     "sixteen_seventeen":-1, // original GOOD
     "seventeen_sixteen":1, // GOOD   
-    "sixteen_eighteen":-2, // original GOOD
-    "eighteen_sixteen":-2, //  GOOD
+  //"sixteen_eighteen":2, // original GOOD
+  //"eighteen_sixteen":-2, //  GOOD
     
     "seventeen_seventeen":1, // original GOOD
     "seventeen_eighteen":-2,// original GOOD
@@ -648,8 +650,8 @@ export const chordRootOffsets = {
     "eighteen_three":6, // original GOOD
     "three_eighteen":-6, // GOOD
  
-    "eighteen_five":1, // original non tabby
-    "five_eighteen":-1, // non tabby
+    "eighteen_five":-1,// original non unique
+    "five_eighteen":1, // GOOD
  
   
     "eighteen_nineteen":6, // original GOOD
