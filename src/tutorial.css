@@ -38,20 +38,44 @@ body[data-tutorial-step="2"] .connection,
 .tutorial-step-2 .connection {
   z-index: 1001 !important;
   pointer-events: auto !important;
-  background: #00e1ff !important;
+  filter: drop-shadow(0 0 10px #00e1ff) brightness(1.8) !important;
+  -webkit-filter: drop-shadow(0 0 10px #00e1ff) brightness(1.8) !important;
+  outline: none !important;
 }
 
 /* Target SVG connections specifically with #00e1ff color */
-body[data-tutorial-step="2"] img[alt="connection-svg"],
-.tutorial-step-2 img[alt="connection-svg"] {
+body[data-tutorial-step="2"] .allConnections img,
+.tutorial-step-2 .allConnections img {
   filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
   -webkit-filter: brightness(0) saturate(100%) invert(77%) sepia(62%) saturate(757%) hue-rotate(156deg) brightness(103%) contrast(98%) !important;
+  opacity: 1 !important;
+}
+
+/* Target div connections specifically */
+body[data-tutorial-step="2"] .allConnections div.connection,
+.tutorial-step-2 .allConnections div.connection {
+  background-color: #00e1ff !important;
+  opacity: 1 !important;
 }
 
 body[data-tutorial-step="2"] .element,
 .tutorial-step-2 .element {
   opacity: 1!important;
   transition: opacity 0.3s ease;
+}
+
+/* Target squared class with just blue borders */
+body[data-tutorial-step="2"] .squared,
+.tutorial-step-2 .squared {
+  border: 2px dashed #00e1ff !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+/* Make sure all connections are visible in step 2 */
+body[data-tutorial-step="2"] .allConnections,
+.tutorial-step-2 .allConnections {
+  opacity: 1 !important;
 }
 
 .tutorial-modal {
