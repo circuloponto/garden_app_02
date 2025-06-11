@@ -146,8 +146,22 @@ function App() {
           console.log('Same chord clicked twice in connections mode - creating scale');
           setSelectedChords([chord, chord]);
         } else {
-          // Clicking a different chord when one is already selected
-          setSelectedChords([first, chord]);
+          // Check if a connection exists in either direction
+          const isValidPair = connections.some(
+            c =>
+              (c.from === first && c.to === chord) ||
+              (c.from === chord && c.to === first)
+          );
+          console.log('Is valid pair in connections mode?', isValidPair);
+          
+          if (isValidPair) {
+            // If it's a valid pair, select both chords
+            setSelectedChords([first, chord]);
+          } else {
+            // If it's not a valid pair, make the new chord the first selected chord
+            console.log('Not a valid pair in connections mode, setting new first chord:', chord);
+            setSelectedChords([chord]);
+          }
         }
       } else if (selectedChords.length === 2) {
         // If two chords are already selected
