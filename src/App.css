@@ -1517,6 +1517,7 @@ transform-origin: bottom;
 }
 
 .scaleTab {
+  position: relative; /* Add position relative to contain the absolute positioned ::before element */
   padding: 6px 12px 6px 35px;
   border-radius: 23px;
   border-top-right-radius: 5px;
