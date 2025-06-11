@@ -1,7 +1,7 @@
 .matrix-container {
   position: fixed;
   top: 45px;
-  left: 70px;
+  left: 115px;
  /*  transform: translate(-50%, -50%); */
   background-color: rgb(0, 0, 0);
   border-radius: 10px;
@@ -16,7 +16,7 @@
 .matrix-collapsed {
   position: fixed;
   top: 285px;
-  left: 70px;
+  left: 115px;
   width: 50px;
   height: 50px;
   background-color: #00cc00;
@@ -112,12 +112,12 @@
   from {
     opacity: 0;
     top: 20px;
-    left: 70px;
+    left: 115px;
   }
   to {
     opacity: 1;
     top: 40px;
-    left: 70px;
+    left: 115px;
   }
 }
 
