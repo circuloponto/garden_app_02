@@ -1045,16 +1045,18 @@ transform-origin: bottom;
 }
 
 .selected-chord::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border: 5px solid #00e1ff;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: -1; /* Ensure it doesn't affect layout */
+  content: '';
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: -3px;
+  left: -3px;
+  right: -10px;
+  bottom: -10px;
+  border: 5px solid #00e1ff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .first-selected-chord {
@@ -1062,16 +1064,18 @@ transform-origin: bottom;
 }
 
 .first-selected-chord::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border: 5px solid #f08c00;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: -1; /* Ensure it doesn't affect layout */
+  content: '';
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: -3px;
+  left: -3px;
+  right: -10px;
+  bottom: -10px;
+  border: 5px solid #f08c00;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
 }
 /* Hide the after pseudo-element by default */
 .first-selected-chord::after {

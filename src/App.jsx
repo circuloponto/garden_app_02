@@ -193,7 +193,9 @@ function App() {
       // List of class names that should not trigger deselection
       const nonDeselectClasses = ['element', 'chord', 'selected-chord', 'first-selected-chord', 'dittoScale',
                                  'connected-chord', 'possible-chord', 'deselect-button', 'controls', 'button',
-                                 'tutorial-modal', 'tutorial-buttons', 'sidebar'];
+                                 'tutorial-modal', 'tutorial-buttons', 'sidebar', 'infoBox', 'infoSection',
+                                 'arrow-left', 'arrow-right', 'notes-wrapper', 'notesContainer', 'sectionContent',
+                                 'infoTitle', 'chordName', 'play-button', 'play-icon', 'titleRow', 'scaleTabs', 'scaleTab'];
       
       // Check if the element or any parent up to 3 levels has one of these classes
       let currentElement = element;
