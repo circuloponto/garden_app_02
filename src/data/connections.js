@@ -515,8 +515,8 @@ export const chordRootOffsets = {
 
 
     "three_three":1,// original GOOD
-    "three_five":[-6,3], // original GOOD
-    "five_three":[6,-3], // GOOD
+    "three_five":[6,-3], // original GOOD
+    "five_three":[6,3], // GOOD
     "three_eight":1, // original GOOD
     "eight_three":-1, // GOOD
     "three_nineteen":[1,4],// original GOOD
