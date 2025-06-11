@@ -333,6 +333,28 @@
    transform: rotate(0deg);
    transform-origin: bottom;
 }
+.eightToSixteen{
+    position: absolute;
+    top:50%;
+    left: 49.3%;
+    transform: rotate(-45deg);
+    height: 80px;
+    width: 1px;
+    background: rgb(255, 255, 255);
+   
+   transform-origin: bottom;
+}
+.eightToEighteen{
+  position: absolute;
+  top:50%;
+  left: 51.6%;
+  transform: rotate(45deg);
+  height: 80px;
+  width: 1px;
+  background: rgb(255, 255, 255);
+ 
+ transform-origin: bottom;
+}
 .tenToTwelve1{
     position: absolute;
     top:83%;
@@ -750,6 +772,7 @@ transform-origin: bottom;
     height:45%;
     
 }
+
 .sixteenToThree{
     position: absolute;
     top: 22%;
@@ -1645,7 +1668,7 @@ background-color: #2ecc71; /* Green circle for active tab */
   border-radius: 12px;
     font-size: 18px;
     border: 2px solid #9c36b5;
-
+padding: 15px 15px;
     width: 30px;
     height: 30px;
     line-height: 30px;
