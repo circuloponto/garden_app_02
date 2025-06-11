@@ -430,7 +430,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
             <div className="sectionTitle">Electrons:</div>
             <div className="sectionContent">
                 {electronNotes.map((note, index) => (
-                    <span key={index} className='infoElectrons'>{note}</span>
+                    <span key={index}id="electron" className='infoElectrons'>{note}</span>
                 ))}
                 {electronNotes.length === 0 && <span>No electron notes to display</span>}
             </div>

@@ -11,7 +11,7 @@ import Inspector from './components/Inspector'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
-import logo from './assets/SVGs/logo.svg'
+import Logo from './components/Logo'
 
 import './App.css'
 import './tutorial.css' 
@@ -268,7 +268,7 @@ function App() {
     chordRootOffsets={chordRootOffsets} 
   />
   <div className="logo">
-    <img src={logo} width={100} height={100} alt="" />
+    <Logo fill="white" stroke="white" />
   </div>
 </>
         <Sidebar 
