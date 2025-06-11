@@ -45,10 +45,6 @@ const Matrix = ({ isVisible, onRootChange, selectedRoot, isExpanded, setIsExpand
     // No action needed as we're just using the selectedRoot prop
   }, [selectedRoot]);
 
-  if (!isVisible) {
-    return null;
-  }
-
   // If matrix is not expanded, don't render anything
   // The RootSelector will now handle the collapsed state
   if (!isExpanded) {

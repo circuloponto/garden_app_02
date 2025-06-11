@@ -260,7 +260,7 @@ function App() {
           selectedRoot={selectedRoot} 
           onToggleSlides={() => setShowSlides(prev => !prev)} 
           onToggleMatrix={() => setMatrixExpanded(prev => !prev)}
-          matrixExpanded={!matrixExpanded && selectedChords.length === 2}
+          matrixExpanded={matrixExpanded}
         />
         <div className="content-wrapper">
           {showSlides ? (
@@ -288,9 +288,9 @@ function App() {
                 }}
               />
               
-              {/* Show Matrix when exactly two chords are selected */}
+              {/* Show Matrix regardless of chord selection state */}
               <Matrix 
-                isVisible={selectedChords.length === 2} 
+                isVisible={true} 
                 onRootChange={(note) => {
                   console.log('Matrix changing root to:', note);
                   // Force update the root selector by setting the state directly
