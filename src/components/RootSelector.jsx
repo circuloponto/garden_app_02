@@ -2,13 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'], onRootChange, selectedRoot, onToggleMatrix, matrixExpanded }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
   const selectorRef = useRef(null);
-  
-  // Threshold for drag distance to trigger a note change
-  const dragThreshold = 20;
   
   // Function to change the note
   const changeNote = (direction) => {
@@ -26,33 +21,29 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
       return newIndex;
     });
     
-    // Force stop dragging
-    setIsDragging(false);
-    
     // Reset after transition completes
     setTimeout(() => {
       setIsChanging(false);
     }, 600);
   };
   
-  // Handle mouse down - start dragging
-  const handleMouseDown = (e) => {
-    if (isChanging) return; // Don't start dragging during transitions
-    setIsDragging(true);
-    setStartX(e.clientX);
-  };
-  
-  // Handle click to toggle matrix
-  const handleClick = (e) => {
-    // If we're not dragging (just a simple click), toggle the matrix
-    if (!isDragging && !isChanging && onToggleMatrix) {
+  // Handle click on the selector to toggle matrix
+  const handleSelectorClick = () => {
+    if (!isChanging && onToggleMatrix) {
       onToggleMatrix();
     }
   };
   
-  // Handle mouse up - stop dragging
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  // Handle click on left arrow
+  const handleLeftArrowClick = (e) => {
+    e.stopPropagation(); // Prevent the click from bubbling up to the selector
+    changeNote(-1);
+  };
+  
+  // Handle click on right arrow
+  const handleRightArrowClick = (e) => {
+    e.stopPropagation(); // Prevent the click from bubbling up to the selector
+    changeNote(1);
   };
   
   // Initialize root note on component mount
@@ -72,54 +63,22 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
     }
   }, [selectedRoot, options]);
   
-  // Global mouse events
-  useEffect(() => {
-    // Only add listeners if we're dragging
-    if (!isDragging) return;
-    
-    // Mouse move handler
-    const handleMouseMove = (e) => {
-      if (!isDragging || isChanging) return;
-      
-      const currentDragDistance = e.clientX - startX;
-      
-      // Check if we've dragged past the threshold
-      if (Math.abs(currentDragDistance) > dragThreshold) {
-        const direction = currentDragDistance > 0 ? 1 : -1;
-        changeNote(direction);
-      }
-    };
-    
-    // Mouse up handler - force stop dragging
-    const handleGlobalMouseUp = () => {
-      setIsDragging(false);
-    };
-    
-    // Add event listeners
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleGlobalMouseUp);
-    document.addEventListener('mouseleave', handleGlobalMouseUp);
-    
-    // Clean up
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
-      document.removeEventListener('mouseleave', handleGlobalMouseUp);
-    };
-  }, [isDragging, isChanging, startX, options.length, dragThreshold]);
-  
   return (
     <div className="root-selector-container">
+      <div className="root-selector-arrow left-arrow" onClick={handleLeftArrowClick}>
+        &#9664;
+      </div>
       <div 
-        className={`root-selector ${isDragging ? 'dragging' : ''} ${isChanging ? 'changing' : ''} ${matrixExpanded ? 'matrix-active' : ''}`} 
+        className={`root-selector ${isChanging ? 'changing' : ''} ${matrixExpanded ? 'matrix-active' : ''}`} 
         ref={selectorRef}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onClick={handleClick}
+        onClick={handleSelectorClick}
       >
         <div className="root-selector-value">
           {options[selectedIndex]}
         </div>
+      </div>
+      <div className="root-selector-arrow right-arrow" onClick={handleRightArrowClick}>
+        &#9654;
       </div>
       <div className="root-selector-label">
         <span>choose root</span>

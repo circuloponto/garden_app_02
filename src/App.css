@@ -34,7 +34,7 @@
     align-items: flex-start;
     position: absolute;
     top: 40px;
-    left: 20px;
+    left: 35px;
     z-index: 100;
 }
 
@@ -97,7 +97,9 @@
     display: flex;
     align-items: center;
     margin: 10px 0;
+    margin: 10px 0 10px -37px;
     position: relative;
+    justify-content: center;
 }
 
 .root-selector-label {
@@ -183,8 +185,34 @@
     margin: 0;
     text-align: center;
     width: 100%;
-    position: absolute;
-    left: 0;
+}
+
+/* Styling for the arrow buttons */
+.root-selector-arrow {
+  cursor: pointer;
+  color: white;
+  font-size: 10px;
+  padding: 5px;
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 30%;
+  width: 15px;
+  height: 15px;
+  transition: all 0.3s ease;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.root-selector-arrow:hover {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.root-selector-arrow:active {
+    transform: scale(0.9);
 }
 
 /* Hint removed */
