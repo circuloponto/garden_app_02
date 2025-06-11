@@ -80,9 +80,7 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
       <div className="root-selector-arrow right-arrow" onClick={handleRightArrowClick}>
         &#9654;
       </div>
-      <div className="root-selector-label">
-        <span>choose root</span>
-      </div>
+      {/* Tooltip removed */}
     </div>
   );
 };

@@ -117,10 +117,12 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    display: none !important;
+    visibility: hidden !important;
 }
 
 .root-selector-container:hover .root-selector-label {
-    opacity: 1;
+    opacity: 0; /* Changed from 1 to 0 to hide the tooltip on hover */
 }
 
 .root-selector {
