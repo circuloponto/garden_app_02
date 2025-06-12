@@ -6,6 +6,13 @@ import { flatNotes, getNoteIndex, calculateChordNotes, calculateTwoChords } from
 // Import some functions we still need from the original calculator
 import { getFullChordName, findChordTypeByClassName, getOffsetRoot } from '../utils/noteCalculator'
 
+// Function to format chord names by replacing 'min'/'Min' with '-' and 'dim' with '°'
+const formatChordName = (chordName) => {
+  return chordName
+    .replace(/[Mm]in/g, '-')  // Match both 'min' and 'Min'
+    .replace(/dim/g, '°');
+};
+
 const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange }) => {
   // Internal display root for ordering notes, without affecting the app's selectedRoot
   const [displayRoot, setDisplayRoot] = useState(selectedRoot);
@@ -349,11 +356,11 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
               <div className="chordName">
                 {calculatedChords.length > 0 ? (
                   <>
-                    <span className='firstChord'>{calculatedChords[0].fullName}</span>
+                    <span className='firstChord'>{formatChordName(calculatedChords[0].fullName)}</span>
                     {calculatedChords.length > 1 && (
                       <>
                         <span className='plus'>&</span>
-                        <span className='secondChord'>{calculatedChords[1].fullName}</span>
+                        <span className='secondChord'>{formatChordName(calculatedChords[1].fullName)}</span>
                       </>
                     )}
                   </>

@@ -28,7 +28,10 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
   };
   
   // Handle click on the selector to toggle matrix
-  const handleSelectorClick = () => {
+  const handleSelectorClick = (e) => {
+    // Stop event propagation to prevent deselecting chords
+    e.stopPropagation();
+    
     if (!isChanging && onToggleMatrix) {
       onToggleMatrix();
     }
@@ -71,7 +74,7 @@ const RootSelector = ({ options = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'A
       <div 
         className={`root-selector ${isChanging ? 'changing' : ''} ${matrixExpanded ? 'matrix-active' : ''}`} 
         ref={selectorRef}
-        onClick={handleSelectorClick}
+        onClick={(e) => handleSelectorClick(e)}
       >
         <div className="root-selector-value">
           {options[selectedIndex]}

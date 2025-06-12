@@ -27,8 +27,7 @@ const Matrix = ({ isVisible, onRootChange, selectedRoot, isExpanded, setIsExpand
     if (onRootChange) {
       // Update the root note without affecting other components
       onRootChange(note);
-      // Collapse after selecting a note
-      setIsExpanded(false);
+      // No longer collapse after selecting a note - matrix stays open
     }
   };
   
