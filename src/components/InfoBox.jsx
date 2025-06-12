@@ -115,10 +115,15 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     }
   }, [selectedOffsetIndex, availableOffsets]);
   
-  // Sync displayRoot with selectedRoot when it changes from outside
+  // Reset displayRoot to selectedRoot when any of these change:
+  // - selectedRoot: When user selects a new root note
+  // - selectedChords: When user selects different chords
+  // - selectedOffsetIndex: When user selects a different scale offset
   useEffect(() => {
+    // This ensures the scale always starts from the proper root
+    // whenever any of the key inputs change
     setDisplayRoot(selectedRoot);
-  }, [selectedRoot]);
+  }, [selectedRoot, selectedChords, selectedOffsetIndex]);
   
   // We don't need the separate scale calculation useEffect anymore
   // as the scale is now calculated in calculateChordsWithOffset
