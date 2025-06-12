@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Button = ({ title, stateOptions = [], setViewMode, icon: Icon }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const Button = ({ title, stateOptions = [], setViewMode, icon: Icon, activeState }) => {
+  // Initialize internal state from props, but only on first render
+  const [activeIndex, setActiveIndex] = useState(activeState !== undefined ? activeState : 0);
+
+  // Update internal state when prop changes
+  useEffect(() => {
+    if (activeState !== undefined) {
+      setActiveIndex(activeState);
+    }
+  }, [activeState]);
 
   const toggleState = () => {
-    setActiveIndex(prev => (prev === 0 ? 1 : 0));
+    // When toggling, always call the parent's callback function
+    // This ensures the parent component updates its state
     if (setViewMode) {
-      setViewMode(prev => (prev === 'connections' ? 'fruits' : 'connections'));
+      setViewMode();
     }
+    
+    // Only update local state if not controlled by parent
+    if (activeState === undefined) {
+      const newIndex = activeIndex === 0 ? 1 : 0;
+      setActiveIndex(newIndex);
+    }
+    // Otherwise, the useEffect above will update our local state
+    // when the parent updates the activeState prop
   };
 
   const currentState = stateOptions[activeIndex] || '';

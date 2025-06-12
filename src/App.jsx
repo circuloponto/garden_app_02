@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import SlidePresentation from './components/SlidePresentation'
 import Matrix from './components/Matrix'
 import Inspector from './components/Inspector'
+import ElectronsDisplay from './components/ElectronsDisplay'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
 
@@ -25,6 +26,13 @@ function App() {
   const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
   const [matrixExpanded, setMatrixExpanded] = useState(false); // Control matrix expansion
   const [hoveredChord, setHoveredChord] = useState(null); // Track which chord is being hovered
+  // Control electrons display visibility with explicit true/false values
+  const [showElectrons, setShowElectrons] = useState(false);
+  
+  // Debug effect to monitor showElectrons state changes
+  useEffect(() => {
+    console.log('showElectrons state changed to:', showElectrons);
+  }, [showElectrons]);
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -259,25 +267,40 @@ function App() {
           </div>
         </div>
       )}
-<>
-  <Inspector 
-    hoveredChord={hoveredChord} 
-    selectedChords={selectedChords} 
-    selectedRoot={selectedRoot} 
-    chordTypes={chordTypes} 
-    chordRootOffsets={chordRootOffsets} 
-  />
-  <div className="logo">
-    <Logo fill="white" stroke="white" />
-  </div>
-</>
-        <Sidebar 
-          onRootChange={setSelectedRoot} 
-          selectedRoot={selectedRoot} 
-          onToggleSlides={() => setShowSlides(prev => !prev)} 
-          onToggleMatrix={() => setMatrixExpanded(prev => !prev)}
-          matrixExpanded={matrixExpanded}
-        />
+      
+      <Inspector 
+        hoveredChord={hoveredChord} 
+        selectedChords={selectedChords} 
+        selectedRoot={selectedRoot} 
+        chordTypes={chordTypes} 
+        chordRootOffsets={chordRootOffsets} 
+      />
+      
+      <div className="logo">
+        <Logo fill="white" stroke="white" />
+      </div>
+      
+      {/* ElectronsDisplay moved to scaler div */}
+      
+      <Sidebar 
+        onRootChange={setSelectedRoot} 
+        selectedRoot={selectedRoot} 
+        onToggleSlides={() => setShowSlides(prev => !prev)} 
+        onToggleMatrix={() => setMatrixExpanded(prev => !prev)}
+        matrixExpanded={matrixExpanded}
+        onToggleElectrons={() => {
+          // Log before state change
+          console.log('Before toggle - showElectrons:', showElectrons);
+          
+          // Use the functional form of setState to ensure we're working with the latest state
+          setShowElectrons(currentState => {
+            const newState = !currentState;
+            console.log('Setting showElectrons to:', newState);
+            return newState;
+          });
+        }}
+        showElectrons={showElectrons}
+      />
         <div className="content-wrapper">
           {showSlides ? (
             <SlidePresentation onClose={() => setShowSlides(false)} />
@@ -289,6 +312,7 @@ function App() {
   selectedChords={selectedChords} 
   possibleChords={possibleChords}
   onChordHover={setHoveredChord}
+  showElectrons={showElectrons}
 />
                 <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>

@@ -1,26 +1,27 @@
 import React from 'react'
 import Button from './button'
 import RootSelector from './RootSelector'
-import { FaEye, FaEyeSlash, FaChessBoard, FaSlidersH } from 'react-icons/fa'
+import { FaEye, FaEyeSlash, FaChessBoard, FaSlidersH, FaAtom } from 'react-icons/fa'
 
-const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot, onToggleMatrix, matrixExpanded }) => {
+const Sidebar = ({ onRootChange, onToggleSlides, selectedRoot, onToggleMatrix, matrixExpanded, onToggleElectrons, showElectrons }) => {
   return (
     <div className='buttons'>
       <Button 
         title="All Electrons" 
         stateOptions={['OFF', 'ON']} 
-        icon={FaChessBoard}
+        icon={FaAtom}
+        setViewMode={() => {
+          console.log('Sidebar: Calling onToggleElectrons directly');
+          onToggleElectrons();
+        }}
+        activeState={showElectrons ? 1 : 0}
       />
       <Button 
         title="Show Trichords" 
         stateOptions={['OFF', 'ON']} 
         icon={FaEye}
       />
-      <Button 
-        title="Hide Electrons" 
-        stateOptions={['OFF', 'ON']} 
-        icon={FaEyeSlash}
-      />
+   
       <RootSelector 
         options={['C', 'Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B']}
         onRootChange={onRootChange}

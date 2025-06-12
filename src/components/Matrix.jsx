@@ -63,7 +63,7 @@ const Matrix = ({ isVisible, onRootChange, selectedRoot, isExpanded, setIsExpand
           −
         </button>
       </div>
-      <div className={styles['matrix-grid']}>
+      <div className={styles['matrix-grid']} onClick={(e) => e.stopPropagation()}>
         {matrixRows.map((row, rowIndex) => (
           <div key={`row-${rowIndex}`} className={styles['matrix-row']}>
             {row.map((note, colIndex) => (

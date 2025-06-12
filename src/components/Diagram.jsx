@@ -1,4 +1,5 @@
 import Chord from "./Chord";
+import ElectronsDisplay from "./ElectronsDisplay";
 import Dash from '../assets/SVGs/Dash.svg';
 import Trigram from '../assets/SVGs/Trigram.svg';
 import TrigramHorizontal from '../assets/SVGs/TrigramHorizontal.svg';
@@ -17,9 +18,13 @@ import SixHorizontal from '../assets/SVGs/6horizontal.svg';
 import SevenHorizontal from '../assets/SVGs/7horizontal.svg';
 
 
-const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [], onChordHover }) => {
+const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [], onChordHover, showElectrons = false }) => {
+    // Debug log to check if showElectrons prop is being passed correctly
+    console.log('Diagram received showElectrons:', showElectrons);
     return (
-        <div className="diagram">
+        <div className="diagram" style={{ position: 'relative' }}>
+            {/* Render ElectronsDisplay component inside diagram with explicit positioning */}
+            {showElectrons && <ElectronsDisplay isVisible={true} />}
             <div className="vertical"> 
                 <Chord svg={Dash} className="one" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords} onChordHover={onChordHover}/>
                 <Chord svg={Trigram} className="two" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords} onChordHover={onChordHover}/>
