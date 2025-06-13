@@ -44,18 +44,48 @@
 .electron_oneToThree{
     position: absolute;
     top: 30px;
-    left: 260px;
-    width: 4%;
+    left: 257px;
+    width: 5%;
 }
 .electron_threeToFive1{
   position: absolute;
   top: 140px;
   left: 255px;
-  width: 4%;
+  width: 5%;
 }
 .electron_threeToFive2{
   position: absolute;
   top: 160px;
   left: 265px;
-  width: 4%;
+  width: 5%;
+}
+.electron_threeToNineteen1{
+  position: absolute;
+  top: 143px;
+  left: 315px;
+  width: 5%;
+}
+.electron_threeToNineteen2{
+  position: absolute;
+  top: 170px;
+  left: 325px;
+  width: 5%;
+}
+.electron_dittoThree{
+  position: absolute;
+  top: 80px;
+  left: 276px;
+  width: 5%;
+}
+.electron_threeToFifteen1{
+  position: absolute;
+  top: 140px;
+  left: 195px;
+  width: 5%;
+}
+.electron_threeToFifteen2{
+  position: absolute;
+  top: 170px;
+  left: 190px;
+  width: 5%;
 }
