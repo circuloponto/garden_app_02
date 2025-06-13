@@ -16,12 +16,20 @@
 
 
 
+@keyframes pulse {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(218, 119, 242, 0.7));
+  }
+  100% {
+    filter: drop-shadow(0 0 15px rgba(218, 119, 242, 1));
+  }
+}
+
 .electron-svg {
   width: 30%;
   height: 200px;
-  /* filter: drop-shadow(0 0 15px rgba(218, 119, 242, 0.9)); */
- /*  animation: pulse 3s infinite alternate; */
- /*  background-color: rgba(0, 0, 0, 0.3);  *//* Dark background for better visibility */
+  filter: drop-shadow(0 0 10px rgba(218, 119, 242, 0.9));
+  animation: pulse 0.3s infinite alternate;
   border-radius: 10px;
   padding: 20px;
   display: flex;
@@ -46,48 +54,64 @@
     top: 30px;
     left: 257px;
     width: 5%;
+    filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+    animation: pulse 2s infinite alternate;
 }
 .electron_threeToFive1{
   position: absolute;
   top: 140px;
   left: 255px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToFive2{
   position: absolute;
   top: 160px;
   left: 265px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToNineteen1{
   position: absolute;
   top: 143px;
   left: 315px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToNineteen2{
   position: absolute;
   top: 170px;
   left: 325px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_dittoThree{
   position: absolute;
   top: 80px;
   left: 276px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToFifteen1{
   position: absolute;
   top: 140px;
   left: 195px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToFifteen2{
   position: absolute;
   top: 170px;
   left: 190px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 
 .electron_threeToEighteen{
@@ -95,22 +119,30 @@
   top: 160px;
   left: 295px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_threeToSixteen{
   position: absolute;
   top: 160px;
   left: 220px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_fiveToNineteen{
   position: absolute;
   top: 215px;
   left: 340px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
 .electron_fiveToEighteen{
   position: absolute;
   top: 205px;
   left: 305px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
 }
