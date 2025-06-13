@@ -189,33 +189,33 @@
 }
 .electron_oneToThirteen{
   position: absolute;
-  top: 120px;
+  top: 125px;
   left: 100px;
-  width: 3.5%;
+  width: 3%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_oneToTwentyOne{
   position: absolute;
-  top: 120px;
+  top: 125px;
   left: 420px;
-  width: 3.5%;
+  width: 3%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_twelveToTwentyOne{
   position: absolute;
-  top: 365px;
+  top: 370px;
   left: 420px;
-  width: 3.5%;
+  width: 3%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_twelveToThirteen{
   position: absolute;
-  top: 365px;
+  top: 370px;
   left: 100px;
-  width: 3.5%;
+  width: 3%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
@@ -251,3 +251,100 @@
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
+.electron_eightToFifteen{
+  position: absolute;
+  top: 300px;
+  left: 170px;
+  width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eightToNineteen{
+  position: absolute;
+  top: 300px;
+  left: 340px;
+  width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_tenToFifteen{
+  position: absolute;
+  top: 350px;
+  left: 170px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_tenToNineteen{
+  position: absolute;
+  top: 350px;
+  left: 330px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eightToTen{
+  position: absolute;
+  top: 390px;
+  left: 252px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_tenToTwelve{
+  position: absolute;
+  top: 470px;
+  left: 257px;
+  width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_thirteenToFifteen{
+  position: absolute;
+  top: 250px;
+  left: 30px;
+  width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_fifteenToSixteen{
+  position: absolute;
+  top: 260px;
+  left: 140px;
+  width: 4%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_sixteenToSeventeen{
+  position: absolute;
+  top: 261px;
+  left: 220px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_seventeenToEighteen{
+  position: absolute;
+  top: 261px;
+  left: 305px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_sixteenToEighteen{
+  position: absolute;
+  top: 261px;
+  left: 305px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eighteenToNineteen{
+  position: absolute;
+  top: 261px;
+  left: 305px;
+  width: 7%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+  

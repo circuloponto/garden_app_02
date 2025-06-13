@@ -26,6 +26,18 @@ import electronSeventeenToEight from '../assets/SVGs/list/electron_seventeenToEi
 import electronFifteenToNineteen1 from '../assets/SVGs/list/electron_fifteenToNineteen1.svg';
 import electronFifteenToNineteen2 from '../assets/SVGs/list/electron_fifteenToNineteen2.svg';
 import electronFifteenToNineteen3 from '../assets/SVGs/list/electron_fifteenToNineteen3.svg';
+import electronEightToFifteen from '../assets/SVGs/list/electron_eightToFifteen.svg';
+import electronEightToNineteen from '../assets/SVGs/list/electron_eightToNineteen.svg';
+import electronTenToFifteen from '../assets/SVGs/list/electron_tenToFifteen.svg';
+import electronTenToNineteen from '../assets/SVGs/list/electron_tenToNineteen.svg';
+import electronEightToTen from '../assets/SVGs/list/electron_eightToTen.svg';
+import electronTenToTwelve from '../assets/SVGs/list/electron_tenToTwelve.svg';
+import electronThirteenToFifteen from '../assets/SVGs/list/electron_thirteenToFifteen.svg';
+import electronFifteenToSixteen from '../assets/SVGs/list/electron_fifteenToSixteen.svg';
+import electronSixteenToSeventeen from '../assets/SVGs/list/electron_sixteenToSeventeen.svg';
+import electronSeventeenToEighteen from '../assets/SVGs/list/electron_seventeenToEighteen.svg';
+import electronSixteenToEighteen from '../assets/SVGs/list/electron_sixteenToEighteen.svg';
+import electronEighteenToNineteen from '../assets/SVGs/list/electron_eighteenToNineteen.svg';
 
 
 
@@ -171,6 +183,66 @@ const ElectronsDisplay = ({ isVisible }) => {
           src={electronFifteenToNineteen3} 
           alt="Electron 25" 
           className={styles['electron_fifteenToNineteen3']} 
+        />   
+        <img 
+          src={electronEightToFifteen} 
+          alt="Electron 26" 
+          className={styles['electron_eightToFifteen']} 
+        />   
+        <img 
+          src={electronEightToNineteen} 
+          alt="Electron 27" 
+          className={styles['electron_eightToNineteen']} 
+        />   
+        <img 
+          src={electronTenToFifteen} 
+          alt="Electron 28" 
+          className={styles['electron_tenToFifteen']} 
+        />   
+        <img 
+          src={electronTenToNineteen} 
+          alt="Electron 29" 
+          className={styles['electron_tenToNineteen']} 
+        />    
+        <img 
+          src={electronEightToTen} 
+          alt="Electron 30" 
+          className={styles['electron_eightToTen']} 
+        />    
+        <img 
+          src={electronTenToTwelve} 
+          alt="Electron 31" 
+          className={styles['electron_tenToTwelve']} 
+        />    
+        <img 
+          src={electronThirteenToFifteen} 
+          alt="Electron 32" 
+          className={styles['electron_thirteenToFifteen']} 
+        />   
+        <img 
+          src={electronFifteenToSixteen} 
+          alt="Electron 33" 
+          className={styles['electron_fifteenToSixteen']} 
+        />   
+        <img 
+          src={electronSixteenToSeventeen} 
+          alt="Electron 34" 
+          className={styles['electron_sixteenToSeventeen']} 
+        />   
+        <img 
+          src={electronSeventeenToEighteen} 
+          alt="Electron 35" 
+          className={styles['electron_seventeenToEighteen']} 
+        />   
+        <img 
+          src={electronSixteenToEighteen} 
+          alt="Electron 36" 
+          className={styles['electron_sixteenToEighteen']} 
+        />   
+        <img 
+          src={electronEighteenToNineteen} 
+          alt="Electron 37" 
+          className={styles['electron_eighteenToNineteen']} 
         />   
     </div>
   );
