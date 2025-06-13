@@ -38,6 +38,15 @@ import electronSixteenToSeventeen from '../assets/SVGs/list/electron_sixteenToSe
 import electronSeventeenToEighteen from '../assets/SVGs/list/electron_seventeenToEighteen.svg';
 import electronSixteenToEighteen from '../assets/SVGs/list/electron_sixteenToEighteen.svg';
 import electronEighteenToNineteen from '../assets/SVGs/list/electron_eighteenToNineteen.svg';
+import electronNineteenToTwentyOne from '../assets/SVGs/list/electron_nineteenToTwentyOne.svg';
+import electronDittoFive from '../assets/SVGs/list/electron_dittoFive.svg';
+import electronDittoEight from '../assets/SVGs/list/electron_dittoEight.svg';
+import electronDittoTwelve from '../assets/SVGs/list/electron_dittoTwelve.svg';
+import electronDittoFifteen from '../assets/SVGs/list/electron_dittoFifteen.svg';
+import electronDittoSixteen from '../assets/SVGs/list/electron_dittoSixteen.svg';
+import electronDittoSeventeen from '../assets/SVGs/list/electron_dittoSeventeen.svg';
+import electronDittoEighteen from '../assets/SVGs/list/electron_dittoEighteen.svg';
+import electronDittoNineteen from '../assets/SVGs/list/electron_dittoNineteen.svg';
 
 
 
@@ -243,6 +252,51 @@ const ElectronsDisplay = ({ isVisible }) => {
           src={electronEighteenToNineteen} 
           alt="Electron 37" 
           className={styles['electron_eighteenToNineteen']} 
+        />   
+        <img 
+          src={electronNineteenToTwentyOne} 
+          alt="Electron 38" 
+          className={styles['electron_nineteenToTwentyOne']} 
+        />   
+        <img 
+          src={electronDittoFive} 
+          alt="Electron 39" 
+          className={styles['electron_dittoFive']} 
+        />   
+        <img 
+          src={electronDittoEight} 
+          alt="Electron 40" 
+          className={styles['electron_dittoEight']} 
+        />   
+        <img 
+          src={electronDittoTwelve} 
+          alt="Electron 41" 
+          className={styles['electron_dittoTwelve']} 
+        />   
+        <img 
+          src={electronDittoFifteen} 
+          alt="Electron 42" 
+          className={styles['electron_dittoFifteen']} 
+        />   
+        <img 
+          src={electronDittoSixteen} 
+          alt="Electron 43" 
+          className={styles['electron_dittoSixteen']} 
+        />   
+        <img 
+          src={electronDittoSeventeen} 
+          alt="Electron 44" 
+          className={styles['electron_dittoSeventeen']} 
+        />   
+        <img 
+          src={electronDittoEighteen} 
+          alt="Electron 45" 
+          className={styles['electron_dittoEighteen']} 
+        />   
+        <img 
+          src={electronDittoNineteen} 
+          alt="Electron 46" 
+          className={styles['electron_dittoNineteen']} 
         />   
     </div>
   );
