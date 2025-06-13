@@ -60,24 +60,24 @@
 .electron_threeToFive1{
   position: absolute;
   top: 140px;
-  left: 255px;
-  width: 5%;
+  left: 247px;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_threeToFive2{
   position: absolute;
-  top: 160px;
-  left: 265px;
-  width: 5%;
+  top: 155px;
+  left: 262px;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_threeToNineteen1{
   position: absolute;
-  top: 143px;
-  left: 315px;
-  width: 5%;
+  top: 135px;
+  left: 310px;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
@@ -85,7 +85,7 @@
   position: absolute;
   top: 170px;
   left: 325px;
-  width: 5%;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
@@ -100,16 +100,16 @@
 .electron_threeToFifteen1{
   position: absolute;
   top: 140px;
-  left: 195px;
-  width: 5%;
+  left: 185px;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
 .electron_threeToFifteen2{
   position: absolute;
   top: 170px;
-  left: 190px;
-  width: 5%;
+  left: 185px;
+  width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
@@ -140,9 +140,114 @@
 }
 .electron_fiveToEighteen{
   position: absolute;
-  top: 205px;
-  left: 305px;
+  top: 225px;
+  left: 300px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+
+.electron_fiveToSixteen1{
+  position: absolute;
+  top: 220px;
+  left: 210px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_fiveToFifteen{
+  position: absolute;
+  top: 220px;
+  left: 170px;
   width: 5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eightToSixteen{
+  position: absolute;
+  top: 305px;
+  left: 220px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eightToEighteen{
+  position: absolute;
+  top: 305px;
+  left: 300px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_eightToThree{
+  position: absolute;
+  top: 248px;
+  left: 285px;
+  width: 6%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_oneToThirteen{
+  position: absolute;
+  top: 120px;
+  left: 100px;
+  width: 3.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_oneToTwentyOne{
+  position: absolute;
+  top: 120px;
+  left: 420px;
+  width: 3.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_twelveToTwentyOne{
+  position: absolute;
+  top: 365px;
+  left: 420px;
+  width: 3.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_twelveToThirteen{
+  position: absolute;
+  top: 365px;
+  left: 100px;
+  width: 3.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_seventeenToEight{
+  position: absolute;
+  top: 298px;
+  left: 260px;
+  width: 5.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_fifteenToNineteen1{
+  position: absolute;
+  top: -180px;
+  left: 255px;
+  width: 5.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_fifteenToNineteen2{
+  position: absolute;
+  top: -155px;
+  left: 250px;
+  width: 5.5%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
+.electron_fifteenToNineteen3{
+  position: absolute;
+  top: -135px;
+  left: 255px;
+  width: 5.5%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
