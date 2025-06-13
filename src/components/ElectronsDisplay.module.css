@@ -89,3 +89,28 @@
   left: 190px;
   width: 5%;
 }
+
+.electron_threeToEighteen{
+  position: absolute;
+  top: 160px;
+  left: 295px;
+  width: 5%;
+}
+.electron_threeToSixteen{
+  position: absolute;
+  top: 160px;
+  left: 220px;
+  width: 5%;
+}
+.electron_fiveToNineteen{
+  position: absolute;
+  top: 215px;
+  left: 340px;
+  width: 5%;
+}
+.electron_fiveToEighteen{
+  position: absolute;
+  top: 205px;
+  left: 305px;
+  width: 5%;
+}

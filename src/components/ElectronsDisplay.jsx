@@ -9,6 +9,14 @@ import electronThreeToNineteen2 from '../assets/SVGs/list/electron_threeToNinete
 import electronDittoThree from '../assets/SVGs/list/electron_dittoThree.svg';
 import electronThreeToFifteen1 from '../assets/SVGs/list/electron_threeToFifteen1.svg';
 import electronThreeToFifteen2 from '../assets/SVGs/list/electron_threeToFifteen2.svg';
+import electronThreeToEighteen from '../assets/SVGs/list/electron_threeToEighteen.svg';
+import electronThreeToSixteen from '../assets/SVGs/list/electron_threeToSixteen.svg';
+import electronFiveToNineteen from '../assets/SVGs/list/electron_fiveToNineteen.svg';
+import electronFiveToEighteen from '../assets/SVGs/list/electron_fiveToEighteen.svg';
+
+
+
+
 const ElectronsDisplay = ({ isVisible }) => {
   // Debug log to check if component is being rendered
   console.log('ElectronsDisplay rendering with isVisible:', isVisible);
@@ -65,6 +73,26 @@ const ElectronsDisplay = ({ isVisible }) => {
           src={electronThreeToFifteen2} 
           alt="Electron 8" 
           className={styles['electron_threeToFifteen2']} 
+        />  
+        <img 
+          src={electronThreeToEighteen} 
+          alt="Electron 9" 
+          className={styles['electron_threeToEighteen']} 
+        />
+        <img 
+          src={electronThreeToSixteen} 
+          alt="Electron 10" 
+          className={styles['electron_threeToSixteen']} 
+        />  
+        <img 
+          src={electronFiveToNineteen} 
+          alt="Electron 11" 
+          className={styles['electron_fiveToNineteen']} 
+        />
+        <img 
+          src={electronFiveToEighteen} 
+          alt="Electron 12" 
+          className={styles['electron_fiveToEighteen']} 
         />  
      
     </div>
