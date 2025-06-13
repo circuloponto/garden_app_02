@@ -18,13 +18,21 @@ import SixHorizontal from '../assets/SVGs/6horizontal.svg';
 import SevenHorizontal from '../assets/SVGs/7horizontal.svg';
 
 
-const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [], onChordHover, showElectrons = false }) => {
+const Diagram = ({ handleChordSelect, selectedChords, possibleChords = [], onChordHover, showElectrons = false, hoveredChord = null, onElectronHover, selectedRoot, chordTypes, chordRootOffsets }) => {
     // Debug log to check if showElectrons prop is being passed correctly
     console.log('Diagram received showElectrons:', showElectrons);
     return (
         <div className="diagram" style={{ position: 'relative' }}>
             {/* Render ElectronsDisplay component inside diagram with explicit positioning */}
-            {showElectrons && <ElectronsDisplay isVisible={true} />}
+            {showElectrons && <ElectronsDisplay 
+                isVisible={true} 
+                selectedChords={selectedChords} 
+                hoveredChord={hoveredChord} 
+                onElectronHover={onElectronHover}
+                selectedRoot={selectedRoot}
+                chordTypes={chordTypes}
+                chordRootOffsets={chordRootOffsets}
+            />}
             <div className="vertical"> 
                 <Chord svg={Dash} className="one" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords} onChordHover={onChordHover}/>
                 <Chord svg={Trigram} className="two" handleChordSelect={handleChordSelect} selectedChords={selectedChords} possibleChords={possibleChords} onChordHover={onChordHover}/>

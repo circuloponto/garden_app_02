@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ElectronsDisplay.module.css';
 // Import SVG files directly
 import electronOneToThree from '../assets/SVGs/list/electron_oneToThree.svg';
@@ -41,7 +41,7 @@ import electronEighteenToNineteen from '../assets/SVGs/list/electron_eighteenToN
 import electronNineteenToTwentyOne from '../assets/SVGs/list/electron_nineteenToTwentyOne.svg';
 import electronDittoFive from '../assets/SVGs/list/electron_dittoFive.svg';
 import electronDittoEight from '../assets/SVGs/list/electron_dittoEight.svg';
-import electronDittoTwelve from '../assets/SVGs/list/electron_dittoTwelve.svg';
+import electronDittoTen from '../assets/SVGs/list/electron_dittoTen.svg';
 import electronDittoFifteen from '../assets/SVGs/list/electron_dittoFifteen.svg';
 import electronDittoSixteen from '../assets/SVGs/list/electron_dittoSixteen.svg';
 import electronDittoSeventeen from '../assets/SVGs/list/electron_dittoSeventeen.svg';
@@ -51,10 +51,212 @@ import electronDittoNineteen from '../assets/SVGs/list/electron_dittoNineteen.sv
 
 
 
-const ElectronsDisplay = ({ isVisible }) => {
-  // Debug log to check if component is being rendered
-  console.log('ElectronsDisplay rendering with isVisible:', isVisible);
-  console.log('SVG imports:', { electronOneToThree, electronThreeToFive1, electronThreeToFive2 });
+// Create a mapping of electron names to their SVG imports
+const electronSvgMap = {
+  'oneToThree': electronOneToThree,
+  'threeToFive1': electronThreeToFive1,
+  'threeToFive2': electronThreeToFive2,
+  'threeToNineteen1': electronThreeToNineteen1,
+  'threeToNineteen2': electronThreeToNineteen2,
+  'dittoThree': electronDittoThree,
+  'threeToFifteen1': electronThreeToFifteen1,
+  'threeToFifteen2': electronThreeToFifteen2,
+  'threeToEighteen': electronThreeToEighteen,
+  'threeToSixteen': electronThreeToSixteen,
+  'fiveToNineteen': electronFiveToNineteen,
+  'fiveToEighteen': electronFiveToEighteen,
+  'fiveToSixteen1': electronFiveToSixteen1,
+  'fiveToFifteen': electronFiveToFifteen,
+  'eightToSixteen': electronEightToSixteen,
+  'eightToEighteen': electronEightToEighteen,
+  'eightToThree': electronEightToThree,
+  'oneToThirteen': electronOneToThirteen,
+  'oneToTwentyOne': electronOneToTwentyOne,
+  'twelveToTwentyOne': electronTwelveToTwentyOne,
+  'twelveToThirteen': electronTwelveToThirteen,
+  'seventeenToEight': electronSeventeenToEight,
+  'fifteenToNineteen1': electronFifteenToNineteen1,
+  'fifteenToNineteen2': electronFifteenToNineteen2,
+  'fifteenToNineteen3': electronFifteenToNineteen3,
+  'eightToFifteen': electronEightToFifteen,
+  'eightToNineteen': electronEightToNineteen,
+  'tenToFifteen': electronTenToFifteen,
+  'tenToNineteen': electronTenToNineteen,
+  'eightToTen': electronEightToTen,
+  'tenToTwelve': electronTenToTwelve,
+  'thirteenToFifteen': electronThirteenToFifteen,
+  'fifteenToSixteen': electronFifteenToSixteen,
+  'sixteenToSeventeen': electronSixteenToSeventeen,
+  'seventeenToEighteen': electronSeventeenToEighteen,
+  'sixteenToEighteen': electronSixteenToEighteen,
+  'eighteenToNineteen': electronEighteenToNineteen,
+  'nineteenToTwentyOne': electronNineteenToTwentyOne,
+  'dittoFive': electronDittoFive,
+  'dittoEight': electronDittoEight,
+  'dittoTen': electronDittoTen,
+  'dittoFifteen': electronDittoFifteen,
+  'dittoSixteen': electronDittoSixteen,
+  'dittoSeventeen': electronDittoSeventeen,
+  'dittoEighteen': electronDittoEighteen,
+  'dittoNineteen': electronDittoNineteen,
+};
+
+// Create an array of electron objects for easier filtering and mapping
+const allElectrons = Object.keys(electronSvgMap).map(name => ({
+  id: name,
+  src: electronSvgMap[name],
+  className: `electron_${name}`
+}));
+
+const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null, onElectronHover, selectedRoot, chordTypes, chordRootOffsets }) => {
+  const [hoveredElectron, setHoveredElectron] = useState(null);
+  
+  // Helper function to get visible electrons based on selected chords
+  const getVisibleElectrons = () => {
+    if (!isVisible || selectedChords.length === 0) {
+      return [];
+    }
+    
+    // Check if the same chord is selected twice (ditto scale mode)
+    const isDittoMode = selectedChords.length === 2 && selectedChords[0] === selectedChords[1];
+    const selectedChord = selectedChords[0];
+    
+    console.log('Is ditto mode?', isDittoMode);
+    
+    // In ditto mode, only show the ditto electron for the selected chord
+    if (isDittoMode) {
+      console.log('Ditto mode: Only showing ditto electron for', selectedChord);
+      return allElectrons.filter(electron => {
+        if (electron.id.startsWith('ditto')) {
+          // Extract chord name and normalize
+          let chordName = electron.id.substring(5);
+          chordName = chordName.charAt(0).toLowerCase() + chordName.slice(1);
+          
+          const isMatch = chordName === selectedChord;
+          console.log(`Ditto electron ${electron.id} -> ${isMatch ? 'SHOW' : 'HIDE'} in ditto mode`);
+          return isMatch;
+        }
+        return false; // Hide all non-ditto electrons in ditto mode
+      });
+    }
+    
+    // Regular mode - show connections
+    // Map of chord class names to their connection points
+    const connectionMap = {
+      'one': ['three', 'thirteen', 'twentyOne'],
+      'three': ['one', 'five', 'fifteen', 'sixteen', 'eighteen', 'nineteen', 'eight'],
+      'five': ['three', 'fifteen', 'sixteen', 'eighteen', 'nineteen'],
+      'eight': ['three', 'ten', 'fifteen', 'sixteen', 'eighteen', 'nineteen', 'seventeen'],
+      'ten': ['eight', 'twelve', 'fifteen', 'nineteen'],
+      'twelve': ['ten', 'thirteen', 'twentyOne'],
+      'thirteen': ['one', 'twelve', 'fifteen'],
+      'fifteen': ['three', 'five', 'eight', 'ten', 'thirteen', 'sixteen', 'nineteen'],
+      'sixteen': ['three', 'five', 'eight', 'fifteen', 'seventeen', 'eighteen'],
+      'seventeen': ['eight', 'sixteen', 'eighteen'],
+      'eighteen': ['three', 'five', 'eight', 'sixteen', 'seventeen', 'nineteen'],
+      'nineteen': ['three', 'five', 'eight', 'ten', 'fifteen', 'eighteen', 'twentyOne'],
+      'twentyOne': ['one', 'twelve', 'nineteen']
+    };
+    
+    // Add debug logging
+    console.log('Selected chord:', selectedChord);
+    console.log('All electrons:', allElectrons.map(e => e.id));
+    
+    // Get the connected chords for the selected chord
+    const connectedChords = connectionMap[selectedChord] || [];
+    console.log('Connected chords:', connectedChords);
+    
+    // Filter electrons that connect to or from the selected chord
+    const filtered = allElectrons.filter(electron => {
+      // Handle ditto electrons (self-connections)
+      if (electron.id.startsWith('ditto')) {
+        // Extract the chord name and normalize it
+        // First, get everything after 'ditto'
+        let chordName = electron.id.substring(5);
+        // Then convert first letter to lowercase (e.g., 'Three' -> 'three')
+        chordName = chordName.charAt(0).toLowerCase() + chordName.slice(1);
+        
+        console.log(`Processing ditto electron: ${electron.id}, extracted chord: ${chordName}`);
+        
+        // Show ditto electrons for both the selected chord AND connected chords
+        const isDittoForSelectedChord = chordName === selectedChord;
+        
+        // Check if this ditto is for any connected chord
+        // We need to normalize the connected chords for comparison
+        const isDittoForConnectedChord = connectedChords.some(connectedChord => {
+          const normalizedConnectedChord = connectedChord.toLowerCase();
+          const normalizedDittoChord = chordName.toLowerCase();
+          const isMatch = normalizedConnectedChord === normalizedDittoChord;
+          console.log(`  Comparing ${normalizedDittoChord} with connected chord ${normalizedConnectedChord}: ${isMatch}`);
+          return isMatch;
+        });
+        
+        const result = isDittoForSelectedChord || isDittoForConnectedChord;
+        console.log(`Ditto electron ${electron.id} -> ${result ? 'SHOW' : 'HIDE'} (${chordName} is selected or connected)`); 
+        return result;
+      }
+      
+      // Handle regular connections
+      const match = electron.id.match(/([a-zA-Z]+)To([a-zA-Z0-9]+)/);
+      if (!match) {
+        console.log(`Electron ${electron.id} -> HIDE (no match found)`);
+        return false;
+      }
+      
+      const source = match[1].toLowerCase();
+      const target = match[2].replace(/[0-9]/g, '').toLowerCase(); // Remove any numbers
+      
+      // Show this electron if it connects to or from the selected chord
+      const result = source === selectedChord || target === selectedChord;
+      console.log(`Electron ${electron.id} -> ${result ? 'SHOW' : 'HIDE'} (${source} or ${target} === ${selectedChord})`);
+      return result;
+    });
+    
+    console.log('Filtered electrons:', filtered.map(e => e.id));
+    return filtered;
+  };
+  
+  // We no longer need the isElectronVisible function as we're using the getVisibleElectrons function instead
+  
+  // Handler for electron hover
+  const handleElectronHover = (electronClass) => {
+    // Handle special case for 'ditto' electrons (self-connections)
+    const dittoMatch = electronClass.match(/electron_ditto([A-Z][a-z]+)/);
+    if (dittoMatch) {
+      const targetChord = dittoMatch[1].toLowerCase(); // Convert first letter to lowercase
+      setHoveredElectron(electronClass);
+      
+      // Call the parent's onElectronHover handler if provided
+      if (onElectronHover) {
+        onElectronHover(electronClass);
+      }
+      return;
+    }
+    
+    // Extract the connection points from the electron class name
+    const match = electronClass.match(/electron_([a-zA-Z]+)To([a-zA-Z0-9]+)/);
+    if (!match) return;
+    
+    const source = match[1];
+    const target = match[2];
+    
+    setHoveredElectron(electronClass);
+    
+    // Call the parent's onElectronHover handler if provided
+    if (onElectronHover) {
+      onElectronHover(electronClass);
+    }
+  };
+  
+  // Handler for mouse leave
+  const handleElectronLeave = () => {
+    setHoveredElectron(null);
+    
+    // Call the parent's onElectronHover handler with null to clear
+    if (onElectronHover) {
+      onElectronHover(null);
+    }
+  };
   
   // Component is conditionally rendered by parent now, so isVisible should always be true
   // but we'll keep the check for safety
@@ -62,242 +264,22 @@ const ElectronsDisplay = ({ isVisible }) => {
     return null;
   }
 
+  // Get the filtered electrons based on selected chord
+  const visibleElectrons = getVisibleElectrons();
+
   return (
     <div className={styles['electrons-display']}>
-    
-        <img 
-          src={electronOneToThree} 
-          alt="Electron 1" 
-          className={styles['electron_oneToThree']}
+      {visibleElectrons.map((electron, index) => (
+        <img
+          key={electron.id}
+          src={electron.src}
+          alt={`Electron ${index + 1}`}
+          className={`${styles[electron.className]} ${styles['visible']}`}
+          onMouseEnter={() => handleElectronHover(electron.className)}
+          onMouseLeave={handleElectronLeave}
         />
-     
-     
-        <img 
-          src={electronThreeToFive1} 
-          alt="Electron 2" 
-          className={styles['electron_threeToFive1']} 
-        />
-      
-        <img 
-          src={electronThreeToFive2} 
-          alt="Electron 3" 
-          className={styles['electron_threeToFive2']} 
-        />
-        <img 
-          src={electronThreeToNineteen1} 
-          alt="Electron 4" 
-          className={styles['electron_threeToNineteen1']} 
-        />
-        <img 
-          src={electronThreeToNineteen2} 
-          alt="Electron 5" 
-          className={styles['electron_threeToNineteen2']} 
-        /> 
-        <img 
-          src={electronDittoThree} 
-          alt="Electron 6" 
-          className={styles['electron_dittoThree']} 
-        /> 
-        <img 
-          src={electronThreeToFifteen1} 
-          alt="Electron 7" 
-          className={styles['electron_threeToFifteen1']} 
-        />
-        <img 
-          src={electronThreeToFifteen2} 
-          alt="Electron 8" 
-          className={styles['electron_threeToFifteen2']} 
-        />  
-        <img 
-          src={electronThreeToEighteen} 
-          alt="Electron 9" 
-          className={styles['electron_threeToEighteen']} 
-        />
-        <img 
-          src={electronThreeToSixteen} 
-          alt="Electron 10" 
-          className={styles['electron_threeToSixteen']} 
-        />  
-        <img 
-          src={electronFiveToNineteen} 
-          alt="Electron 11" 
-          className={styles['electron_fiveToNineteen']} 
-        />
-        <img 
-          src={electronFiveToEighteen} 
-          alt="Electron 12" 
-          className={styles['electron_fiveToEighteen']} 
-        />  
-        <img 
-          src={electronFiveToSixteen1} 
-          alt="Electron 13" 
-          className={styles['electron_fiveToSixteen1']} 
-        />  
-        <img 
-          src={electronFiveToFifteen} 
-          alt="Electron 14" 
-          className={styles['electron_fiveToFifteen']} 
-        />  
-        <img 
-          src={electronEightToSixteen} 
-          alt="Electron 15" 
-          className={styles['electron_eightToSixteen']} 
-        />  
-        <img 
-          src={electronEightToEighteen} 
-          alt="Electron 16" 
-          className={styles['electron_eightToEighteen']} 
-        />    
-        <img 
-          src={electronEightToThree} 
-          alt="Electron 17" 
-          className={styles['electron_eightToThree']} 
-        />    
-        <img 
-          src={electronOneToThirteen} 
-          alt="Electron 18" 
-          className={styles['electron_oneToThirteen']} 
-        />    
-        <img 
-          src={electronOneToTwentyOne} 
-          alt="Electron 19" 
-          className={styles['electron_oneToTwentyOne']} 
-        />    
-        <img 
-          src={electronTwelveToTwentyOne} 
-          alt="Electron 20" 
-          className={styles['electron_twelveToTwentyOne']} 
-        />    
-        <img 
-          src={electronTwelveToThirteen} 
-          alt="Electron 21" 
-          className={styles['electron_twelveToThirteen']} 
-        />   
-        <img 
-          src={electronSeventeenToEight} 
-          alt="Electron 22" 
-          className={styles['electron_seventeenToEight']} 
-        />    
-        <img 
-          src={electronFifteenToNineteen1} 
-          alt="Electron 23" 
-          className={styles['electron_fifteenToNineteen1']} 
-        />   
-        <img 
-          src={electronFifteenToNineteen2} 
-          alt="Electron 24" 
-          className={styles['electron_fifteenToNineteen2']} 
-        />   
-        <img 
-          src={electronFifteenToNineteen3} 
-          alt="Electron 25" 
-          className={styles['electron_fifteenToNineteen3']} 
-        />   
-        <img 
-          src={electronEightToFifteen} 
-          alt="Electron 26" 
-          className={styles['electron_eightToFifteen']} 
-        />   
-        <img 
-          src={electronEightToNineteen} 
-          alt="Electron 27" 
-          className={styles['electron_eightToNineteen']} 
-        />   
-        <img 
-          src={electronTenToFifteen} 
-          alt="Electron 28" 
-          className={styles['electron_tenToFifteen']} 
-        />   
-        <img 
-          src={electronTenToNineteen} 
-          alt="Electron 29" 
-          className={styles['electron_tenToNineteen']} 
-        />    
-        <img 
-          src={electronEightToTen} 
-          alt="Electron 30" 
-          className={styles['electron_eightToTen']} 
-        />    
-        <img 
-          src={electronTenToTwelve} 
-          alt="Electron 31" 
-          className={styles['electron_tenToTwelve']} 
-        />    
-        <img 
-          src={electronThirteenToFifteen} 
-          alt="Electron 32" 
-          className={styles['electron_thirteenToFifteen']} 
-        />   
-        <img 
-          src={electronFifteenToSixteen} 
-          alt="Electron 33" 
-          className={styles['electron_fifteenToSixteen']} 
-        />   
-        <img 
-          src={electronSixteenToSeventeen} 
-          alt="Electron 34" 
-          className={styles['electron_sixteenToSeventeen']} 
-        />   
-        <img 
-          src={electronSeventeenToEighteen} 
-          alt="Electron 35" 
-          className={styles['electron_seventeenToEighteen']} 
-        />   
-        <img 
-          src={electronSixteenToEighteen} 
-          alt="Electron 36" 
-          className={styles['electron_sixteenToEighteen']} 
-        />   
-        <img 
-          src={electronEighteenToNineteen} 
-          alt="Electron 37" 
-          className={styles['electron_eighteenToNineteen']} 
-        />   
-        <img 
-          src={electronNineteenToTwentyOne} 
-          alt="Electron 38" 
-          className={styles['electron_nineteenToTwentyOne']} 
-        />   
-        <img 
-          src={electronDittoFive} 
-          alt="Electron 39" 
-          className={styles['electron_dittoFive']} 
-        />   
-        <img 
-          src={electronDittoEight} 
-          alt="Electron 40" 
-          className={styles['electron_dittoEight']} 
-        />   
-        <img 
-          src={electronDittoTwelve} 
-          alt="Electron 41" 
-          className={styles['electron_dittoTwelve']} 
-        />   
-        <img 
-          src={electronDittoFifteen} 
-          alt="Electron 42" 
-          className={styles['electron_dittoFifteen']} 
-        />   
-        <img 
-          src={electronDittoSixteen} 
-          alt="Electron 43" 
-          className={styles['electron_dittoSixteen']} 
-        />   
-        <img 
-          src={electronDittoSeventeen} 
-          alt="Electron 44" 
-          className={styles['electron_dittoSeventeen']} 
-        />   
-        <img 
-          src={electronDittoEighteen} 
-          alt="Electron 45" 
-          className={styles['electron_dittoEighteen']} 
-        />   
-        <img 
-          src={electronDittoNineteen} 
-          alt="Electron 46" 
-          className={styles['electron_dittoNineteen']} 
-        />   
+      ))}
+       
     </div>
   );
 };

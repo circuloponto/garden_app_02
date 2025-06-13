@@ -9,9 +9,35 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: auto; /* Enable interactions for visible electrons */
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.electrons-display {
+  position: absolute;
+  top: 0;
+  left: -245px;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(255, 255, 255, 0);
+  z-index: 100;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 530px;
   height: 530px;
-  /* No background color when inside diagram *  pointer-events: none; /* Allow clicks to pass through */
+  /* No background color when inside diagram */
+  pointer-events: none; /* Allow clicks to pass through the container */
 }
 
 

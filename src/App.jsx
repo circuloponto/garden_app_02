@@ -28,11 +28,17 @@ function App() {
   const [hoveredChord, setHoveredChord] = useState(null); // Track which chord is being hovered
   // Control electrons display visibility with explicit true/false values
   const [showElectrons, setShowElectrons] = useState(false);
+  const [hoveredElectron, setHoveredElectron] = useState(null);
   
   // Debug effect to monitor showElectrons state changes
   useEffect(() => {
     console.log('showElectrons state changed to:', showElectrons);
   }, [showElectrons]);
+  
+  // Set default root note to C on app load
+  useEffect(() => {
+    setSelectedRoot('C');
+  }, []);
   
   // Start tutorial automatically when app loads
   useEffect(() => {
@@ -270,6 +276,7 @@ function App() {
       
       <Inspector 
         hoveredChord={hoveredChord} 
+        hoveredElectron={hoveredElectron}
         selectedChords={selectedChords} 
         selectedRoot={selectedRoot} 
         chordTypes={chordTypes} 
@@ -312,7 +319,12 @@ function App() {
   selectedChords={selectedChords} 
   possibleChords={possibleChords}
   onChordHover={setHoveredChord}
+  hoveredChord={hoveredChord}
   showElectrons={showElectrons}
+  onElectronHover={setHoveredElectron}
+  selectedRoot={selectedRoot}
+  chordTypes={chordTypes}
+  chordRootOffsets={chordRootOffsets}
 />
                 <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>
