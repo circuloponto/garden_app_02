@@ -481,7 +481,7 @@
 }
 .fifteenToFive1{
     position: absolute;
-    top: 25%;
+    top: 25.5%;
     left: 25%;
     transform: rotate(0deg);
     height: 150px;
@@ -490,7 +490,7 @@
     transform: rotate(61deg);
    transform-origin: bottom;
 }
-.fifteenToFive2{
+/* .fifteenToFive2{
     position: absolute;
     top: 26.5%;
     left: 25%;
@@ -500,7 +500,7 @@
     background: rgb(255, 255, 255);
     transform: rotate(61deg);
     transform-origin: bottom;
-}
+} */
 
 .sixteenToSeventeen{
     position: absolute;
@@ -592,7 +592,7 @@
 } */ 
 .nineteenToFive1{
     position: absolute;
-    top: 24.6%;
+    top: 25%;
     left: 74%;
     transform: rotate(0deg);
     height: 150px;
@@ -602,7 +602,7 @@
     transform-origin: bottom;
    
 }
-.nineteenToFive2{
+/* .nineteenToFive2{
     position: absolute;
     top: 26.3%;
     left: 74.3%;
@@ -612,7 +612,7 @@
     background: rgb(255, 255, 255);
     transform: rotate(-61deg);
     transform-origin: bottom;
-}
+} */
 .nineteenToThree1{
     position: absolute;
     top:11.4%;
@@ -707,7 +707,7 @@ transform-origin: bottom;
 }
 .fifteenToEight1{
     position: absolute;
-    top: 51%;
+    top: 52%;
     left: 26%;
     transform: rotate(0deg);
     height: 150px;
@@ -716,7 +716,7 @@ transform-origin: bottom;
    transform: rotate(303deg);
    transform-origin: top;
 }
-.fifteenToEight2{
+/* .fifteenToEight2{
     position: absolute;
     top: 52%;
     left: 25%;
@@ -726,7 +726,7 @@ transform-origin: bottom;
     background: rgb(255, 255, 255);
    transform: rotate(303deg);
    transform-origin: top;
-}
+} */
 .fifteenTo.allConnections{
     position: absolute;
     top: 0;
@@ -830,7 +830,7 @@ transform-origin: bottom;
 
 .nineteenToEight1{
     position: absolute;
-    top: 51%;
+    top: 52%;
     left: 73%;
     transform: rotate(0deg);
     height: 150px;
@@ -839,7 +839,7 @@ transform-origin: bottom;
     transform: rotate(57deg);
     transform-origin: top;
 }
-.nineteenToEight2{
+/* .nineteenToEight2{
     position: absolute;
     top: 52.5%;
     left: 73.2%;
@@ -849,7 +849,7 @@ transform-origin: bottom;
     background: rgb(255, 255, 255);
     transform: rotate(57deg);
     transform-origin: top;
-}
+} */
 
 .fourToSix1{
   position: absolute;
