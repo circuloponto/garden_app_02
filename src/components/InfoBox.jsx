@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaPlay, FaPause } from 'react-icons/fa'
+import { FaPlay, FaPause, FaExchangeAlt } from 'react-icons/fa'
 import FretboardDisplayer from './FretboardDisplayer'
 import "./FretboardDisplayer.module.css"
 import { flatNotes, getNoteIndex, calculateChordNotes, calculateTwoChords } from '../utils/noteCalculator2'
@@ -13,7 +13,17 @@ const formatChordName = (chordName) => {
     .replace(/dim/g, '°');
 };
 
-const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange }) => {
+const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange, onSwapChords }) => {
+  // Function to handle swapping the order of selected chords
+  const handleSwapChords = (e) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
+    
+    // Call the prop function passed from the parent component
+    if (onSwapChords) {
+      onSwapChords();
+    }
+  };
   // Internal display root for ordering notes, without affecting the app's selectedRoot
   const [displayRoot, setDisplayRoot] = useState(selectedRoot);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -355,9 +365,17 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         <div className="infoTitle">
             <div className="titleRow">
               <div className="tabbytitle">Tabby Pair</div>
-              <span className="play-button" onClick={handlePlayClick}>
-                {isPlaying ? <FaPause className="play-icon" /> : <FaPlay className="play-icon" />}
-              </span>
+              <div className="infobox-controls">
+                {/* Only show swap button if we have two different chords selected */}
+                {selectedChords.length === 2 && selectedChords[0] !== selectedChords[1] && (
+                  <span className="swap-button" onClick={handleSwapChords} title="Swap chord order">
+                    <FaExchangeAlt className="swap-icon" />
+                  </span>
+                )}
+                <span className="play-button" onClick={handlePlayClick}>
+                  {isPlaying ? <FaPause className="play-icon" /> : <FaPlay className="play-icon" />}
+                </span>
+              </div>
               <div className="chordName">
                 {calculatedChords.length > 0 ? (
                   <>

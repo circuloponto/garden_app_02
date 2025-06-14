@@ -1413,9 +1413,15 @@ transform-origin: bottom;
   .titleRow {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     gap: 15px;
+  }
+  
+  .infobox-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
   .infoBox .infoTitle h2 {
@@ -1442,16 +1448,19 @@ transform-origin: bottom;
     font-weight: bold;
     font-size: 20px;
   }
-  .play-button {
+  .play-button, .swap-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: rgba(220, 53, 69, 0.8); /* Red background */
     cursor: pointer;
     transition: all 0.2s ease;
+  }
+  
+  .play-button {
+    background-color: rgba(220, 53, 69, 0.8); /* Red background */
   }
   
   .play-button:hover {
@@ -1460,13 +1469,24 @@ transform-origin: bottom;
     box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
   }
   
-  .play-icon {
+  .swap-button {
+    background-color: rgba(52, 152, 219, 0.8); /* Blue background */
+  }
+  
+  .swap-button:hover {
+    background-color: rgb(52, 152, 219); /* Brighter blue on hover */
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+  }
+  
+  .play-icon, .swap-icon {
     color: white; /* White icon */
     font-size: 14px;
     transition: transform 0.2s ease;
   }
   
-  .play-button:hover .play-icon {
+  .play-button:hover .play-icon,
+  .swap-button:hover .swap-icon {
     transform: scale(1.1);
   }
   .chordName{

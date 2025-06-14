@@ -30,6 +30,17 @@ function App() {
   const [showElectrons, setShowElectrons] = useState(false);
   const [hoveredElectron, setHoveredElectron] = useState(null);
   
+  // Function to handle swapping the order of selected chords
+  const handleSwapChords = () => {
+    // Only swap if we have exactly two different chords
+    if (selectedChords.length === 2 && selectedChords[0] !== selectedChords[1]) {
+      // Create a new array with the chords in reversed order
+      const swappedChords = [selectedChords[1], selectedChords[0]];
+      console.log('Swapping chord order:', selectedChords, '->', swappedChords);
+      setSelectedChords(swappedChords);
+    }
+  };
+  
   // Debug effect to monitor showElectrons state changes
   useEffect(() => {
     console.log('showElectrons state changed to:', showElectrons);
@@ -339,6 +350,7 @@ function App() {
                   console.log('InfoBox changing root to:', note);
                   setSelectedRoot(note);
                 }}
+                onSwapChords={handleSwapChords}
               />
               
               {/* Show Matrix regardless of chord selection state */}
