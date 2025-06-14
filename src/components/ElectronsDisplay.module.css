@@ -209,7 +209,7 @@
   position: absolute;
   top: 248px;
   left: 285px;
-  width: 6%;
+  width: 5%;;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
@@ -415,8 +415,8 @@
 }
 .electron_dittoFifteen{
   position: absolute;
-  top: 273px;
-  left: 81px;
+  top: 275px;
+  left: 85px;
   width: 4%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: _pulse_4a4uo_1 2s infinite alternate;
@@ -432,7 +432,7 @@
 .electron_dittoSeventeen{
   position: absolute;
   top: 275px;
-  left: 250px;
+  left: 245px;
   width: 6%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: __pulse_4a4uo_1_1stcu_1 2s infinite alternate;
@@ -447,8 +447,8 @@
 } 
 .electron_dittoNineteen{
   position: absolute;
-  top: 268px;
-  left: 427px;
+  top: 270px;
+  left: 430px;
   width: 5%;
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: ___pulse_4a4uo_1_1stcu_1_wkkmr_1 2s infinite alternate;

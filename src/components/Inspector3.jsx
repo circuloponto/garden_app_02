@@ -61,6 +61,11 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
             }
           }
           
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
           content = (
             <>
               <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div>
@@ -70,6 +75,7 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
               <div className="inspector-notes">
                 <div>From: {result.firstChord.notes.join(', ')}</div>
                 <div>To: {result.secondChord.notes.join(', ')}</div>
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
                 <div>Scale: {result.scale.join(', ')}</div>
               </div>
             </>
@@ -131,6 +137,11 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
             }
           }
           
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
           content = (
             <>
               <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div>
@@ -140,6 +151,7 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
               <div className="inspector-notes">
                 <div>From: {result.firstChord.notes.join(', ')}</div>
                 <div>To: {result.secondChord.notes.join(', ')}</div>
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
                 <div>Scale: {result.scale.join(', ')}</div>
               </div>
             </>
@@ -204,7 +216,7 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
       );
     }
   }
-
+  
   return (
     <div className="inspector">
       <div className="inspector-content" style={{ textAlign: 'center' }}>

@@ -39,9 +39,6 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
         const toChordType = findChordTypeByClassName(chordTypes, toChord);
         
         if (fromChordType && toChordType) {
-          // Calculate the notes for the connection
-          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, 0);
-          
           // Get the offset between the chords
           const key = `${fromChord}_${toChord}`;
           let offset = chordRootOffsets[key];
@@ -61,16 +58,28 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
             }
           }
           
+          // Use the first offset if it's an array, or default to 0 if not found
+          const offsetValue = offset !== undefined ? (Array.isArray(offset) ? offset[0] : offset) : 0;
+          
+          // Calculate the notes for the connection using the correct offset
+          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, offsetValue);
+          
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
           content = (
             <>
-              <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div>
-              <div className="inspector-relationship">
+              {/* <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div> */}
+             {/*  <div className="inspector-relationship">
                 <span>Offset: {offset !== undefined ? (Array.isArray(offset) ? offset.join('/') : offset) : 'N/A'}</span>
-              </div>
+              </div> */}
               <div className="inspector-notes">
-                <div>From: {result.firstChord.notes.join(', ')}</div>
-                <div>To: {result.secondChord.notes.join(', ')}</div>
-                <div>Scale: {result.scale.join(', ')}</div>
+               {/*  <div>From: {result.firstChord.notes.join(', ')}</div>
+                <div>To: {result.secondChord.notes.join(', ')}</div> */}
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
+               {/*  <div>Scale: {result.scale.join(', ')}</div> */}
               </div>
             </>
           );
@@ -109,9 +118,6 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
         const toChordType = findChordTypeByClassName(chordTypes, toChord);
         
         if (fromChordType && toChordType) {
-          // Calculate the notes for the connection
-          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, 0);
-          
           // Get the offset between the chords
           const key = `${fromChord}_${toChord}`;
           let offset = chordRootOffsets[key];
@@ -131,6 +137,17 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
             }
           }
           
+          // Use the first offset if it's an array, or default to 0 if not found
+          const offsetValue = offset !== undefined ? (Array.isArray(offset) ? offset[0] : offset) : 0;
+          
+          // Calculate the notes for the connection using the correct offset
+          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, offsetValue);
+          
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
           content = (
             <>
               <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div>
@@ -140,6 +157,7 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
               <div className="inspector-notes">
                 <div>From: {result.firstChord.notes.join(', ')}</div>
                 <div>To: {result.secondChord.notes.join(', ')}</div>
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
                 <div>Scale: {result.scale.join(', ')}</div>
               </div>
             </>
@@ -193,18 +211,21 @@ const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, cho
         }
       }
       
-      // Just show the chord type name without the root
-      const chordName = hoveredChordType.name;
+      // Calculate the chord notes
+      const chordNotes = calculateChordNotes(displayRoot, hoveredChordType);
       
       content = (
         <>
-          <div className="inspector-chord-name">{chordName}</div>
+          <div className="inspector-chord-name">{getFullChordName(displayRoot, hoveredChordType)}</div>
           {offsetInfo}
+          <div className="inspector-notes">
+            <div>Notes: {chordNotes.join(', ')}</div>
+          </div>
         </>
       );
     }
   }
-
+  
   return (
     <div className="inspector">
       <div className="inspector-content" style={{ textAlign: 'center' }}>

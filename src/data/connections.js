@@ -10,6 +10,21 @@ export const connections = [
         to: "three",
         className: "oneToThree1"
     },
+    /* {
+        from: "one",
+        to: "three",
+        className: "oneToThree2"
+    },
+    {
+        from: "one",
+        to: "three",
+        className: "oneToThree3"
+    },
+    {
+        from: "one",
+        to: "three",
+        className: "oneToThree4"
+    }, */
    
     /* {
         from: "one",

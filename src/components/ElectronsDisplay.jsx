@@ -146,6 +146,35 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
       });
     }
     
+    // When two different chords are selected, only show electrons connecting those two chords
+    if (selectedChords.length === 2) {
+      const firstChord = selectedChords[0];
+      const secondChord = selectedChords[1];
+      console.log(`Two chords selected: ${firstChord} and ${secondChord}. Only showing connecting electrons.`);
+      
+      return allElectrons.filter(electron => {
+        // Skip ditto electrons when two different chords are selected
+        if (electron.id.startsWith('ditto')) {
+          return false;
+        }
+        
+        // Check if this electron connects the two selected chords
+        const match = electron.id.match(/([a-zA-Z]+)To([a-zA-Z0-9]+)/);
+        if (!match) return false;
+        
+        const source = match[1].toLowerCase();
+        const target = match[2].replace(/[0-9]/g, '').toLowerCase(); // Remove any numbers
+        
+        // Show only if this electron connects the two selected chords (in either direction)
+        const connectsSelectedChords = 
+          (source === firstChord && target === secondChord) || 
+          (source === secondChord && target === firstChord);
+        
+        console.log(`Electron ${electron.id} -> ${connectsSelectedChords ? 'SHOW' : 'HIDE'} (connects ${firstChord} and ${secondChord}: ${connectsSelectedChords})`);
+        return connectsSelectedChords;
+      });
+    }
+    
     // Regular mode - show connections
     // Map of chord class names to their connection points
     const connectionMap = {
@@ -201,28 +230,13 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
         
         console.log(`Processing ditto electron: ${electron.id}, extracted chord: ${chordName}`);
         
-        // Show ditto electrons for both the selected chord AND connected chords
+        // MODIFIED: Only show ditto electron for the selected chord, filter out all others
         const isDittoForSelectedChord = chordName === selectedChord;
         
-        // Check if this ditto is for any connected chord
-        // We need to normalize the connected chords for comparison
-        const isDittoForConnectedChord = connectedChords.some(connectedChord => {
-          // Force both strings to lowercase for comparison
-          const normalizedConnectedChord = String(connectedChord).toLowerCase();
-          const normalizedDittoChord = String(chordName).toLowerCase();
-          
-          // Special case for dittoTen when nineteen is selected
-          if (selectedChord === 'nineteen' && normalizedDittoChord === 'ten') {
-            console.log('Special case: dittoTen with nineteen selected');
-            return true; // Force dittoTen to show when nineteen is selected
-          }
-          
-          const isMatch = normalizedConnectedChord === normalizedDittoChord;
-          console.log(`  Comparing ${normalizedDittoChord} with connected chord ${normalizedConnectedChord}: ${isMatch}`);
-          return isMatch;
-        });
+        // No longer show ditto electrons for connected chords
+        const isDittoForConnectedChord = false;
         
-        const result = isDittoForSelectedChord || isDittoForConnectedChord;
+        const result = isDittoForSelectedChord;
         console.log(`Ditto electron ${electron.id} -> ${result ? 'SHOW' : 'HIDE'} (${chordName} is selected or connected)`); 
         return result;
       }
@@ -271,7 +285,13 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
       
       // Call the parent's onElectronHover handler if provided
       if (onElectronHover) {
-        onElectronHover(electronClass);
+        // Pass the electron class name and extracted chord information
+        onElectronHover({
+          electronClass,
+          type: 'ditto',
+          sourceChord: targetChord,
+          targetChord: targetChord
+        });
       }
       return;
     }
@@ -281,13 +301,20 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
     if (!match) return;
     
     const source = match[1];
-    const target = match[2];
+    // Remove any numbers from the target chord name
+    const target = match[2].replace(/[0-9]/g, '').toLowerCase();
     
     setHoveredElectron(electronClass);
     
     // Call the parent's onElectronHover handler if provided
     if (onElectronHover) {
-      onElectronHover(electronClass);
+      // Pass detailed electron information to the parent
+      onElectronHover({
+        electronClass,
+        type: 'connection',
+        sourceChord: source.toLowerCase(),
+        targetChord: target
+      });
     }
   };
   

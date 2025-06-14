@@ -7,7 +7,7 @@ import Fretboard from './components/Fretboard'
 import Sidebar from './components/Sidebar'
 import SlidePresentation from './components/SlidePresentation'
 import Matrix from './components/Matrix'
-import Inspector from './components/Inspector'
+import Inspector2 from './components/Inspector2'
 import ElectronsDisplay from './components/ElectronsDisplay'
 
 import { connections, chordTypes, chordRootOffsets } from './data/connections';
@@ -274,7 +274,7 @@ function App() {
         </div>
       )}
       
-      <Inspector 
+      <Inspector2 
         hoveredChord={hoveredChord} 
         hoveredElectron={hoveredElectron}
         selectedChords={selectedChords} 
@@ -334,6 +334,7 @@ function App() {
                 selectedChords={selectedChords} 
                 chordTypes={chordTypes} 
                 chordRootOffsets={chordRootOffsets} 
+                hoveredElectron={hoveredElectron}
                 onRootChange={(note) => {
                   console.log('InfoBox changing root to:', note);
                   setSelectedRoot(note);
