@@ -113,8 +113,14 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
   
   // Helper function to get visible electrons based on selected chords
   const getVisibleElectrons = () => {
-    if (!isVisible || selectedChords.length === 0) {
+    if (!isVisible) {
       return [];
+    }
+    
+    // If no chords are selected, show all electrons
+    if (selectedChords.length === 0) {
+      console.log('No chords selected, showing all electrons');
+      return allElectrons;
     }
     
     // Check if the same chord is selected twice (ditto scale mode)
