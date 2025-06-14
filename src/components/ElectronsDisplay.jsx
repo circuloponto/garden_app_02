@@ -166,6 +166,18 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
     const connectedChords = connectionMap[selectedChord] || [];
     console.log('Connected chords:', connectedChords);
     
+    // Special debug for dittoTen
+    const dittoTenElectron = allElectrons.find(e => e.id === 'dittoTen');
+    if (dittoTenElectron) {
+      console.log('Found dittoTen electron:', dittoTenElectron);
+      if (selectedChord === 'nineteen') {
+        console.log('Selected chord is nineteen, checking if ten is in connected chords');
+        console.log('ten in connectedChords?', connectedChords.includes('ten'));
+      }
+    } else {
+      console.log('dittoTen electron not found in allElectrons!');
+    }
+    
     // Filter electrons that connect to or from the selected chord
     const filtered = allElectrons.filter(electron => {
       // Handle ditto electrons (self-connections)
@@ -184,8 +196,16 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
         // Check if this ditto is for any connected chord
         // We need to normalize the connected chords for comparison
         const isDittoForConnectedChord = connectedChords.some(connectedChord => {
-          const normalizedConnectedChord = connectedChord.toLowerCase();
-          const normalizedDittoChord = chordName.toLowerCase();
+          // Force both strings to lowercase for comparison
+          const normalizedConnectedChord = String(connectedChord).toLowerCase();
+          const normalizedDittoChord = String(chordName).toLowerCase();
+          
+          // Special case for dittoTen when nineteen is selected
+          if (selectedChord === 'nineteen' && normalizedDittoChord === 'ten') {
+            console.log('Special case: dittoTen with nineteen selected');
+            return true; // Force dittoTen to show when nineteen is selected
+          }
+          
           const isMatch = normalizedConnectedChord === normalizedDittoChord;
           console.log(`  Comparing ${normalizedDittoChord} with connected chord ${normalizedConnectedChord}: ${isMatch}`);
           return isMatch;

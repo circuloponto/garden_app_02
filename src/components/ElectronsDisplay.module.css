@@ -397,6 +397,14 @@
   filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
   animation: pulse 2s infinite alternate;
 }
+.electron_dittoTen{
+  position: absolute;
+  top: 442px;
+  left: 248px;
+  width: 4%;
+  filter: drop-shadow(0 0 8px rgba(218, 119, 242, 1));
+  animation: pulse 2s infinite alternate;
+}
 .electron_dittoTwelve{
   position: absolute;
   top: 439px;
