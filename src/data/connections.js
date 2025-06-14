@@ -1,5 +1,11 @@
 export const connections = [
     {
+        from: "seventeen",
+        to: "eight",
+        className: "seventeenToEight",
+       
+    },
+    {
         from: "one",
         to: "three",
         className: "oneToThree1"
@@ -394,6 +400,11 @@ export const connections2 = [
         
     },
     {
+        chords: ["eight","seventeen"],
+        classNames:[ "seventeenToEight"],
+        svg: "seventeenToEight"
+    },
+    {
         chords: ["sixteen","seventeen"],
         classNames:[ "sixteenToSeventeen"],
     },
@@ -404,6 +415,12 @@ export const connections2 = [
     {
         chords: ["seventeen","eighteen"],
         classNames:[ "seventeenToEighteen"],
+    },
+
+    {
+        chords: ["sixteen","eighteen"],
+        classNames:[ "sixteenToEighteen"],
+        svg: "sixteenToEighteen"
     },
 
      

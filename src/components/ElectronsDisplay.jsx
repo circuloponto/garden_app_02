@@ -164,6 +164,11 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
       'twentyOne': ['one', 'twelve', 'nineteen']
     };
     
+    // Log specific connection we're debugging
+    if (selectedChord === 'sixteen') {
+      console.log('Chord 16 selected, connections should include 18:', connectionMap['sixteen']);
+    }
+    
     // Add debug logging
     console.log('Selected chord:', selectedChord);
     console.log('All electrons:', allElectrons.map(e => e.id));
@@ -232,6 +237,18 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
       const source = match[1].toLowerCase();
       const target = match[2].replace(/[0-9]/g, '').toLowerCase(); // Remove any numbers
       
+      // Special debug for sixteenToEighteen
+      if (electron.id === 'sixteenToEighteen') {
+        console.log(`SPECIAL DEBUG - sixteenToEighteen: source=${source}, target=${target}, selectedChord=${selectedChord}`);
+        console.log(`Connection check: source === selectedChord: ${source === selectedChord}, target === selectedChord: ${target === selectedChord}`);
+        
+        // If chord 16 is selected, explicitly show the connection to chord 18
+        if (selectedChord === 'sixteen') {
+          console.log('Chord 16 selected, forcing sixteenToEighteen to show');
+          return true;
+        }
+      }
+      
       // Show this electron if it connects to or from the selected chord
       const result = source === selectedChord || target === selectedChord;
       console.log(`Electron ${electron.id} -> ${result ? 'SHOW' : 'HIDE'} (${source} or ${target} === ${selectedChord})`);
@@ -292,6 +309,16 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
 
   // Get the filtered electrons based on selected chord
   const visibleElectrons = getVisibleElectrons();
+  
+  // Special debug for sixteenToEighteen electron
+  const sixteenToEighteenElectron = allElectrons.find(e => e.id === 'sixteenToEighteen');
+  if (sixteenToEighteenElectron) {
+    console.log('sixteenToEighteen electron exists:', sixteenToEighteenElectron);
+    console.log('Is sixteenToEighteen in visible electrons?', 
+      visibleElectrons.some(e => e.id === 'sixteenToEighteen'));
+  } else {
+    console.log('sixteenToEighteen electron NOT found in allElectrons!');
+  }
 
   return (
     <div className={styles['electrons-display']}>
@@ -305,6 +332,18 @@ const ElectronsDisplay = ({ isVisible, selectedChords = [], hoveredChord = null,
           onMouseLeave={handleElectronLeave}
         />
       ))}
+      
+      {/* Force render sixteenToEighteen electron when chord 16 is selected */}
+      {selectedChords.length > 0 && selectedChords[0] === 'sixteen' && sixteenToEighteenElectron && (
+        <img
+          key="forced-sixteenToEighteen"
+          src={sixteenToEighteenElectron.src}
+          alt="Connection 16 to 18"
+          className={`${styles[sixteenToEighteenElectron.className]} ${styles['visible']}`}
+          onMouseEnter={() => handleElectronHover(sixteenToEighteenElectron.className)}
+          onMouseLeave={handleElectronLeave}
+        />
+      )}
        
     </div>
   );
