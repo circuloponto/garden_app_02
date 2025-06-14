@@ -471,7 +471,7 @@ export const chordTypes = [
     },
     {
         className: "eight",
-        name: "dom7#5",
+        name: "7#5",
         intervals: ["0","3","#5","b7"],
     },
     
@@ -479,7 +479,7 @@ export const chordTypes = [
    
     {
         className: "ten",
-        name: "Dom7b5",
+        name: "7b5",
         intervals: ["0","3","b5","b7"],
     },
    
@@ -511,7 +511,7 @@ export const chordTypes = [
     },
     {
         className: "eighteen",
-        name: "Min add11",
+        name: "MinAdd11",
         intervals: ["0","b3","4","5"],
     },
    
