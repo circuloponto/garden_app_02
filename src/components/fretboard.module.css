@@ -1,0 +1,117 @@
+.fretboard {
+    width: 390px;
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 20px;  
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chorNameTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* Fretboard grid */
+.fretboardGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 26px);
+    grid-template-rows: repeat(6, 26px);
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+/* String lines (horizontal) */
+.stringLine {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+   margin: 10px -10px 0 0;
+    z-index: 1;
+}
+
+/* Fret lines (vertical) */
+.fretLine {
+    position: absolute;
+    width: 1.5px;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+}
+
+/* Cell for each note position */
+.cell {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Note styling */
+.note {
+    width: 23px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.2s ease;
+}
+
+/* Notes in the chord */
+.inChord {
+    background-color: white;
+    color: black;
+}
+
+/* Hover effect */
+.note:hover {
+    background-color: rgba(220, 53, 69, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Fret numbers row */
+.fretNumbersRow {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-row: 7;
+    grid-column: 1 / span 6;
+    height: 30px;
+    position: relative;
+    margin-top: 5px;
+}
+
+/* Fret number cell */
+.fretNumberCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    transform: translateX(0px); /* Half the cell width to center between fret lines */
+}
+
+.firstChord{
+    background-color: #f08c00;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .secondChord{
+    background-color: #00e1ff;
+    font-weight: bold;
+    font-size: 15px;
+  }

@@ -1,0 +1,243 @@
+import React from 'react';
+import { findChordTypeByClassName, getFullChordName } from '../utils/noteCalculator';
+import { flatNotes } from '../utils/noteCalculator2';
+import { calculateChordNotes, calculateTwoChords } from '../utils/noteCalculator2';
+
+const Inspector = ({ hoveredChord, selectedChords, selectedRoot, chordTypes, chordRootOffsets, hoveredElectron }) => {
+  // Always render the component, but with empty or placeholder content when no chord or electron is hovered
+  let content = <div className="inspector-placeholder">Hover over a chord or electron</div>;
+  
+  // Display electron information if an electron is hovered
+  if (hoveredElectron && selectedChords.length > 0) {
+    // Check if hoveredElectron is the new detailed object format
+    if (typeof hoveredElectron === 'object' && hoveredElectron.type) {
+      if (hoveredElectron.type === 'ditto') {
+        // Handle ditto electrons (self-connections)
+        const targetChord = hoveredElectron.sourceChord;
+        const chordType = findChordTypeByClassName(chordTypes, targetChord);
+        
+        if (chordType) {
+          const chordNotes = calculateChordNotes(selectedRoot, chordType);
+          
+          content = (
+            <>
+              <div className="inspector-electron-name">Self-Connection: {targetChord}</div>
+              <div className="inspector-notes">
+                <div>Chord: {selectedRoot} {chordType.name}</div>
+                <div>Notes: {chordNotes.join(', ')}</div>
+              </div>
+            </>
+          );
+        }
+      } else if (hoveredElectron.type === 'connection') {
+        // Handle regular connections
+        const fromChord = hoveredElectron.sourceChord;
+        const toChord = hoveredElectron.targetChord;
+        
+        // Find chord types for the connection
+        const fromChordType = findChordTypeByClassName(chordTypes, fromChord);
+        const toChordType = findChordTypeByClassName(chordTypes, toChord);
+        
+        if (fromChordType && toChordType) {
+          // Get the offset between the chords
+          const key = `${fromChord}_${toChord}`;
+          let offset = chordRootOffsets[key];
+          
+          // If direct offset not found, try reverse direction and negate
+          if (offset === undefined) {
+            const reverseKey = `${toChord}_${fromChord}`;
+            const reverseOffset = chordRootOffsets[reverseKey];
+            
+            if (reverseOffset !== undefined) {
+              // Negate the offset for reverse direction
+              if (Array.isArray(reverseOffset)) {
+                offset = reverseOffset.map(val => -val);
+              } else {
+                offset = -reverseOffset;
+              }
+            }
+          }
+          
+          // Use the first offset if it's an array, or default to 0 if not found
+          const offsetValue = offset !== undefined ? (Array.isArray(offset) ? offset[0] : offset) : 0;
+          
+          // Calculate the notes for the connection using the correct offset
+          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, offsetValue);
+          
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
+          content = (
+            <>
+              {/* <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div> */}
+             {/*  <div className="inspector-relationship">
+                <span>Offset: {offset !== undefined ? (Array.isArray(offset) ? offset.join('/') : offset) : 'N/A'}</span>
+              </div> */}
+              <div className="inspector-notes">
+               {/*  <div>From: {result.firstChord.notes.join(', ')}</div>
+                <div>To: {result.secondChord.notes.join(', ')}</div> */}
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
+               {/*  <div>Scale: {result.scale.join(', ')}</div> */}
+              </div>
+            </>
+          );
+        }
+      }
+    } else {
+      // Handle legacy string format for backward compatibility
+      const dittoMatch = hoveredElectron.match(/electron_ditto([A-Z][a-z]+)/);
+      const connectionMatch = hoveredElectron.match(/electron_([a-zA-Z]+)To([a-zA-Z0-9]+)/);
+      
+      if (dittoMatch) {
+        // Handle ditto electrons (self-connections)
+        const targetChord = dittoMatch[1].toLowerCase();
+        const chordType = findChordTypeByClassName(chordTypes, targetChord);
+        
+        if (chordType) {
+          const chordNotes = calculateChordNotes(selectedRoot, chordType);
+          
+          content = (
+            <>
+              <div className="inspector-electron-name">Self-Connection: {targetChord}</div>
+              <div className="inspector-notes">
+                <div>Chord: {selectedRoot} {chordType.name}</div>
+                <div>Notes: {chordNotes.join(', ')}</div>
+              </div>
+            </>
+          );
+        }
+      } else if (connectionMatch) {
+        // Handle regular connections
+        const fromChord = connectionMatch[1].toLowerCase();
+        const toChord = connectionMatch[2].replace(/[0-9]/g, '').toLowerCase();
+        
+        // Find chord types for the connection
+        const fromChordType = findChordTypeByClassName(chordTypes, fromChord);
+        const toChordType = findChordTypeByClassName(chordTypes, toChord);
+        
+        if (fromChordType && toChordType) {
+          // Get the offset between the chords
+          const key = `${fromChord}_${toChord}`;
+          let offset = chordRootOffsets[key];
+          
+          // If direct offset not found, try reverse direction and negate
+          if (offset === undefined) {
+            const reverseKey = `${toChord}_${fromChord}`;
+            const reverseOffset = chordRootOffsets[reverseKey];
+            
+            if (reverseOffset !== undefined) {
+              // Negate the offset for reverse direction
+              if (Array.isArray(reverseOffset)) {
+                offset = reverseOffset.map(val => -val);
+              } else {
+                offset = -reverseOffset;
+              }
+            }
+          }
+          
+          // Use the first offset if it's an array, or default to 0 if not found
+          const offsetValue = offset !== undefined ? (Array.isArray(offset) ? offset[0] : offset) : 0;
+          
+          // Calculate the notes for the connection using the correct offset
+          const result = calculateTwoChords(selectedRoot, fromChordType, toChordType, offsetValue);
+          
+          // Calculate electron notes (notes in scale but not in either chord)
+          const electronNotes = result.scale.filter(note => 
+            !result.firstChord.notes.includes(note) && !result.secondChord.notes.includes(note)
+          );
+          
+          content = (
+            <>
+              <div className="inspector-electron-name">Electron: {fromChord} → {toChord}</div>
+              <div className="inspector-relationship">
+                <span>Offset: {offset !== undefined ? (Array.isArray(offset) ? offset.join('/') : offset) : 'N/A'}</span>
+              </div>
+              <div className="inspector-notes">
+                <div>From: {result.firstChord.notes.join(', ')}</div>
+                <div>To: {result.secondChord.notes.join(', ')}</div>
+                <div><strong>Electrons:</strong> {electronNotes.join(', ')}</div>
+                <div>Scale: {result.scale.join(', ')}</div>
+              </div>
+            </>
+          );
+        }
+      }
+    }
+  } else if (hoveredChord) {
+    // Find the chord type for the hovered chord
+    const hoveredChordType = findChordTypeByClassName(chordTypes, hoveredChord);
+    
+    if (hoveredChordType) {
+      let displayRoot = selectedRoot;
+      let offsetInfo = null;
+      
+      // Check if we have a selected chord and the hovered chord is different
+      if (selectedChords.length === 1 && selectedChords[0] !== hoveredChord) {
+        // Get the offset between the selected chord and the hovered chord
+        const key = `${selectedChords[0]}_${hoveredChord}`;
+        let offset = chordRootOffsets[key];
+        
+        // If direct offset not found, try reverse direction and negate
+        if (offset === undefined) {
+          const reverseKey = `${hoveredChord}_${selectedChords[0]}`;
+          const reverseOffset = chordRootOffsets[reverseKey];
+          
+          if (reverseOffset !== undefined) {
+            // Negate the offset for reverse direction
+            if (Array.isArray(reverseOffset)) {
+              offset = reverseOffset.map(val => -val);
+            } else {
+              offset = -reverseOffset;
+            }
+          }
+        }
+        
+        if (offset !== undefined) {
+          // Use the first offset if it's an array
+          const offsetValue = Array.isArray(offset) ? offset[0] : offset;
+          
+          // Calculate the second chord root based on offset using the same logic as in calculateTwoChords
+          const rootIndex = getNoteIndex(selectedRoot);
+          const secondRootIndex = (rootIndex + offsetValue + 12) % 12; // Add 12 to handle negative offsets
+          displayRoot = flatNotes[secondRootIndex];
+          
+          offsetInfo = (
+            <div className="inspector-relationship">
+              <span>Offset: {Array.isArray(offset) ? offset.join('/') : offset}</span>
+            </div>
+          );
+        }
+      }
+      
+      // Calculate the chord notes
+      const chordNotes = calculateChordNotes(displayRoot, hoveredChordType);
+      
+      content = (
+        <>
+          <div className="inspector-chord-name">{getFullChordName(displayRoot, hoveredChordType)}</div>
+          {offsetInfo}
+          <div className="inspector-notes">
+            <div>Notes: {chordNotes.join(', ')}</div>
+          </div>
+        </>
+      );
+    }
+  }
+  
+  return (
+    <div className="inspector">
+      <div className="inspector-content" style={{ textAlign: 'center' }}>
+        {content}
+      </div>
+    </div>
+  );
+};
+
+// Helper function to get the index of a note in the flatNotes array
+function getNoteIndex(note) {
+  return flatNotes.indexOf(note);
+}
+
+export default Inspector;
