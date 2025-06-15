@@ -45,10 +45,28 @@ function App() {
     }
   };
   
+  // Store the original root for swap functionality
+  const [originalRoot, setOriginalRoot] = useState(selectedRoot);
+  
   // Function to handle swapping just the display order without changing chord selection
   const handleDisplayOrderSwap = () => {
     // Only toggle if we have exactly two different chords
     if (selectedChords.length === 2 && selectedChords[0] !== selectedChords[1]) {
+      // If this is the first swap, store the original root
+      if (!displayOrderSwapped) {
+        console.log('First swap - storing original root:', selectedRoot);
+        setOriginalRoot(selectedRoot);
+        
+        // Get the calculated chords from InfoBox
+        // We'll rely on InfoBox to tell us what the second chord's root should be
+        // via its onRootChange callback
+      } else {
+        // If we're toggling back, restore the original root
+        console.log('Toggling back to original root:', originalRoot);
+        setSelectedRoot(originalRoot);
+      }
+      
+      // Toggle the display order state
       setDisplayOrderSwapped(prev => !prev);
       console.log('Toggling display order swap');
     }

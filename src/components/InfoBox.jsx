@@ -36,42 +36,33 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     e.stopPropagation();
     
     console.log('Swap display colors clicked');
-    console.log('calculatedChords:', calculatedChords);
-    console.log('selectedChords:', selectedChords);
     
     // Only proceed if we have exactly two chords calculated
     if (calculatedChords.length === 2 && onDisplayOrderSwap) {
-      // First time we click, store the original root if not already stored
-      if (selectedRoot === originalRoot && !displayOrderSwapped) {
-        setOriginalRoot(selectedRoot);
+      // Check if we're currently swapped or not
+      if (!displayOrderSwapped) {
+        // We're about to swap to show the second chord first
+        // Update the root to the second chord's root
+        if (calculatedChords[1] && calculatedChords[1].root) {
+          const newRoot = calculatedChords[1].root;
+          console.log('Setting root to second chord root:', newRoot);
+          
+          // First update our internal display root
+          setDisplayRoot(newRoot);
+          
+          // Then update the app's root
+          onRootChange(newRoot);
+        }
       }
       
-      // Determine the new root based on the current display order state
-      // We're about to toggle the state, so we need to use the opposite logic
-      let newRoot;
-      if (displayOrderSwapped) {
-        // Currently swapped, about to unswap - use original root
-        newRoot = originalRoot;
-      } else {
-        // Currently unswapped, about to swap - use second chord's root
-        newRoot = calculatedChords[1].root;
-      }
-      
-      // Update both the display root and the app's selectedRoot
-      setDisplayRoot(newRoot);
-      
-      // Always update the matrix root selector with the new root
-      if (onRootChange) {
-        console.log('Updating root to:', newRoot);
-        onRootChange(newRoot);
-      }
-      
-      // Toggle the display order state in the parent component
+      // Let the parent component handle toggling the display order
+      // and restoring the original root when toggling back
       onDisplayOrderSwap();
     }
   };
   // Internal display root for ordering notes, without affecting the app's selectedRoot
   const [displayRoot, setDisplayRoot] = useState(selectedRoot);
+  const [localSwapped, setLocalSwapped] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [calculatedChords, setCalculatedChords] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
@@ -179,9 +170,14 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     // This ensures the scale always starts from the proper root
     // whenever any of the key inputs change
     setDisplayRoot(selectedRoot);
-    // Also update the original root when these key inputs change
-    setOriginalRoot(selectedRoot);
-  }, [selectedRoot, selectedChords, selectedOffsetIndex]);
+    
+    // Only update originalRoot if we're not in a swapped state
+    // This prevents overwriting our stored original root when swapping
+    if (!localSwapped && !displayOrderSwapped) {
+      console.log('Setting originalRoot from useEffect:', selectedRoot);
+      setOriginalRoot(selectedRoot);
+    }
+  }, [selectedRoot, selectedChords, selectedOffsetIndex, localSwapped, displayOrderSwapped]);
   
   // We don't need the separate scale calculation useEffect anymore
   // as the scale is now calculated in calculateChordsWithOffset
