@@ -5,6 +5,8 @@ import "./FretboardDisplayer.module.css"
 import { flatNotes, getNoteIndex, calculateChordNotes, calculateTwoChords } from '../utils/noteCalculator2'
 // Import some functions we still need from the original calculator
 import { getFullChordName, findChordTypeByClassName, getOffsetRoot } from '../utils/noteCalculator'
+// Import Tone.js for audio playback
+import * as Tone from 'tone'
 
 // Function to format chord names by replacing 'min'/'Min' with '-' and 'dim' with '°'
 const formatChordName = (chordName) => {
@@ -16,6 +18,8 @@ const formatChordName = (chordName) => {
 const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange, onSwapChords, onDisplayOrderSwap, displayOrderSwapped = false }) => {
   // Store the original root to restore it when toggling back
   const [originalRoot, setOriginalRoot] = useState(selectedRoot);
+  // Reference to store the current playing sequence for Tone.js
+  const currentSequenceRef = useRef(null);
   // Use the prop for display order swap state instead of local state
   // This allows the parent component to control and share this state with other components
   
@@ -325,9 +329,101 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     }
   };
 
-  const handlePlayClick = () => {
-    // Toggle play state
-    setIsPlaying(!isPlaying);
+  const handlePlayClick = async () => {
+    // If already playing, stop the sequence
+    if (isPlaying) {
+      if (currentSequenceRef.current) {
+        currentSequenceRef.current.dispose();
+        currentSequenceRef.current = null;
+      }
+      Tone.Transport.stop();
+      Tone.Transport.cancel(); // Cancel any scheduled events
+      setIsPlaying(false);
+      return;
+    }
+
+    try {
+      // Start audio context - this must happen from a user gesture
+      await Tone.start();
+      console.log('Audio context started');
+
+      // Get the ordered notes from the current scale
+      const notes = getOrderedChordNotes();
+      
+      if (notes.length === 0) {
+        console.log('No notes to play');
+        return;
+      }
+
+      console.log('Playing notes:', notes);
+      
+      // Create a PluckSynth for a string-like plucked sound
+      const synth = new Tone.PluckSynth({
+        attackNoise: 1,
+        dampening: 1000,
+        resonance: 0.95,
+        release: 2.5
+      }).toDestination();
+      
+      // Convert flat notes to sharp notation for Tone.js
+      const noteMapping = {
+        'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#'
+      };
+      
+      // Add octave numbers to the notes (default to octave 4)
+      const notesWithOctave = notes.map(note => {
+        // Convert flat notation to sharp notation if needed
+        const mappedNote = noteMapping[note] || note;
+        return `${mappedNote}4`;
+      });
+      
+      // Instead of using a sequence, manually schedule each note
+      setIsPlaying(true);
+      
+      // Clear any previous events
+      Tone.Transport.cancel();
+      
+      // Set the BPM
+      Tone.Transport.bpm.value = 120;
+      
+      // Schedule each note individually
+      let noteIndex = 0;
+      const noteCount = notesWithOctave.length;
+      
+      // Create a counter to track played notes
+      let playedNotes = 0;
+      
+      // Use a callback function that will be called for each note
+      const playNote = () => {
+        if (noteIndex < noteCount) {
+          // Play the current note
+          synth.triggerAttackRelease(notesWithOctave[noteIndex], '8n');
+          noteIndex++;
+          playedNotes++;
+          
+          // Log progress
+          console.log(`Playing note ${playedNotes} of ${noteCount}: ${notesWithOctave[noteIndex-1]}`);
+          
+          // Schedule the next note after a delay
+          if (noteIndex < noteCount) {
+            setTimeout(playNote, 250); // 500ms between notes (120 BPM)
+          } else {
+            // We've played all notes, clean up
+            setTimeout(() => {
+              setIsPlaying(false);
+              console.log('Finished playing all notes:', playedNotes);
+            }, 250);
+          }
+        }
+      };
+      
+      // Start playing the first note
+      playNote();
+      
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      setIsPlaying(false);
+    }
   };
 
   const handleTabClick = (e, index) => {
@@ -389,30 +485,59 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
 
   // Enhanced arrow click handler that only navigates to notes in the current scale
   const handleArrowClick = (e, direction) => {
+    e.preventDefault(); // Prevent default button behavior
+    e.stopPropagation(); // Prevent event bubbling
+    
     // Get the available notes in the current chord/scale
     const availableNotes = getOrderedChordNotes();
+    console.log('Available notes for arrow navigation:', availableNotes);
     
-    if (!displayRoot || availableNotes.length === 0) return;
+    if (!displayRoot || availableNotes.length === 0) {
+      console.log('No display root or available notes');
+      return;
+    }
     
     // Find the current note's position in the available notes
     const currentNoteIndex = availableNotes.indexOf(displayRoot);
+    console.log('Current note index:', currentNoteIndex, 'Current display root:', displayRoot);
     
     // If the current note isn't in the available notes, default to the first note
     if (currentNoteIndex === -1) {
-      setDisplayRoot(availableNotes[0]);
-      console.log('Note not in scale, defaulting to:', availableNotes[0]);
+      const newRoot = availableNotes[0];
+      setDisplayRoot(newRoot);
+      
+      // Update the parent component's state
+      if (onRootChange) {
+        // Pass false to indicate this is not from a swap
+        onRootChange(newRoot, false);
+      }
+      
+      console.log('Note not in scale, defaulting to:', newRoot);
       return;
     }
     
     // Navigate to the next/previous note in the available notes
+    let newRoot;
     if (direction === 'left') {
-      const prevIndex = (currentNoteIndex - 1 + availableNotes.length) % availableNotes.length;
-      setDisplayRoot(availableNotes[prevIndex]);
-      console.log('Left arrow clicked, new root:', availableNotes[prevIndex]);
-    } else {
+      // Left arrow: take first note and move it to the end
+      // This is equivalent to moving forward in the array (next index)
       const nextIndex = (currentNoteIndex + 1) % availableNotes.length;
-      setDisplayRoot(availableNotes[nextIndex]);
-      console.log('Right arrow clicked, new root:', availableNotes[nextIndex]);
+      newRoot = availableNotes[nextIndex];
+      setDisplayRoot(newRoot);
+      console.log('Left arrow clicked, new root:', newRoot);
+    } else {
+      // Right arrow: take last note and move it to the beginning
+      // This is equivalent to moving backward in the array (previous index)
+      const prevIndex = (currentNoteIndex - 1 + availableNotes.length) % availableNotes.length;
+      newRoot = availableNotes[prevIndex];
+      setDisplayRoot(newRoot);
+      console.log('Right arrow clicked, new root:', newRoot);
+    }
+    
+    // Update the parent component's state
+    if (onRootChange) {
+      // Pass false to indicate this is not from a swap
+      onRootChange(newRoot, false);
     }
   };
 
