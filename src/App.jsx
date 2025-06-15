@@ -349,6 +349,7 @@ function App() {
   selectedRoot={selectedRoot}
   chordTypes={chordTypes}
   chordRootOffsets={chordRootOffsets}
+  displayOrderSwapped={displayOrderSwapped}
 />
                 <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>

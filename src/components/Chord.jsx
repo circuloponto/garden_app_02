@@ -2,9 +2,20 @@ import React from 'react'
 import { connections2 } from '../data/connections';
 
 // Chord component: renders a chord with optional selection and possible-chord animation
-const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [], onChordHover }) => {
+const Chord = ({ svg, className, handleChordSelect, selectedChords, possibleChords = [], onChordHover, displayOrderSwapped = false }) => {
   const isSelected = selectedChords.includes(className);
-  const isFirstSelected = selectedChords.length > 0 && selectedChords[0] === className;
+  
+  // Determine if this chord is the first or second selected based on displayOrderSwapped
+  const isFirstSelected = selectedChords.length > 0 && 
+    (displayOrderSwapped ? 
+      (selectedChords.length > 1 && selectedChords[1] === className) : 
+      (selectedChords[0] === className));
+  
+  const isSecondSelected = selectedChords.length > 1 && 
+    (displayOrderSwapped ? 
+      (selectedChords[0] === className) : 
+      (selectedChords[1] === className));
+  
   const isDittoScale = selectedChords.length === 2 && selectedChords[0] === className && selectedChords[1] === className;
   console.log(`Chord ${className} - isDittoScale:`, isDittoScale, 'selectedChords:', selectedChords);
   const isPossible = possibleChords.includes(className);
@@ -41,7 +52,7 @@ console.log("svg",svg, className)
 
   return (
     <div
-      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isDittoScale ? ' dittoScale' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
+      className={`element ${className}${isSelected ? ' selected-chord' : ''}${isFirstSelected ? ' first-selected-chord' : ''}${isSecondSelected ? ' second-selected-chord' : ''}${isDittoScale ? ' dittoScale' : ''}${isConnectedToFirstSelected ? ' connected-chord' : ''}${isPossible ? ' possible-chord' : ''}`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
