@@ -465,7 +465,7 @@ export const chordTypes = [
     
     {
         className: "five",
-        name: "7sus4",
+        name: "sus2&4",
      //intervals: ["0","4","5","b7"],
         intervals: ["0","2","4","5"],
     },
