@@ -63,7 +63,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
       // IMPORTANT: We need to update the matrix root selector
       // WITHOUT triggering a scale recalculation
       if (onRootChange) {
-        // We'll use a special flag in App.jsx to handle this
+        // We'll use the matrixDisplayRoot state in App.jsx to handle this
         onRootChange(newRoot, true); // Pass true to indicate this is from a swap
       }
       

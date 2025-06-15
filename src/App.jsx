@@ -23,6 +23,8 @@ function App() {
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
+  const [originalRoot, setOriginalRoot] = useState('C'); // Store the original root for swap functionality
+  const [matrixDisplayRoot, setMatrixDisplayRoot] = useState('C'); // Special state for matrix display root (visual only)
   const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
   const [matrixExpanded, setMatrixExpanded] = useState(false); // Control matrix expansion
   const [hoveredChord, setHoveredChord] = useState(null); // Track which chord is being hovered
@@ -44,9 +46,6 @@ function App() {
       setDisplayOrderSwapped(false);
     }
   };
-  
-  // Store the original root for swap functionality
-  const [originalRoot, setOriginalRoot] = useState(selectedRoot);
   
   // Function to handle swapping just the display order without changing chord selection
   const handleDisplayOrderSwap = () => {
@@ -384,21 +383,13 @@ function App() {
                   // If this is from a swap, we need to update the matrix root selector
                   // without triggering a scale recalculation
                   if (isFromSwap) {
-                    // Use DOM manipulation to update just the matrix root selector
-                    // without changing the actual selectedRoot state
-                    const matrixRootElements = document.querySelectorAll('.matrix-root');
-                    if (matrixRootElements) {
-                      matrixRootElements.forEach(el => {
-                        if (el.textContent === note) {
-                          el.classList.add('selected');
-                        } else {
-                          el.classList.remove('selected');
-                        }
-                      });
-                    }
+                    // Create a special state for the matrix display root
+                    // This will update the matrix visually without changing the actual scale
+                    setMatrixDisplayRoot(note);
                   } else {
-                    // Normal root change, update the state
+                    // Normal root change, update the state and reset matrix display root
                     setSelectedRoot(note);
+                    setMatrixDisplayRoot(note);
                   }
                 }}
                 onSwapChords={handleSwapChords}
@@ -419,7 +410,7 @@ function App() {
                   }
                   // Don't deselect chords when changing root
                 }} 
-                selectedRoot={selectedRoot}
+                selectedRoot={matrixDisplayRoot || selectedRoot}
                 isExpanded={matrixExpanded}
                 setIsExpanded={setMatrixExpanded}
               />
