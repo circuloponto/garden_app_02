@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaPlay, FaPause, FaExchangeAlt } from 'react-icons/fa'
+import { FaPlay, FaPause, FaExchangeAlt, FaPalette } from 'react-icons/fa'
 import FretboardDisplayer from './FretboardDisplayer'
 import "./FretboardDisplayer.module.css"
 import { flatNotes, getNoteIndex, calculateChordNotes, calculateTwoChords } from '../utils/noteCalculator2'
@@ -13,7 +13,10 @@ const formatChordName = (chordName) => {
     .replace(/dim/g, '°');
 };
 
-const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange, onSwapChords }) => {
+const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange, onSwapChords, onDisplayOrderSwap, displayOrderSwapped = false }) => {
+  // Use the prop for display order swap state instead of local state
+  // This allows the parent component to control and share this state with other components
+  
   // Function to handle swapping the order of selected chords
   const handleSwapChords = (e) => {
     // Stop event propagation to prevent dismissing the InfoBox
@@ -22,6 +25,27 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     // Call the prop function passed from the parent component
     if (onSwapChords) {
       onSwapChords();
+    }
+  };
+  
+  // Function to handle swapping just the display order without changing chord order
+  const handleSwapDisplayColors = (e) => {
+    // Stop event propagation to prevent dismissing the InfoBox
+    e.stopPropagation();
+    
+    console.log('Swap display colors clicked');
+    console.log('calculatedChords:', calculatedChords);
+    console.log('selectedChords:', selectedChords);
+    
+    // Only proceed if we have exactly two chords calculated
+    if (calculatedChords.length === 2 && onDisplayOrderSwap) {
+      // When we swap the display order, also update the display root to the new first chord's root
+      if (!displayOrderSwapped) {
+        setDisplayRoot(calculatedChords[1].root);
+      } else {
+        setDisplayRoot(calculatedChords[0].root);
+      }
+      onDisplayOrderSwap();
     }
   };
   // Internal display root for ordering notes, without affecting the app's selectedRoot
@@ -365,25 +389,41 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         <div className="infoTitle">
             <div className="titleRow">
               <div className="tabbytitle">Tabby Pair</div>
-              <div className="infobox-controls">
+              <div className="infobox-controls" style={{ display: 'flex', alignItems: 'center' }}>
                 {/* Only show swap button if we have two different chords selected */}
                 {selectedChords.length === 2 && selectedChords[0] !== selectedChords[1] && (
                   <span className="swap-button" onClick={handleSwapChords} title="Swap chord order">
                     <FaExchangeAlt className="swap-icon" />
                   </span>
                 )}
-                <span className="play-button" onClick={handlePlayClick}>
+                
+                {/* Simple HTML button for color swap - only show when exactly 2 chords are selected */}
+                {selectedChords.length === 2 && (
+                  <button 
+                    onClick={handleSwapDisplayColors}
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Color Swap
+                  </button>
+                )}
+                
+                <span className="play-button" onClick={handlePlayClick} style={{ marginLeft: '10px' }}>
                   {isPlaying ? <FaPause className="play-icon" /> : <FaPlay className="play-icon" />}
                 </span>
               </div>
               <div className="chordName">
                 {calculatedChords.length > 0 ? (
                   <>
-                    <span className='firstChord'>{formatChordName(calculatedChords[0].fullName)}</span>
+                    {/* Show the chords in swapped order but keep the color classes the same */}
+                    <span className="firstChord">
+                      {formatChordName(calculatedChords[displayOrderSwapped ? 1 : 0].fullName)}
+                    </span>
                     {calculatedChords.length > 1 && (
                       <>
                         <span className='plus'>&</span>
-                        <span className='secondChord'>{formatChordName(calculatedChords[1].fullName)}</span>
+                        <span className="secondChord">
+                          {formatChordName(calculatedChords[displayOrderSwapped ? 0 : 1].fullName)}
+                        </span>
                       </>
                     )}
                   </>
@@ -415,9 +455,14 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                 >
                     {/* Display notes that appear in the selected chords, starting with root note */}
                     {getOrderedChordNotes().map((note, index) => {
-                        // Check if the note is in any of the chords
-                        const inFirstChord = calculatedChords.length > 0 && calculatedChords[0].notes.includes(note);
-                        const inSecondChord = calculatedChords.length > 1 && calculatedChords[1].notes.includes(note);
+                        // Check if the note is in any of the chords, respecting the display order
+                        const firstChordIndex = displayOrderSwapped ? 1 : 0;
+                        const secondChordIndex = displayOrderSwapped ? 0 : 1;
+                        
+                        const inFirstChord = calculatedChords.length > 0 && 
+                            calculatedChords[firstChordIndex].notes.includes(note);
+                        const inSecondChord = calculatedChords.length > 1 && 
+                            calculatedChords[secondChordIndex].notes.includes(note);
                         
                         // Skip notes that don't appear in any chord
                         if (!inFirstChord && !inSecondChord) {
@@ -428,8 +473,10 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                         if (inFirstChord && inSecondChord) {
                             className = 'bothChords';
                         } else if (inFirstChord) {
+                            // First chord is always orange
                             className = 'firstChord';
                         } else if (inSecondChord) {
+                            // Second chord is always blue
                             className = 'secondChord';
                         }
                         
@@ -468,9 +515,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         {calculatedChords.length === 2 && (
           <FretboardDisplayer 
             firstChord={{
-              name: calculatedChords[0].fullName,
-              spelling: calculatedChords[0].notes,
-              root: calculatedChords[0].root,
+              name: calculatedChords[displayOrderSwapped ? 1 : 0].fullName,
+              spelling: calculatedChords[displayOrderSwapped ? 1 : 0].notes,
+              root: calculatedChords[displayOrderSwapped ? 1 : 0].root,
               fretStart: 8,
               positions: [
                 { string: 6, fret: 8 },
@@ -480,9 +527,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
               ]
             }}
             secondChord={{
-              name: calculatedChords[1].fullName,
-              spelling: calculatedChords[1].notes,
-              root: calculatedChords[1].root,
+              name: calculatedChords[displayOrderSwapped ? 0 : 1].fullName,
+              spelling: calculatedChords[displayOrderSwapped ? 0 : 1].notes,
+              root: calculatedChords[displayOrderSwapped ? 0 : 1].root,
               fretStart: 8,
               positions: [
                 { string: 6, fret: 8 },

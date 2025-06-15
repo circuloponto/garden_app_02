@@ -1448,7 +1448,7 @@ transform-origin: bottom;
     font-weight: bold;
     font-size: 20px;
   }
-  .play-button, .swap-button {
+  .play-button, .swap-button, .color-swap-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1479,14 +1479,25 @@ transform-origin: bottom;
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
   }
   
-  .play-icon, .swap-icon {
+  .color-swap-button {
+    background-color: rgba(142, 68, 173, 0.8); /* Purple background */
+  }
+  
+  .color-swap-button:hover {
+    background-color: rgb(142, 68, 173); /* Brighter purple on hover */
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(142, 68, 173, 0.5);
+  }
+  
+  .play-icon, .swap-icon, .color-swap-icon {
     color: white; /* White icon */
     font-size: 14px;
     transition: transform 0.2s ease;
   }
   
   .play-button:hover .play-icon,
-  .swap-button:hover .swap-icon {
+  .swap-button:hover .swap-icon,
+  .color-swap-button:hover .color-swap-icon {
     transform: scale(1.1);
   }
   .chordName{

@@ -40,8 +40,14 @@ const FretboardDisplayer = ({ firstChord, secondChord }) => {
   
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Fretboard chord={firstChordData} type="first" />
-      <Fretboard chord={secondChordData} type="second" />
+      <Fretboard 
+        chord={firstChordData} 
+        type="first" 
+      />
+      <Fretboard 
+        chord={secondChordData} 
+        type="second" 
+      />
     </div>
   )
 }

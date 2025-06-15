@@ -29,6 +29,8 @@ function App() {
   // Control electrons display visibility with explicit true/false values
   const [showElectrons, setShowElectrons] = useState(false);
   const [hoveredElectron, setHoveredElectron] = useState(null);
+  // Track if the display order is swapped (for visual purposes only)
+  const [displayOrderSwapped, setDisplayOrderSwapped] = useState(false);
   
   // Function to handle swapping the order of selected chords
   const handleSwapChords = () => {
@@ -38,6 +40,17 @@ function App() {
       const swappedChords = [selectedChords[1], selectedChords[0]];
       console.log('Swapping chord order:', selectedChords, '->', swappedChords);
       setSelectedChords(swappedChords);
+      // Reset display order swap when actual chord order is swapped
+      setDisplayOrderSwapped(false);
+    }
+  };
+  
+  // Function to handle swapping just the display order without changing chord selection
+  const handleDisplayOrderSwap = () => {
+    // Only toggle if we have exactly two different chords
+    if (selectedChords.length === 2 && selectedChords[0] !== selectedChords[1]) {
+      setDisplayOrderSwapped(prev => !prev);
+      console.log('Toggling display order swap');
     }
   };
   
@@ -351,6 +364,8 @@ function App() {
                   setSelectedRoot(note);
                 }}
                 onSwapChords={handleSwapChords}
+                onDisplayOrderSwap={handleDisplayOrderSwap}
+                displayOrderSwapped={displayOrderSwapped}
               />
               
               {/* Show Matrix regardless of chord selection state */}
