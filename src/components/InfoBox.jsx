@@ -397,14 +397,27 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                   </span>
                 )}
                 
-                {/* Simple HTML button for color swap - only show when exactly 2 chords are selected */}
+                {/* Color swap button styled to match other buttons - only show when exactly 2 chords are selected */}
                 {selectedChords.length === 2 && (
-                  <button 
+                  <span 
+                    className="color-swap-button" 
                     onClick={handleSwapDisplayColors}
-                    style={{ marginLeft: '10px' }}
+                    title="Swap display colors"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '30px',
+                      height: '30px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(142, 68, 173, 0.8)',
+                      marginLeft: '10px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    Color Swap
-                  </button>
+                    <FaPalette style={{ color: 'white' }} />
+                  </span>
                 )}
                 
                 <span className="play-button" onClick={handlePlayClick} style={{ marginLeft: '10px' }}>
