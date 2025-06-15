@@ -376,6 +376,10 @@ function App() {
                   console.log('Matrix changing root to:', note);
                   // Force update the root selector by setting the state directly
                   setSelectedRoot(note);
+                  // Reset the display order swap state when selecting a new root from the matrix
+                  if (displayOrderSwapped) {
+                    setDisplayOrderSwapped(false);
+                  }
                   // Don't deselect chords when changing root
                 }} 
                 selectedRoot={selectedRoot}

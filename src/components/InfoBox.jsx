@@ -14,6 +14,8 @@ const formatChordName = (chordName) => {
 };
 
 const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, onRootChange, onSwapChords, onDisplayOrderSwap, displayOrderSwapped = false }) => {
+  // Store the original root to restore it when toggling back
+  const [originalRoot, setOriginalRoot] = useState(selectedRoot);
   // Use the prop for display order swap state instead of local state
   // This allows the parent component to control and share this state with other components
   
@@ -40,11 +42,29 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     // Only proceed if we have exactly two chords calculated
     if (calculatedChords.length === 2 && onDisplayOrderSwap) {
       // When we swap the display order, also update the display root to the new first chord's root
+      let newRoot;
+      
       if (!displayOrderSwapped) {
-        setDisplayRoot(calculatedChords[1].root);
+        // First time swapping - store the original root
+        if (selectedRoot === originalRoot) {
+          setOriginalRoot(selectedRoot);
+        }
+        
+        // Set to second chord's root
+        newRoot = calculatedChords[1].root;
+        setDisplayRoot(newRoot);
       } else {
-        setDisplayRoot(calculatedChords[0].root);
+        // Swapping back - restore the original root
+        newRoot = originalRoot;
+        setDisplayRoot(newRoot);
       }
+      
+      // Update the app's selectedRoot to match the new display root
+      // This will also update the matrix root selector
+      if (onRootChange) {
+        onRootChange(newRoot);
+      }
+      
       onDisplayOrderSwap();
     }
   };
@@ -157,6 +177,8 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     // This ensures the scale always starts from the proper root
     // whenever any of the key inputs change
     setDisplayRoot(selectedRoot);
+    // Also update the original root when these key inputs change
+    setOriginalRoot(selectedRoot);
   }, [selectedRoot, selectedChords, selectedOffsetIndex]);
   
   // We don't need the separate scale calculation useEffect anymore
@@ -429,13 +451,19 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                   <>
                     {/* Show the chords in swapped order but keep the color classes the same */}
                     <span className="firstChord">
-                      {formatChordName(calculatedChords[displayOrderSwapped ? 1 : 0].fullName)}
+                      {/* Make sure the index exists before accessing fullName */}
+                      {displayOrderSwapped && calculatedChords.length > 1 
+                        ? formatChordName(calculatedChords[1].fullName)
+                        : formatChordName(calculatedChords[0].fullName)}
                     </span>
                     {calculatedChords.length > 1 && (
                       <>
                         <span className='plus'>&</span>
                         <span className="secondChord">
-                          {formatChordName(calculatedChords[displayOrderSwapped ? 0 : 1].fullName)}
+                          {/* Make sure the index exists before accessing fullName */}
+                          {displayOrderSwapped 
+                            ? formatChordName(calculatedChords[0].fullName)
+                            : formatChordName(calculatedChords[1].fullName)}
                         </span>
                       </>
                     )}
@@ -468,14 +496,29 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
                 >
                     {/* Display notes that appear in the selected chords, starting with root note */}
                     {getOrderedChordNotes().map((note, index) => {
-                        // Check if the note is in any of the chords, respecting the display order
-                        const firstChordIndex = displayOrderSwapped ? 1 : 0;
-                        const secondChordIndex = displayOrderSwapped ? 0 : 1;
+                        // Safely determine if a note is in each chord
+                        let inFirstChord = false;
+                        let inSecondChord = false;
                         
-                        const inFirstChord = calculatedChords.length > 0 && 
-                            calculatedChords[firstChordIndex].notes.includes(note);
-                        const inSecondChord = calculatedChords.length > 1 && 
-                            calculatedChords[secondChordIndex].notes.includes(note);
+                        if (calculatedChords.length > 0) {
+                            // First chord is always at index 0
+                            if (!displayOrderSwapped) {
+                                inFirstChord = calculatedChords[0].notes.includes(note);
+                            } else if (calculatedChords.length > 1) {
+                                // When swapped and we have 2 chords, first chord is at index 1
+                                inFirstChord = calculatedChords[1].notes.includes(note);
+                            }
+                        }
+                        
+                        if (calculatedChords.length > 1) {
+                            // Second chord is at index 1 when not swapped
+                            if (!displayOrderSwapped) {
+                                inSecondChord = calculatedChords[1].notes.includes(note);
+                            } else {
+                                // When swapped, second chord is at index 0
+                                inSecondChord = calculatedChords[0].notes.includes(note);
+                            }
+                        }
                         
                         // Skip notes that don't appear in any chord
                         if (!inFirstChord && !inSecondChord) {
@@ -528,9 +571,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
         {calculatedChords.length === 2 && (
           <FretboardDisplayer 
             firstChord={{
-              name: calculatedChords[displayOrderSwapped ? 1 : 0].fullName,
-              spelling: calculatedChords[displayOrderSwapped ? 1 : 0].notes,
-              root: calculatedChords[displayOrderSwapped ? 1 : 0].root,
+              name: displayOrderSwapped ? calculatedChords[1].fullName : calculatedChords[0].fullName,
+              spelling: displayOrderSwapped ? calculatedChords[1].notes : calculatedChords[0].notes,
+              root: displayOrderSwapped ? calculatedChords[1].root : calculatedChords[0].root,
               fretStart: 8,
               positions: [
                 { string: 6, fret: 8 },
@@ -540,9 +583,9 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
               ]
             }}
             secondChord={{
-              name: calculatedChords[displayOrderSwapped ? 0 : 1].fullName,
-              spelling: calculatedChords[displayOrderSwapped ? 0 : 1].notes,
-              root: calculatedChords[displayOrderSwapped ? 0 : 1].root,
+              name: displayOrderSwapped ? calculatedChords[0].fullName : calculatedChords[1].fullName,
+              spelling: displayOrderSwapped ? calculatedChords[0].notes : calculatedChords[1].notes,
+              root: displayOrderSwapped ? calculatedChords[0].root : calculatedChords[1].root,
               fretStart: 8,
               positions: [
                 { string: 6, fret: 8 },
