@@ -378,9 +378,28 @@ function App() {
                 chordTypes={chordTypes} 
                 chordRootOffsets={chordRootOffsets} 
                 hoveredElectron={hoveredElectron}
-                onRootChange={(note) => {
-                  console.log('InfoBox changing root to:', note);
-                  setSelectedRoot(note);
+                onRootChange={(note, isFromSwap = false) => {
+                  console.log('InfoBox changing root to:', note, isFromSwap ? '(from swap)' : '');
+                  
+                  // If this is from a swap, we need to update the matrix root selector
+                  // without triggering a scale recalculation
+                  if (isFromSwap) {
+                    // Use DOM manipulation to update just the matrix root selector
+                    // without changing the actual selectedRoot state
+                    const matrixRootElements = document.querySelectorAll('.matrix-root');
+                    if (matrixRootElements) {
+                      matrixRootElements.forEach(el => {
+                        if (el.textContent === note) {
+                          el.classList.add('selected');
+                        } else {
+                          el.classList.remove('selected');
+                        }
+                      });
+                    }
+                  } else {
+                    // Normal root change, update the state
+                    setSelectedRoot(note);
+                  }
                 }}
                 onSwapChords={handleSwapChords}
                 onDisplayOrderSwap={handleDisplayOrderSwap}

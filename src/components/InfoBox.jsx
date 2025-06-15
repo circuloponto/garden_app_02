@@ -39,24 +39,35 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     
     // Only proceed if we have exactly two chords calculated
     if (calculatedChords.length === 2 && onDisplayOrderSwap) {
-      // Check if we're currently swapped or not
+      // Store the original root on first swap
       if (!displayOrderSwapped) {
-        // We're about to swap to show the second chord first
-        // Update the root to the second chord's root
-        if (calculatedChords[1] && calculatedChords[1].root) {
-          const newRoot = calculatedChords[1].root;
-          console.log('Setting root to second chord root:', newRoot);
-          
-          // First update our internal display root
-          setDisplayRoot(newRoot);
-          
-          // Then update the app's root
-          onRootChange(newRoot);
-        }
+        setOriginalRoot(selectedRoot);
+        console.log('Storing original root:', selectedRoot);
       }
       
-      // Let the parent component handle toggling the display order
-      // and restoring the original root when toggling back
+      // Determine which root to use based on current display state
+      // We're about to toggle, so use the opposite of current state
+      const newRoot = !displayOrderSwapped 
+        ? calculatedChords[1].root  // Going to swapped state, use second chord's root
+        : originalRoot;             // Going back to original state, use original root
+      
+      console.log('Setting root to:', newRoot, 'Original root:', originalRoot);
+      
+      // First update our internal display root
+      // This controls which note is displayed as the root in the UI
+      setDisplayRoot(newRoot);
+      
+      // Set local swap state to prevent originalRoot from being overwritten
+      setLocalSwapped(!displayOrderSwapped);
+      
+      // IMPORTANT: We need to update the matrix root selector
+      // WITHOUT triggering a scale recalculation
+      if (onRootChange) {
+        // We'll use a special flag in App.jsx to handle this
+        onRootChange(newRoot, true); // Pass true to indicate this is from a swap
+      }
+      
+      // Then toggle the display order state
       onDisplayOrderSwap();
     }
   };
@@ -337,16 +348,32 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     // Get all unique notes from both chords
     const uniqueNotes = new Set();
     
-    // Add all notes from both chords
-    calculatedChords.forEach(chord => {
-      chord.notes.forEach(note => uniqueNotes.add(note));
-    });
+    // Determine which chord is displayed first based on swap state
+    const firstDisplayedChord = displayOrderSwapped && calculatedChords.length > 1 
+      ? calculatedChords[1] 
+      : calculatedChords[0];
     
-    // Convert to array and sort starting from the display root note
-    const rootIndex = flatNotes.indexOf(displayRoot || selectedRoot);
+    // Get the root of the first displayed chord
+    const firstDisplayedRoot = firstDisplayedChord.root;
+    
+    // Add all notes from both chords, respecting the display order
+    if (displayOrderSwapped && calculatedChords.length > 1) {
+      // When swapped, second chord (index 1) becomes first, first chord (index 0) becomes second
+      calculatedChords[1].notes.forEach(note => uniqueNotes.add(note));
+      calculatedChords[0].notes.forEach(note => uniqueNotes.add(note));
+    } else {
+      // Normal order
+      calculatedChords.forEach(chord => {
+        chord.notes.forEach(note => uniqueNotes.add(note));
+      });
+    }
+    
+    // IMPORTANT: Always use the root of the first displayed chord as the starting point
+    // This ensures the scale always starts from the currently displayed first chord's root
+    const rootIndex = flatNotes.indexOf(firstDisplayedRoot);
     if (rootIndex === -1) return Array.from(uniqueNotes);
     
-    // Create an array of all notes in chromatic order starting from the display root
+    // Create an array of all notes in chromatic order starting from the first displayed chord's root
     const orderedNotes = [];
     for (let i = 0; i < flatNotes.length; i++) {
       const noteIndex = (rootIndex + i) % flatNotes.length;
@@ -356,6 +383,7 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
       }
     }
     
+    console.log('Ordered notes:', orderedNotes, 'First displayed root:', firstDisplayedRoot, 'Swapped:', displayOrderSwapped);
     return orderedNotes;
   };
 
