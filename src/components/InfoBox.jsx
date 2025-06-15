@@ -41,30 +41,32 @@ const InfoBox = ({ selectedRoot, selectedChords, chordTypes, chordRootOffsets, o
     
     // Only proceed if we have exactly two chords calculated
     if (calculatedChords.length === 2 && onDisplayOrderSwap) {
-      // When we swap the display order, also update the display root to the new first chord's root
-      let newRoot;
-      
-      if (!displayOrderSwapped) {
-        // First time swapping - store the original root
-        if (selectedRoot === originalRoot) {
-          setOriginalRoot(selectedRoot);
-        }
-        
-        // Set to second chord's root
-        newRoot = calculatedChords[1].root;
-        setDisplayRoot(newRoot);
-      } else {
-        // Swapping back - restore the original root
-        newRoot = originalRoot;
-        setDisplayRoot(newRoot);
+      // First time we click, store the original root if not already stored
+      if (selectedRoot === originalRoot && !displayOrderSwapped) {
+        setOriginalRoot(selectedRoot);
       }
       
-      // Update the app's selectedRoot to match the new display root
-      // This will also update the matrix root selector
+      // Determine the new root based on the current display order state
+      // We're about to toggle the state, so we need to use the opposite logic
+      let newRoot;
+      if (displayOrderSwapped) {
+        // Currently swapped, about to unswap - use original root
+        newRoot = originalRoot;
+      } else {
+        // Currently unswapped, about to swap - use second chord's root
+        newRoot = calculatedChords[1].root;
+      }
+      
+      // Update both the display root and the app's selectedRoot
+      setDisplayRoot(newRoot);
+      
+      // Always update the matrix root selector with the new root
       if (onRootChange) {
+        console.log('Updating root to:', newRoot);
         onRootChange(newRoot);
       }
       
+      // Toggle the display order state in the parent component
       onDisplayOrderSwap();
     }
   };
