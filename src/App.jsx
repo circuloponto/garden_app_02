@@ -23,6 +23,8 @@ function App() {
   const [selectedChords, setSelectedChords] = useState([]); // e.g. ['four', 'five']
   const [tutorialStep, setTutorialStep] = useState(0); // 0 = not showing, 1 = chords, 2 = connections
   const [selectedRoot, setSelectedRoot] = useState('C'); // Default root note
+  const [originalRoot, setOriginalRoot] = useState('C'); // Store the original root for swap functionality
+  const [matrixDisplayRoot, setMatrixDisplayRoot] = useState('C'); // Special state for matrix display root (visual only)
   const [showSlides, setShowSlides] = useState(false); // Control slide presentation visibility
   const [matrixExpanded, setMatrixExpanded] = useState(false); // Control matrix expansion
   const [hoveredChord, setHoveredChord] = useState(null); // Track which chord is being hovered
@@ -49,6 +51,21 @@ function App() {
   const handleDisplayOrderSwap = () => {
     // Only toggle if we have exactly two different chords
     if (selectedChords.length === 2 && selectedChords[0] !== selectedChords[1]) {
+      // If this is the first swap, store the original root
+      if (!displayOrderSwapped) {
+        console.log('First swap - storing original root:', selectedRoot);
+        setOriginalRoot(selectedRoot);
+        
+        // Get the calculated chords from InfoBox
+        // We'll rely on InfoBox to tell us what the second chord's root should be
+        // via its onRootChange callback
+      } else {
+        // If we're toggling back, restore the original root
+        console.log('Toggling back to original root:', originalRoot);
+        setSelectedRoot(originalRoot);
+      }
+      
+      // Toggle the display order state
       setDisplayOrderSwapped(prev => !prev);
       console.log('Toggling display order swap');
     }
@@ -349,6 +366,7 @@ function App() {
   selectedRoot={selectedRoot}
   chordTypes={chordTypes}
   chordRootOffsets={chordRootOffsets}
+  displayOrderSwapped={displayOrderSwapped}
 />
                 <Connections viewMode={selectedChords.length === 2 ? 'fruits' : 'connections'} selectedChords={selectedChords} />
               </div>
@@ -359,9 +377,20 @@ function App() {
                 chordTypes={chordTypes} 
                 chordRootOffsets={chordRootOffsets} 
                 hoveredElectron={hoveredElectron}
-                onRootChange={(note) => {
-                  console.log('InfoBox changing root to:', note);
-                  setSelectedRoot(note);
+                onRootChange={(note, isFromSwap = false) => {
+                  console.log('InfoBox changing root to:', note, isFromSwap ? '(from swap)' : '');
+                  
+                  // If this is from a swap, we need to update the matrix root selector
+                  // without triggering a scale recalculation
+                  if (isFromSwap) {
+                    // Create a special state for the matrix display root
+                    // This will update the matrix visually without changing the actual scale
+                    setMatrixDisplayRoot(note);
+                  } else {
+                    // Normal root change, update the state and reset matrix display root
+                    setSelectedRoot(note);
+                    setMatrixDisplayRoot(note);
+                  }
                 }}
                 onSwapChords={handleSwapChords}
                 onDisplayOrderSwap={handleDisplayOrderSwap}
@@ -375,9 +404,13 @@ function App() {
                   console.log('Matrix changing root to:', note);
                   // Force update the root selector by setting the state directly
                   setSelectedRoot(note);
+                  // Reset the display order swap state when selecting a new root from the matrix
+                  if (displayOrderSwapped) {
+                    setDisplayOrderSwapped(false);
+                  }
                   // Don't deselect chords when changing root
                 }} 
-                selectedRoot={selectedRoot}
+                selectedRoot={matrixDisplayRoot || selectedRoot}
                 isExpanded={matrixExpanded}
                 setIsExpanded={setMatrixExpanded}
               />

@@ -1413,24 +1413,14 @@ transform-origin: bottom;
   .titleRow {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .controlsRow {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
     width: 100%;
     gap: 15px;
-    margin-bottom: 10px;
   }
   
   .infobox-controls {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     gap: 10px;
   }
   
@@ -1446,12 +1436,12 @@ transform-origin: bottom;
   .firstChord{
     color: #f08c00;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 20px;
   }
   .secondChord{
     color: #00e1ff;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 20px;
   }
   .infoElectrons{
     color: #e64980; 
@@ -1755,33 +1745,13 @@ padding: 15px 15px;
     border-color: white;
 }
 
-/* First chord root note styling (orange) */
-.rootNoteFirst {
-    border: 2px solid #f08c00 !important;
-    box-shadow: 0 0 8px #f08c00;
-    font-weight: bold;
-    border-radius: 50px;
-    position: relative;
-    z-index: 2;
-}
-
-/* Second chord root note styling (blue) */
-.rootNoteSecond {
-    border: 1px solid #00e1ff !important;
-   /*  box-shadow: 0 0 8px #00e1ff; */
-    font-weight: bold;
-    border-radius: 50px;
-    position: relative;
-    z-index: 2;
-}
-
-/* Keeping the original rootNote class for backward compatibility */
 .rootNote {
     border: 2px solid #f08c00 !important;
     box-shadow: 0 0 8px #f08c00;
     font-weight: bold;
     border-radius: 50px;
     position: relative;
+    
     z-index: 2;
 }
 
